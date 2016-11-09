@@ -47,15 +47,20 @@ public class ATestFilter extends SimpleStreamFilter {
 
 	private HashMap<Integer, Collection<Integer>> findMissingAttributes(Instances instances) {
 		HashMap<Integer, Collection<Integer>> missing = new HashMap<Integer, Collection<Integer>>();
+		// Initialise a list of instances with missing attributes for every column
+		for (int i=0; i < instances.numAttributes(); i++){
+			missing.put(i, new ArrayList<Integer>());
+		}
+		
 		for (int i = 0; i < instances.numInstances(); i++) {
 			Instance test = instances.get(i);
-			ArrayList<Integer> missingFromRow = new ArrayList<Integer>();
 			for (int j = 0; j < test.numAttributes(); j++) {
-				if (test.isMissing(j))
-					missingFromRow.add(j);
+				// Add the index of the instance which contains the attribute to that particular
+				// attribute's list
+				if (test.isMissing(j)) {
+					missing.get(j).add(i);
+				}
 			}
-			if (!missingFromRow.isEmpty())
-				missing.put(i, missingFromRow);
 		}
 		return missing;
 	}
