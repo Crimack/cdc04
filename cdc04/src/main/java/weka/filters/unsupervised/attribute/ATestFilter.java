@@ -1,5 +1,9 @@
 package weka.filters.unsupervised.attribute;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.SimpleStreamFilter;
@@ -23,14 +27,8 @@ public class ATestFilter extends SimpleStreamFilter {
 
 	@Override
 	protected Instances process(Instances instances) throws Exception {
-		System.out.println(instances.numAttributes());
-		System.out.println(instances.numClasses());
-		System.out.println("LEMONS");
-		System.out.println(instances);
-		System.out.println("LIMES");
-		for (Instance in : instances){
-			System.out.println(in);
-		}
+		HashMap<Integer, Collection<Integer>> missing = findMissingAttributes(instances);
+		System.out.println(missing);
 		return instances;
 	}
 
@@ -42,8 +40,24 @@ public class ATestFilter extends SimpleStreamFilter {
 
 	@Override
 	protected Instance process(Instance instance) throws Exception {
-		System.out.println(instance.enumerateAttributes());
+		System.out.println("CATS");
+		// System.out.println(instance.enumerateAttributes());
 		return instance;
+	}
+
+	private HashMap<Integer, Collection<Integer>> findMissingAttributes(Instances instances) {
+		HashMap<Integer, Collection<Integer>> missing = new HashMap<Integer, Collection<Integer>>();
+		for (int i = 0; i < instances.numInstances(); i++) {
+			Instance test = instances.get(i);
+			ArrayList<Integer> missingFromRow = new ArrayList<Integer>();
+			for (int j = 0; j < test.numAttributes(); j++) {
+				if (test.isMissing(j))
+					missingFromRow.add(j);
+			}
+			if (!missingFromRow.isEmpty())
+				missing.put(i, missingFromRow);
+		}
+		return missing;
 	}
 
 }

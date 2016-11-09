@@ -1,1 +1,5 @@
 *.class
+*.jar
+build/
+*.project
+*.classpath
