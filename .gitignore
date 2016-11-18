@@ -1,8 +1,8 @@
 *.class
 *.jar
-**/build/*
+**/build/*********
 dist/*
 *.project
 *.classpath
 .idea/
-Code/McKee/build
+Code/McKee/build/*
