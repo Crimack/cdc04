@@ -1,14 +1,9 @@
 package weka.classifiers;
 
-import weka.classifiers.trees.J48;
-import weka.core.Capabilities;
-import weka.core.Instance;
-import weka.core.Instances;
+import weka.classifiers.trees.RandomForest;
+import weka.core.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class ProjectClassifier extends AbstractClassifier {
 
@@ -31,20 +26,26 @@ public class ProjectClassifier extends AbstractClassifier {
     @Override
     public void buildClassifier(Instances data) throws Exception {
         findMissingAttributes(data);
+        replaceMissingValues(data);
+
+        System.out.println(data.toString());
         original = new Instances(data);
+        System.out.println("Original instantiated");
+        System.out.println(original.toString());
+
         // Force instantiation as a quick hack to remove null errors.
         current = new Instances(data);
         last = new Instances(data);
-        last.remove(0);
+        last.remove(0); // Forces current and last to be different on first iteration
 
 
-        trainClassifiers(data);
+        //trainClassifiers(data);
     }
 
     private void trainClassifiers(Instances data) throws Exception {
         classifiers = new Classifier[data.numAttributes()];
         for (int j = 0; j < data.numAttributes(); j++) {
-            Classifier tester = new J48();
+            Classifier tester = new RandomForest();
             data.setClassIndex(j);
             tester.buildClassifier(data);
             classifiers[j] = tester;
@@ -111,6 +112,39 @@ public class ProjectClassifier extends AbstractClassifier {
             }
         }
         return missing;
+    }
+
+    private void replaceMissingValues(Instances instances) {
+        for (int i=0; i < instances.numAttributes(); i++) {
+            // Build a list of potential values to pick from
+            System.out.println("Setting shit up");
+            Attribute targetAtt = instances.attribute(i);
+            NominalAttributeInfo info = new NominalAttributeInfo()
+            targetAtt.isNominal()
+            HashSet<Object> potentialValueSet = new HashSet<Object>();
+            System.out.println("Starting enumeration");
+            for (int j=0; j < targetAtt.; j++) {
+                Attribute a = instances.get(i).;
+                a.value()
+                potentialValueSet.add(next);
+
+            }
+            }
+            System.out.println("Finishing enumeration");
+            System.out.println(potentialValueSet);
+            Object[] potentialValues = potentialValueSet.toArray();
+            System.out.println(potentialValues);
+
+            // Replace the missing attribute with a random possible value
+            Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+            while (instanceNumbers.hasNext()) {
+                int index = instanceNumbers.next();
+                Instance a = instances.get(index);
+                Object value = potentialValues[(int) (Math.random() * potentialValues.length)];
+                System.out.println("Value:" + value.toString());
+                a.setValue(i, (Double) value);
+            }
+        }
     }
 
 
