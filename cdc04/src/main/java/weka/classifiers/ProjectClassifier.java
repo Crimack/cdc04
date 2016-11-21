@@ -72,7 +72,7 @@ public class ProjectClassifier extends AbstractClassifier {
 
 	public Instances classifyDataset() throws Exception {
 		int counter = 1;
-		while (!current.toString().equals(last.toString())) {
+		while ((!current.toString().equals(last.toString())) && (counter < 20)) {
 			System.out.println("Number of iterations: " + counter);
 			last = new Instances(current);
 			current = new Instances(original);
