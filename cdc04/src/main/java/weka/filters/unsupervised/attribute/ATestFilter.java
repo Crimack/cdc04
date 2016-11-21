@@ -23,7 +23,7 @@ public class ATestFilter extends SimpleBatchFilter {
 
 	@Override
 	protected Instances process(Instances instances) throws Exception {
-		System.out.println(instances.classAttribute());
+		System.out.println("Filter started");
 		ProjectClassifier a = new ProjectClassifier();
 		a.buildClassifier(instances);
 		Instances answer = a.classifyDataset();
