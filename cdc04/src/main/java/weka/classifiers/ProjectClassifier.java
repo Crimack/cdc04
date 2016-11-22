@@ -32,17 +32,12 @@ public class ProjectClassifier extends AbstractClassifier {
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
 		findMissingAttributes(data);
-		replaceMissingValues(data);
+		// Docs say dataset must not be changed, so we take a copy that we're free to modify
 		original = new Instances(data);
-		System.out.println("Original instantiated");
-
-		// Force instantiation as a quick hack to remove null errors.
 		current = new Instances(data);
-		last = new Instances(data);
-		last.remove(0); // Forces current and last to be different on first
-						// iteration
-
-		trainClassifiers(data);
+		replaceMissingValues(current);
+		last = new Instances(original);
+		trainClassifiers(current);
 	}
 
 	private void trainClassifiers(Instances data) throws Exception {
@@ -97,8 +92,7 @@ public class ProjectClassifier extends AbstractClassifier {
 
 	private HashMap<Integer, Collection<Integer>> findMissingAttributes(Instances instances) {
 		missing = new HashMap<Integer, Collection<Integer>>();
-		// Initialise a list of instances with missing attributes for every
-		// column
+		// Initialise a list of instances with missing attributes for every column
 		for (int i = 0; i < instances.numAttributes(); i++) {
 			missing.put(i, new LinkedList<Integer>());
 		}
@@ -106,8 +100,7 @@ public class ProjectClassifier extends AbstractClassifier {
 			Instance test = instances.get(i);
 			for (int j = 0; j < test.numAttributes(); j++) {
 				// Add the index of the instance which contains the attribute to
-				// that particular
-				// attribute's list
+				// that particular attribute's list
 				if (test.isMissing(j)) {
 					missing.get(j).add(i);
 				}
