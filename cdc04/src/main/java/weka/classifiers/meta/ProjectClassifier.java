@@ -1,17 +1,16 @@
-package weka.classifiers;
+package weka.classifiers.meta;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-
-import weka.classifiers.trees.RandomForest;
+import weka.classifiers.AbstractClassifier;
+import weka.classifiers.Classifier;
+import weka.classifiers.IterativeClassifier;
+import weka.classifiers.trees.J48;
 import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class ProjectClassifier extends AbstractClassifier {
+import java.util.*;
+
+public class ProjectClassifier extends AbstractClassifier implements IterativeClassifier {
 
 	private static final long serialVersionUID = 3582366333379609425L;
 
@@ -19,7 +18,9 @@ public class ProjectClassifier extends AbstractClassifier {
 	private Classifier[] classifiers;
 	private HashMap<Integer, Collection<Integer>> missing;
 
+
 	// Instances used to track progress
+	private int counter = 0;
 	private Instances original;
 	private Instances last;
 	private Instances current;
@@ -32,19 +33,16 @@ public class ProjectClassifier extends AbstractClassifier {
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
 		findMissingAttributes(data);
-		// Docs say dataset must not be changed, so we take a copy that we're free to modify
-		original = new Instances(data);
-		current = new Instances(data);
-		replaceMissingValues(current);
-		last = new Instances(original);
-		trainClassifiers(current);
+		initializeClassifier(data);
+		while (next()) {}
+		done();
 	}
 
 	private void trainClassifiers(Instances data) throws Exception {
 		System.out.println("Building new classifiers");
 		classifiers = new Classifier[data.numAttributes()];
 		for (int j = 0; j < data.numAttributes(); j++) {
-			Classifier tester = new RandomForest();
+			Classifier tester = new J48();
 			data.setClassIndex(j);
 			tester.buildClassifier(data);
 			classifiers[j] = tester;
@@ -53,40 +51,65 @@ public class ProjectClassifier extends AbstractClassifier {
 
 	@Override
 	public double classifyInstance(Instance instance) throws Exception {
-		/**
-		 * Should only be run through classifyDataset
-		 */
 		Classifier active = classifiers[instance.classIndex()];
 		return active.classifyInstance(instance);
 	}
 
+	public void initializeClassifier(Instances instances) throws Exception {
+		System.out.println("Initialising...");
+		// Docs say data must not be changed, so we take copies that we're free to modify
+		original = new Instances(instances);
+		current = new Instances(instances);
+		last = new Instances(original);
+		replaceMissingValues(last);
+		current.remove(0); // Force first loop to pass
+	}
+
+
+	public boolean next() throws Exception {
+		counter ++;
+		last = new Instances(current);
+		current = new Instances(original);
+		System.out.println("Number of iterations: " + counter);
+		trainClassifiers(last);
+		for (int i = 0; i < current.numAttributes(); i++) {
+			current.setClassIndex(i);
+			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+			while (instanceNumbers.hasNext()) {
+				int index = instanceNumbers.next();
+				Instance a = current.get(index);
+				a.setValue(i, classifyInstance(a));
+
+			}
+		}
+		if (current.toString().equals(last.toString())) {
+			System.out.println("Classifier completed");
+			return false;
+		}
+		System.out.println("Going again");
+		System.out.println();
+		return true;
+	}
+
+
+	public void done() throws Exception {
+		System.out.println(current.toString());
+	}
+
+
 	@Override
 	public Capabilities getCapabilities() {
-		return null;
+		Capabilities result = super.getCapabilities();
+
+		// class
+		result.disableAllClasses();
+		result.disableAllClassDependencies();
+		result.enable(Capabilities.Capability.NOMINAL_CLASS);
+
+		return result;
 	}
 
 	public Instances classifyDataset() throws Exception {
-		int counter = 1;
-		while ((!current.toString().equals(last.toString())) && (counter < 20)) {
-			System.out.println("Number of iterations: " + counter);
-			last = new Instances(current);
-			current = new Instances(original);
-			trainClassifiers(last);
-			for (int i = 0; i < current.numAttributes(); i++) {
-				current.setClassIndex(i);
-				Iterator<Integer> instanceNumbers = missing.get(i).iterator();
-				while (instanceNumbers.hasNext()) {
-					int index = instanceNumbers.next();
-					Instance a = current.get(index);
-					a.setValue(i, classifyInstance(a));
-
-				}
-			}
-			counter++;
-			System.out.println("Lets go for another round");
-			System.out.println("Previous iteration == current?" + current.toString().equals(last.toString()));
-			System.out.println();
-		}
 		return current;
 	}
 

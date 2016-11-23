@@ -1,6 +1,6 @@
 package weka.filters.unsupervised.attribute;
 
-import weka.classifiers.ProjectClassifier;
+import weka.classifiers.meta.ProjectClassifier;
 import weka.core.Instances;
 import weka.filters.SimpleBatchFilter;
 
