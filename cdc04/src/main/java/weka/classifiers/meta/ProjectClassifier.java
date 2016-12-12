@@ -1,5 +1,17 @@
 package weka.classifiers.meta;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Vector;
+
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.IterativeClassifier;
@@ -13,17 +25,18 @@ import weka.core.Instances;
 import weka.core.Option;
 import weka.core.Utils;
 
-import java.util.*;
-
 public class ProjectClassifier extends AbstractClassifier implements IterativeClassifier {
 
 	private static final long serialVersionUID = 3582366333379609425L;
+	private static final String DEFAULT_OUTPUT_DATA_PATH = "C:\\Users\\Chris\\Documents\\repos\\Project\\Test Results\\current.arff";
 
 	private enum ClassifierChoice {
 		J48, RANDOM_FOREST, NAIVE_BAYES
 	}
 
 	private ClassifierChoice targetClassifier = ClassifierChoice.J48;
+	private boolean supervised = false;
+	private String outputDataPath = DEFAULT_OUTPUT_DATA_PATH;
 
 	// Classification variables
 	private Classifier[] classifiers;
@@ -49,19 +62,11 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		result.disableAll();
 		result.disableAllClassDependencies();
 		result.enable(Capability.NOMINAL_CLASS);
+		result.enable(Capability.MISSING_CLASS_VALUES);
 		result.enable(Capability.NOMINAL_ATTRIBUTES);
 		result.enable(Capability.NUMERIC_ATTRIBUTES);
+		result.enable(Capability.MISSING_VALUES);
 		return result;
-	}
-
-	@Override
-	public void buildClassifier(Instances data) throws Exception {
-		originalClassAttributeIndex = data.classIndex();
-		findMissingAttributes(data);
-		initializeClassifier(data);
-		while (next()) {
-		}
-		done();
 	}
 
 	/**
@@ -75,7 +80,16 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		newVector.addElement(new Option(
 				"\tIf set, specified classifier is used. Defaults to J48.\n"
 						+ "\tSupported Options: J48, RandomForest, NaiveBayes. Case not important but spacing is.",
-				"-C", 1, "-C"));
+				"C", 1, "-C"));
+
+		newVector.addElement(
+				new Option("\tIf set, this causes the classifier should to run as  a supervised classifier.\n"
+						+ "\tIf not present, this will be supervised.", "S", 0, "-S"));
+
+		newVector.addElement(new Option(
+				"\tIf set, this will write the resulting dataset to the specified file path.\n"
+						+ "\tIf not present, this will be defaulted to " + DEFAULT_OUTPUT_DATA_PATH,
+				"-outputResultToFile", 1, "-outputResultToFile"));
 
 		return newVector.elements();
 	}
@@ -93,6 +107,13 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 			setTargetClassifier(ClassifierChoice.J48);
 		}
 
+		setSupervised(Utils.getFlag("S", options));
+
+		String chosenWritePath = Utils.getOption("outputResultToFile", options);
+		if (!chosenWritePath.isEmpty()) {
+			setOutputDataPath(chosenWritePath);
+		}
+
 		super.setOptions(options);
 	}
 
@@ -103,12 +124,26 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		options.add("-C");
 		options.add("" + getTargetClassifier());
 
-		for (String opt : superOptions) {
-			options.add(opt);
-		}
+		options.add("-outputResultToFile");
+		options.add("" + outputDataPath);
+
+		if (supervised)
+			options.add("-S");
+
+		options.addAll(Arrays.asList(superOptions));
 		String[] result = new String[options.size()];
 
 		return options.toArray(result);
+	}
+
+	@Override
+	public void buildClassifier(Instances data) throws Exception {
+		originalClassAttributeIndex = data.classIndex();
+		findMissingAttributes(data);
+		initializeClassifier(data);
+		while (next()) {
+		}
+		done();
 	}
 
 	private void trainClassifiers(Instances data) throws Exception {
@@ -188,6 +223,11 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 
 	public void done() throws Exception {
 		System.out.println("Classifier completed");
+		FileWriter result = new FileWriter(outputDataPath, false);
+		PrintWriter print = new PrintWriter(result);
+		print.print(current.toString());
+		print.close();
+		result.close();
 	}
 
 	public Instances classifyDataset() throws Exception {
@@ -216,9 +256,14 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 
 	private void replaceMissingValues(Instances instances) {
 		System.out.println("Randomising missing values");
-		for (int i = 0; i < instances.numAttributes() - 1; i++) {
+		int attributesToReplace = instances.numAttributes();
+		// Trim off the last column if supervised
+		if (!supervised)
+			attributesToReplace--;
+
+		for (int i = 0; i < attributesToReplace; i++) {
 			// Build a list of potential values to pick from
-			HashSet<Double> potentialValueSet = new HashSet<Double>();
+			HashSet<Double> potentialValueSet = new HashSet<>();
 			for (int j = 0; j < instances.numInstances(); j++) {
 				Double a = instances.get(j).value(i);
 				if (!a.isNaN())
@@ -248,6 +293,30 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 
 	public String targetClassifierTipText() {
 		return "Classifier type to use. Defaults to J48";
+	}
+
+	public boolean getSupervised() {
+		return supervised;
+	}
+
+	public void setSupervised(boolean supervised) {
+		this.supervised = supervised;
+	}
+
+	public String supervisedTipText() {
+		return "Determines whether or not class attribute is used in training model.";
+	}
+
+	public String getOutputDataPath() {
+		return outputDataPath;
+	}
+
+	public void setOutputDataPath(String outputDataPath) {
+		this.outputDataPath = outputDataPath;
+	}
+
+	public String outputDataPathTipText() {
+		return "Determines the file location to write results to.";
 	}
 
 	public static void main(String[] args) {
