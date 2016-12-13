@@ -62,6 +62,7 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		result.disableAll();
 		result.disableAllClassDependencies();
 		result.enable(Capability.NOMINAL_CLASS);
+		result.enable(Capability.NUMERIC_CLASS);
 		result.enable(Capability.MISSING_CLASS_VALUES);
 		result.enable(Capability.NOMINAL_ATTRIBUTES);
 		result.enable(Capability.NUMERIC_ATTRIBUTES);
@@ -146,6 +147,111 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		done();
 	}
 
+	private HashMap<Integer, Collection<Integer>> findMissingAttributes(Instances instances) {
+		missing = new HashMap<Integer, Collection<Integer>>();
+		// Initialise a list of instances with missing attributes for every
+		// column
+		for (int i = 0; i < instances.numAttributes(); i++) {
+			missing.put(i, new LinkedList<Integer>());
+		}
+		for (int i = 0; i < instances.numInstances(); i++) {
+			Instance test = instances.get(i);
+			for (int j = 0; j < test.numAttributes(); j++) {
+				// Add the index of the instance which contains the attribute to
+				// that particular attribute's list
+				if (test.isMissing(j)) {
+					missing.get(j).add(i);
+				}
+			}
+		}
+		System.out.println(missing);
+		return missing;
+	}
+
+	public void initializeClassifier(Instances instances) throws Exception {
+		System.out.println("Initialising...");
+		// Docs say data must not be changed, so we take copies that we're free
+		// to modify
+		original = new Instances(instances);
+		current = new Instances(instances);
+		last = new Instances(original);
+		replaceMissingValues(last);
+		current.remove(0); // Force first loop to pass
+	}
+
+	private void replaceMissingValues(Instances instances) {
+		System.out.println("Randomising missing values");
+		int attributesToReplace = instances.numAttributes();
+		// Trim off the last column if supervised
+		if (supervised)
+			attributesToReplace--;
+
+		for (int i = 0; i < attributesToReplace; i++) {
+			// Build a list of potential values to pick from
+			HashSet<Double> potentialValueSet = new HashSet<>();
+			for (int j = 0; j < instances.numInstances(); j++) {
+				Double a = instances.get(j).value(i);
+				if (!a.isNaN())
+					potentialValueSet.add(a);
+			}
+			Double[] potentialValues = potentialValueSet.toArray(new Double[potentialValueSet.size()]);
+
+			// Replace the missing attribute with a random possible value
+			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+			while (instanceNumbers.hasNext()) {
+				int index = instanceNumbers.next();
+				Instance a = instances.get(index);
+				Double value = potentialValues[(int) (Math.random() * potentialValues.length)];
+				a.setValue(i, value);
+
+			}
+		}
+	}
+
+	public boolean next() throws Exception {
+		counter++;
+		last = new Instances(current);
+		current = new Instances(original);
+		System.out.println("Number of iterations: " + counter);
+		trainClassifiers(last);
+		for (int i = 0; i < current.numAttributes(); i++) {
+			if (i == originalClassAttributeIndex) {
+				// Don't guess at the values of the class attribute
+				continue;
+			}
+			current.setClassIndex(i);
+			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+			while (instanceNumbers.hasNext()) {
+				int index = instanceNumbers.next();
+				Instance a = current.get(index);
+				a.setValue(i, classifyInstance(a));
+
+			}
+		}
+		if (current.toString().equals(last.toString()) || counter >= 25) {
+			return false;
+		}
+		System.out.println("Going again");
+		System.out.println();
+		return true;
+	}
+
+	public void done() throws Exception {
+		if (supervised) {
+			current.setClassIndex(originalClassAttributeIndex);
+			for (int i : missing.get(originalClassAttributeIndex)) {
+				Instance toClassify = current.get(i);
+				toClassify.setValue(originalClassAttributeIndex, classifyInstance(toClassify));
+			}
+		}
+		System.out.println("Classifier completed");
+		FileWriter result = new FileWriter(outputDataPath, false);
+		PrintWriter print = new PrintWriter(result);
+		print.print(current.toString());
+		print.close();
+		result.close();
+	}
+
 	private void trainClassifiers(Instances data) throws Exception {
 		System.out.println("Building new classifiers");
 		classifiers = new Classifier[data.numAttributes()];
@@ -182,105 +288,8 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		return active.distributionForInstance(instance);
 	}
 
-	public void initializeClassifier(Instances instances) throws Exception {
-		System.out.println("Initialising...");
-		// Docs say data must not be changed, so we take copies that we're free
-		// to modify
-		original = new Instances(instances);
-		current = new Instances(instances);
-		last = new Instances(original);
-		replaceMissingValues(last);
-		current.remove(0); // Force first loop to pass
-	}
-
-	public boolean next() throws Exception {
-		counter++;
-		last = new Instances(current);
-		current = new Instances(original);
-		System.out.println("Number of iterations: " + counter);
-		trainClassifiers(last);
-		for (int i = 0; i < current.numAttributes(); i++) {
-			if (i == originalClassAttributeIndex) {
-				// Don't guess at the values of the class attribute
-				continue;
-			}
-			current.setClassIndex(i);
-			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
-			while (instanceNumbers.hasNext()) {
-				int index = instanceNumbers.next();
-				Instance a = current.get(index);
-				a.setValue(i, classifyInstance(a));
-
-			}
-		}
-		if (current.toString().equals(last.toString()) || counter >= 25) {
-			return false;
-		}
-		System.out.println("Going again");
-		System.out.println();
-		return true;
-	}
-
-	public void done() throws Exception {
-		System.out.println("Classifier completed");
-		FileWriter result = new FileWriter(outputDataPath, false);
-		PrintWriter print = new PrintWriter(result);
-		print.print(current.toString());
-		print.close();
-		result.close();
-	}
-
 	public Instances classifyDataset() throws Exception {
 		return current;
-	}
-
-	private HashMap<Integer, Collection<Integer>> findMissingAttributes(Instances instances) {
-		missing = new HashMap<Integer, Collection<Integer>>();
-		// Initialise a list of instances with missing attributes for every
-		// column
-		for (int i = 0; i < instances.numAttributes(); i++) {
-			missing.put(i, new LinkedList<Integer>());
-		}
-		for (int i = 0; i < instances.numInstances(); i++) {
-			Instance test = instances.get(i);
-			for (int j = 0; j < test.numAttributes(); j++) {
-				// Add the index of the instance which contains the attribute to
-				// that particular attribute's list
-				if (test.isMissing(j)) {
-					missing.get(j).add(i);
-				}
-			}
-		}
-		return missing;
-	}
-
-	private void replaceMissingValues(Instances instances) {
-		System.out.println("Randomising missing values");
-		int attributesToReplace = instances.numAttributes();
-		// Trim off the last column if supervised
-		if (!supervised)
-			attributesToReplace--;
-
-		for (int i = 0; i < attributesToReplace; i++) {
-			// Build a list of potential values to pick from
-			HashSet<Double> potentialValueSet = new HashSet<>();
-			for (int j = 0; j < instances.numInstances(); j++) {
-				Double a = instances.get(j).value(i);
-				if (!a.isNaN())
-					potentialValueSet.add(a);
-			}
-			Double[] potentialValues = potentialValueSet.toArray(new Double[potentialValueSet.size()]);
-
-			// Replace the missing attribute with a random possible value
-			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
-			while (instanceNumbers.hasNext()) {
-				int index = instanceNumbers.next();
-				Instance a = instances.get(index);
-				Double value = potentialValues[(int) (Math.random() * potentialValues.length)];
-				a.setValue(i, value);
-
-			}
-		}
 	}
 
 	public ClassifierChoice getTargetClassifier() {
