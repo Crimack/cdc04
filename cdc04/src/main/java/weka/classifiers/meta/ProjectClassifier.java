@@ -4,9 +4,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,32 +14,28 @@ import java.util.Vector;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.IterativeClassifier;
-import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.SingleClassifierEnhancer;
 import weka.classifiers.trees.J48;
-import weka.classifiers.trees.RandomForest;
 import weka.core.Capabilities;
 import weka.core.Capabilities.Capability;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
+import weka.core.OptionHandler;
 import weka.core.Utils;
 
-public class ProjectClassifier extends AbstractClassifier implements IterativeClassifier {
+public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
 	private static final long serialVersionUID = 3582366333379609425L;
 	private static final String DEFAULT_OUTPUT_DATA_PATH = "C:\\Users\\Chris\\Documents\\repos\\Project\\Test Results\\current.arff";
 
-	private enum ClassifierChoice {
-		J48, RANDOM_FOREST, NAIVE_BAYES
-	}
-
-	private ClassifierChoice targetClassifier = ClassifierChoice.J48;
+	private String[] classifierOptions;
 	private boolean supervised = false;
 	private String outputDataPath = DEFAULT_OUTPUT_DATA_PATH;
 
 	// Classification variables
 	private Classifier[] classifiers;
-	private HashMap<Integer, Collection<Integer>> missing;
+	private ArrayList<LinkedList<Integer>> missing;
 
 	// Instances used to track progress
 	private int counter = 0;
@@ -48,6 +43,17 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 	private Instances original;
 	private Instances last;
 	private Instances current;
+
+	protected Classifier m_Classifier = new J48();
+
+	/**
+	 * String describing default classifier.
+	 */
+	@Override
+	protected String defaultClassifierString() {
+
+		return "weka.classifiers.rules.J48";
+	}
 
 	public String globalInfo() {
 		return "Repeatedly applies, then rebuilds models until the output data set no longer changes.";
@@ -78,10 +84,9 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 	public Enumeration<Option> listOptions() {
 		Vector<Option> newVector = Option.listOptionsForClassHierarchy(this.getClass(), AbstractClassifier.class);
 
-		newVector.addElement(new Option(
-				"\tIf set, specified classifier is used. Defaults to J48.\n"
-						+ "\tSupported Options: J48, RandomForest, NaiveBayes. Case not important but spacing is.",
-				"C", 1, "-C"));
+		newVector.addElement(
+				new Option("\tSets the classifier to be used, and any options to be passed to it. Defaults to J48.",
+						"W", 1, "-W"));
 
 		newVector.addElement(
 				new Option("\tIf set, this causes the classifier should to run as  a supervised classifier.\n"
@@ -92,21 +97,18 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 						+ "\tIf not present, this will be defaulted to " + DEFAULT_OUTPUT_DATA_PATH,
 				"-outputResultToFile", 1, "-outputResultToFile"));
 
+		newVector.addElement(
+				new Option("", "", 0, "\nOptions specific to classifier " + m_Classifier.getClass().getName() + ":"));
+		newVector.addAll(Collections.list(((OptionHandler) m_Classifier).listOptions()));
+
 		return newVector.elements();
 	}
 
 	public void setOptions(String[] options) throws Exception {
 
-		String chosenClassifier = Utils.getOption('C', options);
-		if (chosenClassifier.equalsIgnoreCase("J48")) {
-			setTargetClassifier(ClassifierChoice.J48);
-		} else if (chosenClassifier.equalsIgnoreCase("RandomForest")) {
-			setTargetClassifier(ClassifierChoice.RANDOM_FOREST);
-		} else if (chosenClassifier.equalsIgnoreCase("NaiveBayes")) {
-			setTargetClassifier(ClassifierChoice.NAIVE_BAYES);
-		} else {
-			setTargetClassifier(ClassifierChoice.J48);
-		}
+		super.setOptions(options);
+
+		setClassifierOptions(Utils.partitionOptions(options));
 
 		setSupervised(Utils.getFlag("S", options));
 
@@ -115,15 +117,12 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 			setOutputDataPath(chosenWritePath);
 		}
 
-		super.setOptions(options);
 	}
 
 	public String[] getOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 		String[] superOptions = super.getOptions();
-		options.add("-C");
-		options.add("" + getTargetClassifier());
 
 		options.add("-outputResultToFile");
 		options.add("" + outputDataPath);
@@ -147,12 +146,12 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		done();
 	}
 
-	private HashMap<Integer, Collection<Integer>> findMissingAttributes(Instances instances) {
-		missing = new HashMap<Integer, Collection<Integer>>();
+	private ArrayList<LinkedList<Integer>> findMissingAttributes(Instances instances) {
+		missing = new ArrayList<LinkedList<Integer>>();
 		// Initialise a list of instances with missing attributes for every
 		// column
 		for (int i = 0; i < instances.numAttributes(); i++) {
-			missing.put(i, new LinkedList<Integer>());
+			missing.add(i, new LinkedList<Integer>());
 		}
 		for (int i = 0; i < instances.numInstances(); i++) {
 			Instance test = instances.get(i);
@@ -172,6 +171,10 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		System.out.println("Initialising...");
 		// Docs say data must not be changed, so we take copies that we're free
 		// to modify
+		classifiers = new Classifier[instances.numAttributes()];
+		for (int i = 0; i < classifiers.length; i++) {
+			classifiers[i] = forName(getClassifier().getClass().getName(), getClassifierOptions());
+		}
 		original = new Instances(instances);
 		current = new Instances(instances);
 		last = new Instances(original);
@@ -213,7 +216,7 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		last = new Instances(current);
 		current = new Instances(original);
 		System.out.println("Number of iterations: " + counter);
-		trainClassifiers(last);
+		retrainClassifiers(last);
 		for (int i = 0; i < current.numAttributes(); i++) {
 			if (i == originalClassAttributeIndex) {
 				// Don't guess at the values of the class attribute
@@ -252,25 +255,10 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		result.close();
 	}
 
-	private void trainClassifiers(Instances data) throws Exception {
+	private void retrainClassifiers(Instances data) throws Exception {
 		System.out.println("Building new classifiers");
-		classifiers = new Classifier[data.numAttributes()];
 		for (int j = 0; j < data.numAttributes(); j++) {
-			Classifier tester;
-			switch (targetClassifier) {
-			case J48:
-				tester = new J48();
-				break;
-			case RANDOM_FOREST:
-				tester = new RandomForest();
-				break;
-			case NAIVE_BAYES:
-				tester = new NaiveBayes();
-				break;
-			default:
-				tester = new J48();
-				break;
-			}
+			Classifier tester = classifiers[j];
 			data.setClassIndex(j);
 			tester.buildClassifier(data);
 			classifiers[j] = tester;
@@ -292,16 +280,16 @@ public class ProjectClassifier extends AbstractClassifier implements IterativeCl
 		return current;
 	}
 
-	public ClassifierChoice getTargetClassifier() {
-		return targetClassifier;
+	public String[] getClassifierOptions() {
+		return classifierOptions;
 	}
 
-	public void setTargetClassifier(ClassifierChoice targetClassifier) {
-		this.targetClassifier = targetClassifier;
+	public void setClassifierOptions(String[] classifierOptions) {
+		this.classifierOptions = classifierOptions;
 	}
 
-	public String targetClassifierTipText() {
-		return "Classifier type to use. Defaults to J48";
+	public String classifierOptionsTipText() {
+		return "Options to pass to the chosen classifier";
 	}
 
 	public boolean getSupervised() {
