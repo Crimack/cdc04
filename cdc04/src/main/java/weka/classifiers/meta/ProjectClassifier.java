@@ -92,6 +92,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 * non-probabilistic classifiers.
 	 */
 	private int m_MaxIterations = Integer.MAX_VALUE;
+	private int m_NumHiddenVariables;
 
 	// Classification variables
 	/** The current set of trained classifiers being iteratively trained */
@@ -138,7 +139,6 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 */
 	public ProjectClassifier() {
 		super();
-		m_Tracker = new StateAnalyser();
 		m_Classifier = new NaiveBayes();
 	}
 
@@ -206,6 +206,9 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		newVector.addElement(new Option("\tSets the maximum number of times that a particular classifier will iterate "
 				+ "before determining that it is trained.", "M", 1, "-M"));
 
+		newVector.addElement(new Option(
+				"\tSets the number of 'hidden variables' to be inferred by the chosen classifier.", "h", 1, "-h"));
+
 		newVector.addElement(
 				new Option("", "", 0, "\nOptions specific to classifier " + m_Classifier.getClass().getName() + ":"));
 		newVector.addAll(Collections.list(((OptionHandler) m_Classifier).listOptions()));
@@ -258,6 +261,8 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		if (!maxIterString.isEmpty())
 			setMaxIterations(Integer.parseInt(maxIterString));
 
+		setNumHiddenVariables(Integer.parseInt(Utils.getOption('h', options)));
+
 	}
 
 	/**
@@ -280,6 +285,9 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			options.add("-M");
 			options.add("" + m_MaxIterations);
 		}
+		if (m_NumHiddenVariables > 0)
+			options.add("-h");
+			options.add("" + m_NumHiddenVariables);
 
 		options.addAll(Arrays.asList(superOptions));
 		String[] result = new String[options.size()];
@@ -297,10 +305,13 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 *                exception thrown is raised to a Weka error handler
 	 */
 	@Override
-	public void buildClassifier(Instances data) throws Exception {
-		m_OriginalClassAttributeIndex = data.classIndex();
-		findMissingAttributes(data);
-		initializeClassifier(data);
+	public void buildClassifier(Instances instances) throws Exception {
+		m_OriginalClassAttributeIndex = instances.classIndex();
+		m_Original = new Instances(instances);
+		if (getNumHiddenVariables() > 0)
+			inferHiddenAttributes(m_Original);
+		findMissingAttributes(m_Original);
+		initializeClassifier(m_Original);
 		while (next()) {
 		}
 		done();
@@ -337,6 +348,16 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		return m_Missing;
 	}
 
+	private void inferHiddenAttributes(Instances instances) {
+		ArrayList<String> hiddenValues = new ArrayList<>();
+		hiddenValues.add("1");
+		hiddenValues.add("0");
+		for (int i = 1; i <= getNumHiddenVariables(); i++) {
+			Attribute hidden = new Attribute("hidden" + i, hiddenValues);
+			instances.insertAttributeAt(hidden, m_OriginalClassAttributeIndex + i);
+		}
+	}
+
 	/**
 	 * Makes copies of the training data which can be mutated, and initialise
 	 * the array of Classifier objects
@@ -347,14 +368,15 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	public void initializeClassifier(Instances instances) throws Exception {
 		// Docs say data must not be changed, so we take copies that we're free
 		// to modify
+		m_Tracker = new StateAnalyser();
 		m_Classifiers = new Classifier[instances.numAttributes()];
 		for (int i = 0; i < m_Classifiers.length; i++) {
 			m_Classifiers[i] = forName(getClassifier().getClass().getName(), getClassifierOptions());
 		}
-		m_Original = new Instances(instances);
-		m_Current = new Instances(instances);
+		m_Current = new Instances(m_Original);
 		m_Last = new Instances(m_Original);
 		replaceMissingValues(m_Last);
+		System.out.println(m_Last);
 		m_Current.remove(0); // Force first loop to pass
 	}
 
@@ -366,12 +388,12 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 *            a dataset
 	 */
 	private void replaceMissingValues(Instances instances) {
-		int attributesToReplace = instances.numAttributes();
-		// Trim off the last column if supervised
-		if (m_Supervised)
-			attributesToReplace--;
 
-		for (int i = 0; i < attributesToReplace; i++) {
+		for (int i = 0; i < instances.numAttributes(); i++) {
+			// Skip over the class attribute if supervised
+			if (m_Supervised && i == m_OriginalClassAttributeIndex)
+				continue;
+
 			Attribute att = instances.attribute(i);
 			if (att.isNominal() || att.isRelationValued() || att.isString()) {
 				ArrayList<Object> a = Collections.list(att.enumerateValues());
@@ -450,6 +472,16 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 			}
 		}
+
+		// Talk to Cassio about this. Should we remove and force a retrain or
+		// just use the non-hidden classifiers
+		if (getNumHiddenVariables() > 0) {
+			for (int i = m_OriginalClassAttributeIndex
+					+ getNumHiddenVariables(); i > m_OriginalClassAttributeIndex; i--) {
+				m_Current.deleteAttributeAt(i);
+			}
+		}
+		System.err.println(m_Current);
 		System.err.println("Number of iterations taken: " + m_Tracker.getNumberIterations());
 	}
 
@@ -461,11 +493,11 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 * @throws Exception
 	 *             any exception thrown
 	 */
-	private void retrainClassifiers(Instances data) throws Exception {
-		for (int j = 0; j < data.numAttributes(); j++) {
+	private void retrainClassifiers(Instances instances) throws Exception {
+		for (int j = 0; j < instances.numAttributes(); j++) {
 			Classifier tester = m_Classifiers[j];
-			data.setClassIndex(j);
-			tester.buildClassifier(data);
+			instances.setClassIndex(j);
+			tester.buildClassifier(instances);
 		}
 	}
 
@@ -614,6 +646,18 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	public String maxIterationsTipText() {
 		return "Sets the maximum number of times which the classifier should iterate "
 				+ "over the training data before determining that it is completed.";
+	}
+
+	public int getNumHiddenVariables() {
+		return m_NumHiddenVariables;
+	}
+
+	public void setNumHiddenVariables(int numHiddenVariables) {
+		this.m_NumHiddenVariables = numHiddenVariables;
+	}
+
+	public String numHiddenVariablesTipText() {
+		return "Determines the number of 'hidden variables which should be inferred";
 	}
 
 	/**
