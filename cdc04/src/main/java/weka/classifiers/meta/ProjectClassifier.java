@@ -52,7 +52,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	@Override
 	protected String defaultClassifierString() {
 
-		return "weka.classifiers.rules.J48";
+		return "weka.classifiers.trees.J48";
 	}
 
 	public String globalInfo() {
