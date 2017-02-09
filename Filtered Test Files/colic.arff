@@ -1,0 +1,396 @@
+@relation colic-weka.filters.unsupervised.attribute.ReplaceWithMissingValue-Rfirst-last-S1-P0.1-unset-class-temporarily
+
+@attribute surgery {yes,no}
+@attribute Age {adult,young}
+@attribute rectal_temperature {FALSE,TRUE}
+@attribute pulse {FALSE,TRUE}
+@attribute respiratory_rate {FALSE,TRUE}
+@attribute temp_extremities {normal,warm,cool,cold}
+@attribute peripheral_pulse {normal,increased,reduced,absent}
+@attribute mucous_membranes {'normal pink','bright pink','pale pink','pale cyanotic','bright red','dark cyanotic'}
+@attribute capillary_refill_time {<3,>=3,'meaning unknown'}
+@attribute pain {'alert no pain',depressed,'intermittent mild pain','intermittent severe pain','continuous severe pain'}
+@attribute peristalsis {hypermotile,normal,hypomotile,absent}
+@attribute abdominal_distension {none,slight,moderate,severe}
+@attribute nasogastric_tube {none,slight,significant}
+@attribute nasogastric_reflux {none,>1l,<1l}
+@attribute nasogastric_reflux_PH {FALSE,TRUE}
+@attribute rectal_examination {normal,increased,decreased,absent}
+@attribute abdomen {normal,other,'firm feces in large intestine','distended small intestine','distended large intestine'}
+@attribute packed_cell_volume {FALSE,TRUE}
+@attribute total_protein {FALSE,TRUE}
+@attribute abdominocentesis_appearance {clear,cloudy,serosanguinous}
+@attribute abdomcentesis_total_protein {FALSE,TRUE}
+@attribute outcome {lived,died,euthanized}
+@attribute surgical_lesion {yes,no}
+
+@data
+
+no,adult,FALSE,FALSE,FALSE,?,reduced,'normal pink',>=3,'continuous severe pain',absent,severe,slight,none,FALSE,decreased,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,?
+yes,adult,FALSE,FALSE,TRUE,cool,normal,'pale cyanotic',<3,?,absent,slight,slight,none,FALSE,absent,other,FALSE,FALSE,cloudy,?,euthanized,no
+no,adult,FALSE,TRUE,TRUE,normal,normal,'pale pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,normal,normal,TRUE,TRUE,cloudy,FALSE,lived,no
+yes,young,FALSE,FALSE,FALSE,cold,normal,'dark cyanotic',>=3,depressed,absent,?,none,>1l,TRUE,decreased,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+no,adult,?,FALSE,?,cool,?,?,>=3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,?
+no,adult,FALSE,?,FALSE,warm,normal,?,<3,depressed,hypomotile,slight,slight,none,FALSE,decreased,'firm feces in large intestine',FALSE,?,cloudy,FALSE,lived,no
+yes,adult,TRUE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',hypomotile,moderate,none,none,FALSE,?,'distended large intestine',TRUE,TRUE,cloudy,FALSE,?,yes
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',?,slight,slight,none,FALSE,decreased,'distended small intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+no,adult,FALSE,FALSE,FALSE,cool,absent,'pale pink',<3,'intermittent severe pain',absent,severe,slight,none,?,decreased,'distended large intestine',TRUE,TRUE,cloudy,FALSE,euthanized,yes
+no,?,FALSE,?,FALSE,normal,?,'normal pink',<3,'continuous severe pain',hypomotile,none,slight,none,FALSE,decreased,'distended large intestine',TRUE,?,clear,FALSE,lived,no
+yes,adult,FALSE,FALSE,TRUE,?,reduced,'bright red',<3,'intermittent mild pain',hypomotile,none,slight,none,TRUE,increased,?,FALSE,TRUE,?,?,?,yes
+no,adult,FALSE,FALSE,?,warm,normal,'bright pink',<3,depressed,hypermotile,slight,none,none,?,absent,'distended small intestine',FALSE,?,cloudy,FALSE,lived,yes
+yes,adult,TRUE,TRUE,TRUE,warm,normal,'normal pink',?,'intermittent mild pain',hypomotile,moderate,significant,?,?,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,lived,no
+no,?,TRUE,FALSE,FALSE,normal,normal,?,<3,'alert no pain',hypomotile,slight,significant,?,FALSE,normal,normal,TRUE,TRUE,clear,FALSE,died,no
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',absent,none,slight,>1l,FALSE,?,'distended small intestine',?,FALSE,clear,?,lived,yes
+yes,adult,TRUE,FALSE,FALSE,cool,?,'pale cyanotic',<3,'continuous severe pain',hypomotile,moderate,slight,<1l,TRUE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes
+yes,young,FALSE,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,'intermittent severe pain',absent,moderate,significant,none,?,absent,'distended large intestine',FALSE,FALSE,serosanguinous,FALSE,died,no
+no,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',<3,?,hypomotile,none,slight,none,FALSE,?,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+?,adult,TRUE,FALSE,?,normal,normal,'bright pink',<3,depressed,hypomotile,none,none,?,FALSE,increased,'distended large intestine',TRUE,TRUE,clear,FALSE,lived,yes
+no,adult,FALSE,FALSE,FALSE,?,reduced,?,<3,'intermittent mild pain',hypomotile,moderate,slight,none,FALSE,absent,'distended large intestine',?,?,cloudy,FALSE,lived,?
+yes,adult,FALSE,?,FALSE,normal,normal,'bright red',>=3,'continuous severe pain',absent,severe,?,none,FALSE,absent,'distended small intestine',FALSE,TRUE,cloudy,?,lived,yes
+no,?,FALSE,?,TRUE,normal,normal,'normal pink',<3,'alert no pain',hypomotile,none,slight,<1l,?,absent,'firm feces in large intestine',?,TRUE,cloudy,FALSE,lived,no
+yes,adult,?,TRUE,FALSE,warm,normal,'pale cyanotic',<3,depressed,hypomotile,none,slight,none,FALSE,normal,?,FALSE,TRUE,cloudy,FALSE,lived,yes
+yes,young,FALSE,FALSE,FALSE,?,reduced,'normal pink',<3,depressed,absent,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,?,cool,reduced,'pale pink',<3,'intermittent mild pain',?,moderate,?,>1l,TRUE,?,'distended large intestine',FALSE,FALSE,?,FALSE,lived,yes
+no,adult,TRUE,FALSE,FALSE,cool,?,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,?,cold,reduced,?,>=3,'intermittent mild pain',hypomotile,moderate,slight,none,FALSE,decreased,?,TRUE,TRUE,cloudy,FALSE,lived,?
+yes,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',?,slight,none,none,FALSE,normal,'firm feces in large intestine',?,TRUE,cloudy,TRUE,lived,no
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,?,FALSE,died,no
+no,adult,TRUE,TRUE,FALSE,warm,normal,'normal pink',<3,'alert no pain',?,?,none,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+no,adult,TRUE,FALSE,FALSE,cool,reduced,?,>=3,'continuous severe pain',absent,severe,significant,>1l,TRUE,absent,'distended large intestine',FALSE,FALSE,cloudy,?,died,yes
+no,adult,TRUE,FALSE,TRUE,?,reduced,'pale cyanotic',>=3,depressed,absent,slight,?,<1l,FALSE,?,?,FALSE,FALSE,serosanguinous,FALSE,euthanized,yes
+yes,adult,TRUE,?,?,?,normal,'normal pink',<3,'intermittent mild pain',hypomotile,?,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,?,?,none,FALSE,absent,'distended small intestine',FALSE,FALSE,?,FALSE,?,yes
+yes,adult,FALSE,FALSE,FALSE,?,reduced,'pale cyanotic',>=3,'continuous severe pain',absent,severe,significant,<1l,FALSE,?,'distended small intestine',FALSE,TRUE,cloudy,FALSE,lived,yes
+no,adult,FALSE,FALSE,TRUE,cold,reduced,'pale pink',>=3,'intermittent severe pain',absent,moderate,slight,<1l,FALSE,absent,other,FALSE,FALSE,?,?,euthanized,yes
+no,adult,FALSE,FALSE,?,cool,reduced,'bright red',>=3,'intermittent mild pain',?,none,none,?,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,TRUE,euthanized,no
+yes,adult,TRUE,FALSE,FALSE,cool,reduced,'normal pink',?,'continuous severe pain',hypomotile,none,slight,none,FALSE,normal,normal,FALSE,FALSE,clear,TRUE,lived,yes
+no,?,FALSE,TRUE,?,normal,normal,'normal pink',<3,'intermittent mild pain',hypomotile,slight,none,none,FALSE,normal,'firm feces in large intestine',TRUE,TRUE,clear,FALSE,lived,no
+yes,young,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',?,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+?,?,?,?,FALSE,cool,reduced,'dark cyanotic',>=3,'continuous severe pain',hypomotile,moderate,none,<1l,?,absent,'distended large intestine',FALSE,TRUE,serosanguinous,?,died,?
+no,young,?,FALSE,FALSE,cool,normal,'normal pink',?,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,TRUE,lived,?
+no,adult,TRUE,FALSE,TRUE,cool,normal,'pale pink',?,'intermittent mild pain',hypomotile,none,none,?,FALSE,increased,other,FALSE,TRUE,cloudy,FALSE,?,no
+yes,adult,FALSE,FALSE,?,cool,absent,'pale cyanotic',<3,?,?,severe,none,none,FALSE,absent,'distended large intestine',FALSE,?,cloudy,TRUE,euthanized,yes
+yes,adult,TRUE,FALSE,TRUE,cool,reduced,'pale cyanotic',>=3,'intermittent severe pain',absent,none,slight,none,FALSE,?,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,euthanized,yes
+no,?,FALSE,FALSE,FALSE,cold,reduced,'pale cyanotic',>=3,'continuous severe pain',absent,severe,none,none,FALSE,?,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+yes,adult,TRUE,?,TRUE,cool,normal,'pale cyanotic',>=3,'continuous severe pain',absent,severe,slight,>1l,FALSE,absent,'distended large intestine',?,FALSE,?,FALSE,lived,yes
+no,adult,TRUE,TRUE,?,normal,normal,'normal pink',<3,'alert no pain',hypermotile,none,none,none,FALSE,normal,'distended large intestine',?,TRUE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',>=3,depressed,hypomotile,moderate,slight,>1l,FALSE,decreased,normal,FALSE,TRUE,serosanguinous,FALSE,died,?
+no,?,TRUE,FALSE,?,cool,reduced,?,>=3,'intermittent severe pain',hypermotile,slight,none,>1l,FALSE,increased,normal,FALSE,TRUE,cloudy,FALSE,died,no
+no,adult,FALSE,TRUE,FALSE,normal,normal,'bright pink',<3,'alert no pain',hypomotile,slight,none,none,FALSE,absent,other,FALSE,FALSE,clear,TRUE,lived,no
+yes,adult,TRUE,FALSE,FALSE,normal,normal,'pale pink',>=3,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,serosanguinous,FALSE,?,yes
+no,adult,FALSE,FALSE,FALSE,normal,normal,'pale pink',<3,'alert no pain',hypomotile,none,slight,?,?,increased,other,TRUE,FALSE,cloudy,FALSE,lived,no
+?,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,?,TRUE,TRUE,cloudy,FALSE,lived,?
+no,adult,FALSE,?,FALSE,cool,reduced,'normal pink',?,depressed,hypomotile,moderate,slight,none,FALSE,normal,?,FALSE,FALSE,serosanguinous,FALSE,euthanized,yes
+yes,young,FALSE,FALSE,TRUE,cool,?,'bright red',<3,'intermittent mild pain',hypomotile,severe,significant,none,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,died,yes
+yes,adult,?,?,FALSE,cool,normal,?,<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,adult,?,FALSE,FALSE,warm,normal,'bright pink',<3,'continuous severe pain',hypomotile,moderate,slight,>1l,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,died,?
+yes,?,FALSE,FALSE,TRUE,cold,reduced,'pale pink',<3,'continuous severe pain',absent,moderate,slight,none,FALSE,absent,'distended small intestine',FALSE,TRUE,serosanguinous,FALSE,died,?
+no,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',>=3,'continuous severe pain',absent,severe,none,>1l,FALSE,absent,'distended large intestine',?,FALSE,cloudy,FALSE,died,yes
+no,adult,TRUE,TRUE,?,normal,normal,'pale pink',<3,depressed,hypermotile,none,none,none,FALSE,absent,'distended large intestine',?,TRUE,cloudy,FALSE,lived,no
+no,adult,FALSE,FALSE,FALSE,warm,increased,'normal pink',<3,'alert no pain',normal,slight,slight,?,FALSE,normal,normal,FALSE,FALSE,cloudy,FALSE,lived,no
+yes,adult,TRUE,FALSE,TRUE,warm,normal,'bright pink',<3,'intermittent mild pain',?,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,clear,FALSE,died,yes
+no,adult,FALSE,FALSE,TRUE,cold,reduced,'pale cyanotic',>=3,depressed,absent,severe,none,none,FALSE,absent,?,FALSE,FALSE,cloudy,TRUE,euthanized,no
+yes,?,FALSE,FALSE,FALSE,cool,normal,'pale cyanotic',>=3,'intermittent mild pain',hypomotile,slight,none,>1l,FALSE,absent,'distended large intestine',FALSE,FALSE,serosanguinous,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'pale pink',<3,'intermittent mild pain',hypomotile,slight,none,?,FALSE,?,'distended small intestine',TRUE,FALSE,cloudy,TRUE,lived,yes
+?,adult,TRUE,FALSE,FALSE,normal,normal,'bright red',>=3,'intermittent mild pain',hypomotile,none,none,<1l,?,decreased,'distended small intestine',FALSE,?,clear,TRUE,lived,yes
+no,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,decreased,other,FALSE,TRUE,?,FALSE,lived,no
+no,adult,FALSE,TRUE,TRUE,normal,normal,'pale pink',<3,'intermittent mild pain',hypomotile,none,slight,<1l,?,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,lived,no
+no,adult,?,TRUE,?,normal,normal,'normal pink',<3,?,hypomotile,none,none,none,FALSE,decreased,other,TRUE,TRUE,cloudy,FALSE,lived,no
+no,adult,TRUE,FALSE,TRUE,cool,?,'normal pink',?,'intermittent mild pain',hypomotile,moderate,slight,>1l,TRUE,absent,'distended small intestine',TRUE,FALSE,cloudy,FALSE,euthanized,yes
+yes,adult,TRUE,TRUE,FALSE,normal,normal,'normal pink',<3,'alert no pain',normal,none,slight,none,FALSE,?,normal,FALSE,TRUE,cloudy,FALSE,lived,no
+yes,adult,TRUE,TRUE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',?,none,slight,none,FALSE,absent,?,FALSE,FALSE,cloudy,FALSE,died,yes
+yes,adult,?,TRUE,TRUE,normal,normal,?,?,'intermittent severe pain',?,none,?,<1l,FALSE,normal,'distended large intestine',FALSE,FALSE,cloudy,FALSE,?,?
+yes,young,?,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,?,'distended large intestine',?,TRUE,cloudy,FALSE,died,yes
+yes,young,FALSE,FALSE,FALSE,cool,?,'bright red',>=3,?,hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,TRUE,euthanized,yes
+yes,adult,TRUE,TRUE,TRUE,cool,reduced,'normal pink',<3,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,decreased,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+no,adult,?,TRUE,?,warm,normal,'normal pink',<3,?,hypermotile,none,none,none,FALSE,?,normal,TRUE,FALSE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,cool,?,'pale pink','meaning unknown','continuous severe pain',hypomotile,moderate,significant,>1l,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes
+yes,adult,?,FALSE,TRUE,normal,reduced,'dark cyanotic',>=3,'intermittent mild pain',absent,slight,slight,?,TRUE,absent,'distended small intestine',FALSE,FALSE,serosanguinous,FALSE,lived,yes
+yes,adult,TRUE,?,FALSE,cool,reduced,'pale cyanotic',<3,'intermittent severe pain',hypomotile,slight,slight,none,FALSE,absent,'distended small intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+?,adult,TRUE,TRUE,FALSE,?,reduced,'normal pink',<3,depressed,hypomotile,slight,significant,none,FALSE,decreased,'distended large intestine',TRUE,FALSE,serosanguinous,TRUE,lived,yes
+yes,young,FALSE,FALSE,FALSE,cool,normal,'bright pink',?,'intermittent mild pain',absent,none,slight,none,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,adult,TRUE,FALSE,TRUE,cool,reduced,'dark cyanotic',>=3,'continuous severe pain',hypomotile,severe,none,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+yes,?,TRUE,FALSE,FALSE,normal,reduced,'bright pink',>=3,depressed,hypomotile,moderate,slight,>1l,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+no,adult,?,TRUE,?,warm,reduced,'pale pink','meaning unknown','intermittent mild pain',?,slight,slight,>1l,FALSE,absent,'distended small intestine',?,?,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,'continuous severe pain',absent,moderate,significant,?,FALSE,absent,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,died,yes
+no,adult,?,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,?,slight,none,?,absent,'distended large intestine',FALSE,TRUE,cloudy,?,euthanized,yes
+no,adult,FALSE,FALSE,FALSE,normal,?,'bright red',?,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,decreased,'firm feces in large intestine',TRUE,?,cloudy,FALSE,lived,no
+no,adult,FALSE,TRUE,TRUE,?,normal,'normal pink',<3,?,hypermotile,none,slight,none,FALSE,?,'distended large intestine',TRUE,?,cloudy,FALSE,?,no
+no,?,TRUE,TRUE,TRUE,cool,?,?,<3,depressed,hypomotile,none,slight,<1l,TRUE,normal,normal,FALSE,FALSE,cloudy,FALSE,lived,?
+?,adult,FALSE,FALSE,FALSE,cool,?,?,>=3,depressed,hypomotile,moderate,slight,none,?,normal,'distended large intestine',FALSE,FALSE,serosanguinous,FALSE,died,yes
+no,adult,FALSE,TRUE,TRUE,?,normal,'normal pink',<3,?,hypermotile,none,slight,none,FALSE,decreased,normal,TRUE,TRUE,cloudy,FALSE,lived,no
+no,adult,FALSE,FALSE,FALSE,?,reduced,'normal pink',<3,'continuous severe pain',hypomotile,moderate,none,none,FALSE,?,?,TRUE,TRUE,cloudy,FALSE,died,yes
+?,adult,?,TRUE,FALSE,cold,normal,'pale pink',<3,'intermittent mild pain',normal,none,none,none,FALSE,normal,normal,FALSE,FALSE,cloudy,FALSE,lived,no
+yes,adult,TRUE,?,TRUE,cool,normal,'bright pink',<3,'intermittent mild pain',hypomotile,moderate,slight,none,FALSE,decreased,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+no,adult,FALSE,FALSE,FALSE,cool,normal,'pale pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,decreased,other,FALSE,FALSE,cloudy,FALSE,?,yes
+yes,adult,FALSE,FALSE,FALSE,cool,?,'pale cyanotic',<3,depressed,hypomotile,moderate,slight,<1l,?,absent,'distended large intestine',?,FALSE,cloudy,FALSE,euthanized,no
+no,adult,TRUE,TRUE,FALSE,warm,normal,'pale pink',<3,'alert no pain',hypomotile,slight,none,none,FALSE,normal,'distended large intestine',TRUE,FALSE,?,FALSE,lived,no
+no,adult,FALSE,FALSE,FALSE,cool,?,'dark cyanotic',>=3,depressed,absent,moderate,none,>1l,FALSE,decreased,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,?
+yes,adult,FALSE,TRUE,TRUE,cool,reduced,'normal pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,normal,normal,TRUE,FALSE,cloudy,FALSE,lived,no
+?,adult,FALSE,FALSE,TRUE,cold,reduced,?,>=3,'continuous severe pain',?,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,?
+no,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,depressed,?,none,slight,none,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,?,no
+yes,young,TRUE,FALSE,?,normal,normal,'normal pink',?,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,increased,normal,TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,adult,TRUE,TRUE,TRUE,normal,reduced,'pale pink',<3,'intermittent severe pain',absent,none,slight,<1l,FALSE,increased,'distended large intestine',FALSE,TRUE,clear,FALSE,died,yes
+yes,adult,FALSE,FALSE,FALSE,normal,normal,?,>=3,depressed,hypomotile,slight,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,?,yes
+?,adult,FALSE,TRUE,FALSE,cool,reduced,'pale pink',<3,'intermittent mild pain',?,none,none,none,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,?,lived,yes
+no,adult,TRUE,TRUE,FALSE,normal,?,'pale pink',<3,'alert no pain',hypomotile,slight,?,?,FALSE,normal,'distended large intestine',?,TRUE,cloudy,FALSE,lived,?
+yes,?,FALSE,FALSE,FALSE,cold,reduced,'bright pink',>=3,'intermittent severe pain',absent,severe,?,none,FALSE,absent,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,euthanized,yes
+yes,young,FALSE,FALSE,FALSE,cool,reduced,'bright pink',<3,'intermittent mild pain',hypomotile,moderate,none,none,FALSE,?,'distended large intestine',TRUE,TRUE,cloudy,FALSE,?,yes
+yes,adult,FALSE,FALSE,TRUE,cool,?,'bright red',>=3,depressed,hypomotile,?,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+yes,adult,?,TRUE,TRUE,cool,normal,'normal pink',<3,'alert no pain',hypomotile,?,slight,none,FALSE,absent,'distended large intestine',TRUE,FALSE,clear,TRUE,lived,yes
+yes,?,FALSE,TRUE,FALSE,warm,?,'normal pink',<3,'alert no pain',hypomotile,none,none,none,FALSE,?,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,TRUE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,?,yes
+yes,adult,FALSE,TRUE,?,cool,normal,'pale cyanotic',<3,'continuous severe pain',absent,moderate,slight,none,FALSE,absent,'distended large intestine',FALSE,?,cloudy,FALSE,lived,yes
+no,adult,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,absent,'distended large intestine',FALSE,?,cloudy,?,lived,no
+?,adult,TRUE,TRUE,TRUE,?,normal,'normal pink',<3,'intermittent mild pain',hypomotile,moderate,slight,?,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+no,adult,FALSE,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,?,absent,moderate,?,<1l,FALSE,absent,'distended large intestine',FALSE,TRUE,clear,FALSE,euthanized,yes
+yes,adult,TRUE,FALSE,FALSE,normal,normal,'normal pink',?,?,hypomotile,none,slight,none,?,absent,'distended large intestine',TRUE,FALSE,cloudy,TRUE,?,yes
+no,adult,FALSE,TRUE,TRUE,warm,normal,'bright pink',<3,'alert no pain',?,none,none,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+yes,adult,FALSE,TRUE,FALSE,normal,normal,'bright pink',<3,depressed,hypomotile,slight,none,none,FALSE,decreased,?,TRUE,TRUE,cloudy,?,?,yes
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'dark cyanotic',>=3,'intermittent severe pain',hypomotile,none,slight,>1l,FALSE,normal,'distended small intestine',FALSE,FALSE,cloudy,TRUE,?,yes
+no,adult,FALSE,TRUE,FALSE,warm,normal,'normal pink',<3,'intermittent mild pain',hypermotile,none,?,none,FALSE,normal,'distended large intestine',TRUE,FALSE,clear,TRUE,lived,no
+?,adult,FALSE,FALSE,TRUE,normal,normal,'pale pink',<3,'intermittent severe pain',?,moderate,slight,none,FALSE,absent,'distended small intestine',FALSE,FALSE,clear,TRUE,died,yes
+no,?,TRUE,?,TRUE,cool,normal,'pale cyanotic',<3,'alert no pain',?,moderate,slight,none,FALSE,normal,normal,TRUE,TRUE,cloudy,FALSE,euthanized,yes
+yes,adult,TRUE,TRUE,FALSE,cold,normal,'normal pink',<3,?,hypomotile,slight,slight,>1l,FALSE,absent,?,?,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'pale pink',?,'continuous severe pain',absent,slight,slight,none,?,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+?,adult,TRUE,TRUE,FALSE,cool,reduced,'normal pink',<3,'intermittent severe pain',absent,none,slight,?,FALSE,normal,'distended large intestine',?,FALSE,cloudy,?,lived,?
+yes,adult,TRUE,FALSE,TRUE,cool,normal,'pale pink',<3,depressed,hypomotile,?,slight,none,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,TRUE,euthanized,no
+yes,?,?,TRUE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,?,FALSE,lived,yes
+?,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',?,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+no,adult,?,FALSE,FALSE,cool,?,'normal pink',?,'intermittent mild pain',hypomotile,slight,none,<1l,TRUE,absent,'distended large intestine',?,TRUE,cloudy,FALSE,?,yes
+yes,adult,TRUE,TRUE,TRUE,cool,normal,'pale pink',<3,?,hypomotile,none,slight,none,FALSE,decreased,?,TRUE,FALSE,cloudy,TRUE,lived,yes
+no,adult,TRUE,TRUE,TRUE,normal,normal,'normal pink',<3,depressed,hypomotile,?,slight,?,FALSE,absent,'firm feces in large intestine',TRUE,TRUE,cloudy,?,lived,yes
+?,?,FALSE,FALSE,FALSE,cool,normal,'pale cyanotic',>=3,'continuous severe pain',?,none,slight,none,FALSE,increased,?,FALSE,TRUE,cloudy,FALSE,died,?
+yes,young,FALSE,FALSE,FALSE,cool,reduced,'pale pink',<3,'continuous severe pain',hypermotile,?,slight,>1l,TRUE,increased,'distended large intestine',TRUE,TRUE,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',>=3,'continuous severe pain',hypomotile,moderate,significant,>1l,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes
+yes,adult,TRUE,TRUE,?,normal,normal,'normal pink',<3,'alert no pain',normal,severe,slight,>1l,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,?
+?,adult,?,TRUE,FALSE,?,increased,'pale pink',<3,?,hypermotile,none,none,?,FALSE,normal,normal,?,FALSE,cloudy,FALSE,?,no
+no,adult,TRUE,FALSE,FALSE,normal,normal,'normal pink',<3,'intermittent mild pain',hypomotile,?,none,none,?,absent,'distended large intestine',FALSE,TRUE,clear,TRUE,lived,no
+?,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,depressed,normal,?,none,none,FALSE,absent,'distended large intestine',TRUE,TRUE,?,FALSE,lived,no
+no,adult,TRUE,TRUE,?,cool,normal,'bright red',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,no
+?,?,FALSE,FALSE,FALSE,cold,reduced,'dark cyanotic',>=3,'continuous severe pain',absent,severe,?,none,FALSE,absent,'distended large intestine',FALSE,?,serosanguinous,?,died,yes
+?,adult,TRUE,TRUE,FALSE,normal,normal,'normal pink',>=3,'alert no pain',normal,none,slight,none,FALSE,normal,normal,FALSE,TRUE,cloudy,FALSE,lived,no
+?,adult,TRUE,FALSE,FALSE,cool,reduced,'dark cyanotic',<3,depressed,absent,severe,significant,>1l,TRUE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,no
+?,adult,FALSE,FALSE,FALSE,cool,reduced,'bright pink',<3,depressed,hypomotile,moderate,slight,none,FALSE,decreased,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,TRUE,FALSE,normal,reduced,'pale pink',<3,'intermittent mild pain',absent,severe,none,<1l,TRUE,absent,'distended large intestine',?,FALSE,cloudy,FALSE,lived,yes
+?,adult,TRUE,TRUE,TRUE,warm,normal,'pale pink',<3,'intermittent mild pain',absent,moderate,?,>1l,FALSE,?,'distended small intestine',TRUE,TRUE,cloudy,?,?,yes
+yes,adult,FALSE,FALSE,FALSE,cool,?,'dark cyanotic',>=3,depressed,absent,slight,slight,<1l,FALSE,absent,'distended small intestine',FALSE,FALSE,cloudy,FALSE,?,yes
+?,?,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,'alert no pain',hypermotile,none,none,none,FALSE,normal,'distended large intestine',TRUE,FALSE,cloudy,FALSE,?,no
+?,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,depressed,hypomotile,slight,slight,none,FALSE,absent,other,TRUE,FALSE,?,FALSE,lived,no
+yes,adult,?,FALSE,FALSE,cold,?,'dark cyanotic',>=3,'intermittent severe pain',?,slight,none,<1l,TRUE,?,'distended small intestine',FALSE,FALSE,serosanguinous,FALSE,?,yes
+yes,adult,?,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,'intermittent mild pain',?,severe,slight,?,TRUE,absent,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,lived,yes
+no,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,'alert no pain',hypomotile,slight,slight,none,FALSE,decreased,other,FALSE,TRUE,?,FALSE,lived,no
+no,?,FALSE,TRUE,FALSE,normal,normal,'pale pink',<3,'intermittent mild pain',hypomotile,?,slight,none,FALSE,?,'distended large intestine',TRUE,FALSE,?,?,?,yes
+?,adult,TRUE,TRUE,TRUE,cool,reduced,'pale cyanotic',<3,'alert no pain',absent,?,slight,none,TRUE,absent,other,FALSE,FALSE,?,FALSE,lived,?
+no,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',?,'intermittent mild pain',hypomotile,slight,none,none,FALSE,normal,'firm feces in large intestine',TRUE,TRUE,clear,FALSE,lived,no
+yes,?,TRUE,FALSE,TRUE,normal,normal,'pale pink',>=3,'intermittent mild pain',absent,severe,slight,<1l,TRUE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,yes
+no,adult,TRUE,TRUE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,?,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,?
+no,adult,?,FALSE,TRUE,normal,normal,?,<3,depressed,?,slight,significant,none,FALSE,normal,'firm feces in large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+?,adult,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent severe pain',hypomotile,none,?,none,FALSE,absent,?,TRUE,FALSE,cloudy,TRUE,lived,yes
+yes,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,?,'distended large intestine',TRUE,FALSE,cloudy,FALSE,died,yes
+no,adult,FALSE,FALSE,?,cool,normal,'normal pink',?,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,decreased,'distended large intestine',?,FALSE,clear,FALSE,lived,no
+yes,adult,TRUE,FALSE,TRUE,normal,reduced,'pale pink',<3,'continuous severe pain',hypomotile,none,none,none,FALSE,decreased,'distended large intestine',FALSE,FALSE,serosanguinous,?,euthanized,yes
+yes,adult,?,FALSE,FALSE,normal,normal,'bright red',>=3,'intermittent mild pain',hypomotile,slight,slight,>1l,FALSE,absent,?,FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'bright red',<3,'intermittent mild pain',hypomotile,moderate,none,?,FALSE,absent,?,?,FALSE,?,TRUE,euthanized,no
+yes,?,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,none,slight,none,FALSE,increased,normal,?,TRUE,clear,?,?,no
+no,adult,FALSE,TRUE,TRUE,normal,?,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,normal,FALSE,TRUE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,normal,normal,'pale pink',<3,depressed,absent,slight,slight,<1l,?,absent,'distended small intestine',?,FALSE,cloudy,FALSE,lived,yes
+yes,adult,?,FALSE,TRUE,cool,normal,'normal pink',>=3,'continuous severe pain',hypomotile,severe,significant,none,FALSE,absent,'distended large intestine',?,FALSE,cloudy,FALSE,euthanized,yes
+no,adult,TRUE,TRUE,TRUE,normal,normal,'pale pink',<3,'intermittent mild pain',hypermotile,none,?,none,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,no
+no,adult,FALSE,FALSE,?,cool,reduced,'bright red',?,'intermittent mild pain',hypomotile,moderate,slight,>1l,FALSE,absent,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+?,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',<3,depressed,absent,moderate,none,<1l,TRUE,absent,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,lived,?
+yes,adult,FALSE,FALSE,FALSE,?,reduced,'bright red',>=3,depressed,absent,moderate,slight,<1l,?,absent,'distended small intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+no,adult,FALSE,FALSE,FALSE,cool,absent,'dark cyanotic',<3,'intermittent severe pain',hypomotile,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'normal pink',?,'intermittent mild pain',?,none,slight,none,?,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,?,FALSE,FALSE,normal,normal,?,<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,decreased,other,FALSE,FALSE,cloudy,?,lived,yes
+yes,adult,FALSE,?,TRUE,cool,normal,'pale cyanotic',<3,'intermittent severe pain',hypomotile,none,slight,none,?,absent,?,?,FALSE,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,?,>=3,?,absent,severe,?,?,FALSE,?,?,FALSE,FALSE,serosanguinous,TRUE,lived,yes
+no,adult,?,FALSE,FALSE,cool,reduced,'bright red',>=3,'intermittent severe pain',hypomotile,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,no
+yes,adult,FALSE,?,FALSE,cool,normal,'bright red',>=3,'intermittent severe pain',hypomotile,moderate,slight,?,FALSE,absent,'distended small intestine',FALSE,?,?,FALSE,died,yes
+no,adult,TRUE,TRUE,TRUE,?,normal,'normal pink',<3,'intermittent mild pain',hypomotile,slight,none,<1l,TRUE,normal,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,no
+yes,adult,TRUE,FALSE,TRUE,cool,reduced,'dark cyanotic',>=3,'continuous severe pain',hypomotile,severe,none,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+no,adult,TRUE,TRUE,TRUE,normal,?,'bright pink',?,depressed,hypermotile,none,slight,none,FALSE,normal,'distended large intestine',FALSE,FALSE,?,?,lived,no
+no,?,FALSE,FALSE,FALSE,warm,increased,'bright pink',?,'alert no pain',hypermotile,none,significant,none,FALSE,normal,normal,TRUE,FALSE,cloudy,?,lived,no
+yes,adult,?,FALSE,FALSE,cold,reduced,'dark cyanotic',>=3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',?,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,warm,reduced,'normal pink',<3,'intermittent mild pain',hypomotile,none,none,>1l,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,?,reduced,?,<3,'intermittent mild pain',hypomotile,?,significant,<1l,FALSE,absent,'distended large intestine',TRUE,TRUE,serosanguinous,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,none,slight,?,FALSE,absent,'distended large intestine',TRUE,FALSE,clear,FALSE,?,yes
+yes,adult,FALSE,FALSE,TRUE,cool,normal,'normal pink',<3,depressed,hypermotile,none,slight,>1l,TRUE,normal,'distended small intestine',TRUE,TRUE,clear,FALSE,lived,?
+yes,adult,TRUE,TRUE,TRUE,cool,normal,'pale cyanotic',<3,'intermittent mild pain',hypomotile,none,none,none,FALSE,decreased,'firm feces in large intestine',TRUE,TRUE,serosanguinous,?,lived,yes
+?,young,FALSE,?,FALSE,warm,?,'normal pink',<3,'intermittent severe pain',hypermotile,none,slight,none,?,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,?,no
+yes,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',hypomotile,moderate,none,>1l,FALSE,absent,'distended large intestine',FALSE,FALSE,clear,TRUE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,'intermittent severe pain',hypomotile,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,?
+no,adult,TRUE,FALSE,TRUE,normal,?,?,?,depressed,normal,none,slight,none,FALSE,absent,normal,TRUE,FALSE,cloudy,FALSE,lived,no
+no,adult,?,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',hypermotile,slight,slight,none,FALSE,normal,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,no
+no,adult,FALSE,?,TRUE,normal,normal,'bright red',>=3,depressed,normal,none,slight,none,FALSE,increased,'firm feces in large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,no
+no,adult,FALSE,FALSE,FALSE,cool,?,'normal pink',>=3,depressed,absent,slight,none,>1l,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+no,adult,FALSE,FALSE,TRUE,normal,?,'normal pink',>=3,'alert no pain',hypomotile,none,slight,none,FALSE,?,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,no
+no,adult,FALSE,FALSE,FALSE,cool,normal,'bright pink',<3,depressed,?,slight,slight,none,FALSE,decreased,other,FALSE,FALSE,cloudy,FALSE,lived,no
+yes,?,?,TRUE,TRUE,normal,normal,'pale pink',<3,'intermittent mild pain',hypermotile,moderate,slight,none,FALSE,decreased,'firm feces in large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,normal,normal,'pale pink',<3,'intermittent severe pain',absent,moderate,slight,none,FALSE,?,'distended large intestine',FALSE,TRUE,clear,FALSE,died,yes
+yes,adult,TRUE,TRUE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,none,none,FALSE,absent,'distended large intestine',TRUE,FALSE,serosanguinous,TRUE,euthanized,yes
+no,adult,TRUE,?,TRUE,normal,normal,'normal pink',<3,depressed,hypomotile,none,slight,none,FALSE,absent,normal,TRUE,TRUE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,TRUE,cool,normal,'pale pink',<3,'intermittent severe pain',absent,slight,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,clear,FALSE,lived,yes
+no,?,FALSE,FALSE,FALSE,cool,reduced,?,>=3,'intermittent severe pain',hypomotile,severe,slight,none,FALSE,absent,?,?,FALSE,cloudy,FALSE,euthanized,no
+yes,?,FALSE,FALSE,FALSE,warm,reduced,'pale cyanotic',>=3,'intermittent severe pain',absent,moderate,slight,none,FALSE,decreased,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,?
+?,adult,?,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',?,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+yes,?,TRUE,FALSE,FALSE,cool,?,'bright red',>=3,'intermittent mild pain',hypomotile,moderate,slight,<1l,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,yes
+no,adult,TRUE,TRUE,TRUE,?,normal,'normal pink',<3,'intermittent mild pain',hypermotile,slight,slight,none,FALSE,decreased,'firm feces in large intestine',?,FALSE,clear,?,lived,no
+yes,adult,TRUE,FALSE,TRUE,cool,normal,'bright pink',<3,depressed,absent,slight,slight,none,FALSE,?,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+yes,adult,TRUE,FALSE,TRUE,cold,reduced,'pale cyanotic',<3,depressed,absent,severe,none,none,?,absent,'distended large intestine',FALSE,TRUE,?,FALSE,died,yes
+yes,young,FALSE,FALSE,FALSE,normal,reduced,'bright pink',>=3,'intermittent mild pain',hypomotile,moderate,significant,?,?,absent,'distended large intestine',FALSE,TRUE,clear,FALSE,lived,no
+?,?,TRUE,TRUE,TRUE,cool,normal,'pale pink',<3,'intermittent mild pain',normal,slight,slight,none,FALSE,normal,'distended small intestine',TRUE,TRUE,?,TRUE,lived,yes
+no,adult,FALSE,TRUE,FALSE,warm,normal,'normal pink',<3,'alert no pain',hypermotile,none,slight,none,FALSE,increased,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,no
+yes,adult,TRUE,TRUE,TRUE,normal,normal,'normal pink',<3,'alert no pain',normal,none,slight,none,FALSE,normal,other,TRUE,TRUE,cloudy,FALSE,lived,yes
+no,adult,FALSE,FALSE,FALSE,?,normal,'normal pink',<3,'intermittent mild pain',hypomotile,?,?,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+yes,adult,TRUE,FALSE,?,cool,normal,'normal pink',>=3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,?,?,FALSE,FALSE,?,FALSE,lived,yes
+yes,adult,FALSE,?,FALSE,normal,increased,'bright pink',<3,depressed,?,none,slight,none,FALSE,absent,?,FALSE,FALSE,cloudy,?,?,yes
+yes,?,FALSE,TRUE,FALSE,cool,reduced,'pale cyanotic',<3,'intermittent mild pain',absent,moderate,slight,none,FALSE,absent,'distended small intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cold,absent,'normal pink',>=3,'continuous severe pain',absent,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,TRUE,?,no
+yes,adult,FALSE,FALSE,FALSE,?,reduced,'normal pink',<3,depressed,absent,moderate,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,TRUE,lived,?
+yes,adult,FALSE,FALSE,?,cold,absent,'pale cyanotic',<3,depressed,?,none,slight,none,TRUE,absent,'distended small intestine',FALSE,TRUE,serosanguinous,FALSE,lived,yes
+yes,adult,?,FALSE,TRUE,?,normal,'pale pink',<3,'intermittent mild pain',hypomotile,slight,slight,none,FALSE,absent,'distended small intestine',TRUE,TRUE,cloudy,TRUE,lived,yes
+?,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,none,none,none,?,decreased,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+no,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,decreased,other,FALSE,TRUE,clear,FALSE,lived,no
+yes,adult,FALSE,FALSE,TRUE,cold,reduced,'bright red',>=3,depressed,hypomotile,moderate,none,<1l,FALSE,absent,'distended small intestine',?,FALSE,serosanguinous,FALSE,died,yes
+yes,young,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,?,FALSE,?,'distended large intestine',FALSE,TRUE,?,FALSE,?,yes
+yes,adult,TRUE,FALSE,FALSE,cool,?,'dark cyanotic',>=3,'continuous severe pain',absent,moderate,slight,>1l,FALSE,?,?,FALSE,FALSE,serosanguinous,TRUE,euthanized,?
+?,young,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypermotile,none,slight,none,FALSE,normal,'distended large intestine',TRUE,FALSE,?,TRUE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cool,?,'normal pink',<3,'intermittent severe pain',hypomotile,severe,slight,?,FALSE,?,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+no,adult,FALSE,FALSE,?,cool,reduced,'dark cyanotic',<3,'continuous severe pain',absent,none,slight,<1l,FALSE,absent,'distended large intestine',?,TRUE,cloudy,FALSE,died,no
+yes,adult,FALSE,?,TRUE,cool,normal,?,<3,'intermittent mild pain',hypomotile,?,slight,none,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,?
+yes,adult,FALSE,FALSE,FALSE,cold,reduced,'pale pink',>=3,'intermittent mild pain',hypomotile,moderate,slight,none,?,decreased,'distended large intestine',?,TRUE,cloudy,FALSE,?,yes
+no,adult,TRUE,TRUE,FALSE,cold,normal,'pale pink',?,'intermittent mild pain',normal,none,none,none,FALSE,normal,normal,FALSE,?,cloudy,FALSE,lived,no
+yes,adult,FALSE,TRUE,TRUE,normal,normal,'bright red',?,'intermittent severe pain',?,none,slight,<1l,FALSE,normal,'distended large intestine',?,FALSE,cloudy,FALSE,died,yes
+no,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,slight,slight,none,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,?,no
+no,adult,?,TRUE,FALSE,?,normal,'bright red',<3,'intermittent mild pain',?,none,slight,none,FALSE,absent,other,FALSE,FALSE,serosanguinous,TRUE,lived,?
+?,adult,TRUE,?,FALSE,?,reduced,'pale pink',<3,'intermittent mild pain',hypomotile,slight,?,<1l,FALSE,absent,'distended small intestine',FALSE,TRUE,serosanguinous,?,euthanized,yes
+yes,adult,FALSE,FALSE,TRUE,cool,normal,'normal pink',<3,'continuous severe pain',hypomotile,none,slight,none,FALSE,absent,?,?,FALSE,cloudy,FALSE,euthanized,yes
+yes,?,TRUE,FALSE,FALSE,cold,reduced,'pale cyanotic',>=3,'continuous severe pain',?,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes
+yes,adult,FALSE,TRUE,?,normal,normal,'bright pink',?,'alert no pain',normal,none,none,none,FALSE,normal,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,no
+yes,adult,FALSE,TRUE,FALSE,normal,normal,?,<3,'continuous severe pain',hypomotile,?,slight,<1l,TRUE,absent,?,TRUE,TRUE,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,TRUE,normal,normal,'normal pink',>=3,'intermittent mild pain',hypomotile,moderate,slight,none,FALSE,normal,'distended large intestine',FALSE,FALSE,cloudy,FALSE,?,yes
+yes,young,FALSE,FALSE,FALSE,?,reduced,'bright pink',<3,depressed,hypomotile,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,?,FALSE,?,yes
+no,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',>=3,'continuous severe pain',absent,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,?,cloudy,?,died,yes
+yes,adult,TRUE,FALSE,FALSE,?,normal,'pale pink',<3,'intermittent severe pain',normal,severe,slight,>1l,FALSE,?,'distended large intestine',FALSE,TRUE,?,FALSE,?,yes
+yes,adult,FALSE,?,TRUE,cool,reduced,'pale cyanotic',<3,'continuous severe pain',?,moderate,slight,?,FALSE,decreased,'distended small intestine',TRUE,TRUE,cloudy,?,died,yes
+yes,adult,TRUE,FALSE,?,warm,reduced,'pale cyanotic',<3,'intermittent severe pain',hypomotile,moderate,slight,?,?,decreased,'distended small intestine',FALSE,FALSE,serosanguinous,FALSE,lived,?
+no,adult,FALSE,TRUE,FALSE,warm,normal,'normal pink',>=3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,other,TRUE,TRUE,cloudy,FALSE,lived,no
+yes,?,FALSE,FALSE,FALSE,cold,?,?,<3,depressed,absent,none,?,<1l,TRUE,absent,'distended small intestine',FALSE,FALSE,serosanguinous,TRUE,?,?
+no,adult,TRUE,TRUE,TRUE,cool,reduced,'bright pink',<3,'alert no pain',?,none,none,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes
+yes,young,FALSE,FALSE,FALSE,cool,normal,'bright pink',<3,depressed,hypomotile,severe,none,none,FALSE,absent,'distended small intestine',FALSE,FALSE,serosanguinous,FALSE,died,yes
+no,adult,FALSE,FALSE,?,cool,reduced,'pale cyanotic',>=3,'continuous severe pain',absent,slight,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,serosanguinous,FALSE,?,no
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',<3,'intermittent severe pain',absent,severe,slight,?,FALSE,?,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+yes,young,FALSE,FALSE,FALSE,normal,normal,'normal pink',<3,'intermittent severe pain',hypermotile,?,slight,none,?,increased,'distended large intestine',?,TRUE,cloudy,FALSE,died,yes
+yes,adult,TRUE,FALSE,?,warm,normal,?,<3,depressed,?,none,none,none,?,?,?,TRUE,FALSE,cloudy,TRUE,euthanized,yes
+?,adult,FALSE,?,FALSE,cool,reduced,'pale cyanotic',<3,'intermittent mild pain',absent,none,slight,<1l,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+no,adult,TRUE,?,TRUE,normal,?,'normal pink',<3,depressed,hypomotile,slight,slight,?,FALSE,decreased,'distended large intestine',?,?,clear,?,lived,?
+yes,?,FALSE,FALSE,?,cool,reduced,'normal pink',<3,?,hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+no,adult,TRUE,TRUE,TRUE,?,normal,'normal pink',<3,'intermittent severe pain',hypomotile,slight,none,none,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,no
+no,adult,FALSE,TRUE,TRUE,?,normal,'normal pink',<3,'alert no pain',hypomotile,slight,slight,none,FALSE,absent,?,?,TRUE,cloudy,FALSE,lived,no
+no,young,FALSE,?,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,?,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,?
+yes,adult,?,FALSE,FALSE,cool,?,'pale pink',>=3,'intermittent severe pain',absent,slight,slight,<1l,TRUE,absent,'distended small intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+yes,adult,FALSE,TRUE,TRUE,cool,normal,'bright pink',<3,'intermittent mild pain',hypomotile,moderate,slight,none,FALSE,normal,'distended large intestine',FALSE,TRUE,cloudy,FALSE,?,yes
+no,adult,FALSE,?,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,euthanized,?
+no,adult,FALSE,FALSE,TRUE,warm,normal,'pale pink',<3,'intermittent mild pain',?,slight,none,none,FALSE,normal,'distended large intestine',TRUE,TRUE,?,FALSE,lived,no
+no,adult,FALSE,TRUE,TRUE,cool,normal,'bright pink',<3,depressed,hypomotile,slight,slight,<1l,FALSE,absent,'distended small intestine',FALSE,?,serosanguinous,FALSE,lived,no
+?,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,?,slight,none,FALSE,decreased,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,warm,?,'normal pink',<3,'intermittent mild pain',hypomotile,none,none,>1l,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,?
+yes,adult,TRUE,FALSE,FALSE,cool,reduced,'normal pink',<3,'intermittent mild pain',hypomotile,?,?,>1l,TRUE,decreased,'distended small intestine',TRUE,TRUE,cloudy,FALSE,died,yes
+?,?,TRUE,FALSE,?,cool,reduced,'dark cyanotic',<3,'continuous severe pain',absent,?,slight,<1l,FALSE,decreased,normal,FALSE,FALSE,serosanguinous,TRUE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,'continuous severe pain',absent,severe,significant,<1l,?,absent,'distended small intestine',FALSE,?,cloudy,FALSE,lived,?
+yes,adult,TRUE,?,FALSE,?,reduced,'pale pink',<3,'continuous severe pain',hypomotile,moderate,none,none,FALSE,absent,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+?,adult,?,FALSE,FALSE,cool,reduced,'normal pink',<3,'intermittent mild pain',?,severe,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,euthanized,?
+yes,?,FALSE,FALSE,FALSE,normal,reduced,'dark cyanotic',>=3,'continuous severe pain',hypomotile,slight,none,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,?,died,yes
+yes,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',<3,'intermittent severe pain',normal,slight,significant,<1l,TRUE,decreased,'distended large intestine',TRUE,FALSE,cloudy,?,euthanized,no
+no,adult,?,TRUE,FALSE,warm,reduced,'pale pink',<3,'alert no pain',hypomotile,slight,significant,none,FALSE,absent,'distended large intestine',TRUE,?,cloudy,FALSE,lived,no
+no,adult,TRUE,TRUE,TRUE,normal,normal,'normal pink',<3,'alert no pain',hypermotile,none,slight,none,?,normal,normal,?,TRUE,cloudy,FALSE,lived,no
+no,adult,FALSE,TRUE,FALSE,cold,reduced,'normal pink',<3,?,?,moderate,slight,>1l,FALSE,absent,'distended large intestine',?,TRUE,clear,FALSE,lived,no
+yes,adult,FALSE,TRUE,TRUE,cool,normal,'normal pink',?,'alert no pain',hypermotile,none,slight,none,FALSE,absent,?,TRUE,FALSE,cloudy,FALSE,lived,no
+no,adult,FALSE,FALSE,FALSE,cool,reduced,'bright red',<3,depressed,hypomotile,none,none,?,FALSE,absent,normal,FALSE,TRUE,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,TRUE,cool,absent,'bright red',>=3,depressed,hypomotile,?,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,TRUE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,?,?,none,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+no,?,FALSE,TRUE,FALSE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,none,slight,none,FALSE,normal,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,TRUE,normal,normal,'normal pink',?,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,clear,FALSE,lived,yes
+no,adult,?,FALSE,TRUE,cool,?,'normal pink',>=3,'intermittent severe pain',hypomotile,moderate,none,?,FALSE,absent,'distended large intestine',FALSE,TRUE,?,FALSE,euthanized,yes
+no,young,FALSE,FALSE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,?,none,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,?,lived,no
+yes,?,FALSE,FALSE,FALSE,?,normal,'normal pink',?,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,TRUE,TRUE,FALSE,cool,normal,?,<3,'intermittent mild pain',normal,slight,slight,none,FALSE,decreased,'distended large intestine',TRUE,TRUE,clear,FALSE,lived,yes
+no,adult,FALSE,TRUE,TRUE,?,normal,'bright pink',<3,'alert no pain',hypermotile,none,slight,none,FALSE,normal,normal,TRUE,FALSE,?,FALSE,lived,no
+?,adult,FALSE,FALSE,FALSE,cool,reduced,'pale pink',?,depressed,hypomotile,moderate,slight,>1l,FALSE,decreased,normal,FALSE,TRUE,serosanguinous,FALSE,died,?
+yes,?,TRUE,FALSE,TRUE,normal,?,'bright pink',?,'intermittent severe pain',hypomotile,moderate,none,none,?,normal,'distended large intestine',TRUE,?,cloudy,FALSE,died,yes
+yes,adult,FALSE,FALSE,TRUE,cool,reduced,'pale pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended small intestine',TRUE,FALSE,cloudy,TRUE,euthanized,no
+no,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,?,hypermotile,none,slight,none,FALSE,?,other,TRUE,FALSE,cloudy,FALSE,lived,no
+yes,adult,?,FALSE,FALSE,cold,normal,'pale cyanotic',>=3,depressed,absent,?,slight,none,FALSE,absent,'distended large intestine',?,FALSE,?,FALSE,euthanized,no
+no,adult,TRUE,FALSE,TRUE,cool,increased,'pale cyanotic',>=3,'intermittent severe pain',hypomotile,moderate,significant,?,FALSE,absent,?,FALSE,FALSE,serosanguinous,FALSE,euthanized,yes
+yes,adult,?,FALSE,FALSE,cold,reduced,'pale cyanotic',<3,'intermittent severe pain',?,moderate,slight,none,FALSE,decreased,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes
+yes,adult,TRUE,FALSE,TRUE,cool,reduced,'pale pink',<3,?,?,moderate,significant,none,FALSE,absent,'distended small intestine',FALSE,TRUE,serosanguinous,FALSE,lived,yes
+yes,adult,TRUE,TRUE,?,cool,normal,'normal pink',<3,?,hypomotile,none,slight,?,FALSE,?,normal,TRUE,FALSE,clear,TRUE,euthanized,no
+no,adult,FALSE,TRUE,TRUE,cool,normal,'bright pink',>=3,'intermittent mild pain',absent,none,slight,>1l,FALSE,absent,other,TRUE,TRUE,cloudy,FALSE,lived,no
+no,adult,TRUE,TRUE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,?,FALSE,TRUE,?,FALSE,lived,no
+yes,adult,TRUE,TRUE,FALSE,cool,?,'pale pink',>=3,'continuous severe pain',?,severe,none,none,FALSE,decreased,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,lived,yes
+yes,adult,TRUE,TRUE,TRUE,cool,?,'pale cyanotic',>=3,'intermittent severe pain',absent,moderate,none,none,FALSE,absent,'distended large intestine',TRUE,FALSE,serosanguinous,TRUE,euthanized,no
+no,adult,TRUE,TRUE,TRUE,cool,normal,'pale pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,absent,?,TRUE,TRUE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,cool,normal,?,<3,'intermittent mild pain',absent,none,significant,>1l,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+no,adult,FALSE,?,FALSE,cool,increased,'bright pink',<3,'intermittent mild pain',normal,none,slight,>1l,FALSE,normal,normal,FALSE,TRUE,cloudy,FALSE,lived,no
+no,adult,TRUE,TRUE,TRUE,warm,normal,'bright pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,increased,'distended large intestine',FALSE,TRUE,clear,FALSE,lived,no
+yes,?,TRUE,FALSE,FALSE,cool,normal,'pale cyanotic',>=3,?,hypomotile,none,slight,?,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+no,adult,TRUE,TRUE,FALSE,cool,reduced,'pale pink',>=3,depressed,?,none,slight,none,FALSE,decreased,?,TRUE,TRUE,serosanguinous,FALSE,lived,yes
+no,adult,FALSE,FALSE,TRUE,cool,normal,'bright red',<3,depressed,absent,?,none,>1l,FALSE,absent,'distended small intestine',FALSE,TRUE,?,FALSE,died,yes
+no,adult,FALSE,FALSE,?,?,normal,'pale pink',>=3,'intermittent mild pain',?,slight,significant,<1l,FALSE,absent,'distended small intestine',FALSE,FALSE,cloudy,TRUE,lived,?
+yes,adult,FALSE,FALSE,FALSE,cool,normal,'pale cyanotic',>=3,'continuous severe pain',absent,severe,none,none,FALSE,absent,'distended large intestine',TRUE,?,cloudy,FALSE,died,no
+?,adult,TRUE,FALSE,FALSE,cool,reduced,'pale pink',<3,'continuous severe pain',absent,severe,slight,>1l,FALSE,absent,'distended large intestine',FALSE,TRUE,serosanguinous,TRUE,?,yes
+no,adult,TRUE,FALSE,FALSE,normal,normal,'pale pink',<3,'intermittent mild pain',?,?,slight,none,FALSE,decreased,'distended large intestine',TRUE,TRUE,cloudy,TRUE,lived,no
+no,young,TRUE,FALSE,FALSE,normal,normal,'bright pink',?,'alert no pain',hypomotile,slight,?,none,FALSE,absent,'distended large intestine',TRUE,TRUE,clear,TRUE,lived,?
+yes,adult,FALSE,FALSE,FALSE,warm,reduced,'normal pink',<3,depressed,absent,moderate,significant,>1l,FALSE,?,'distended large intestine',?,TRUE,cloudy,FALSE,?,yes
+no,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',<3,depressed,hypermotile,?,none,none,FALSE,decreased,other,TRUE,?,clear,?,lived,no
+yes,adult,TRUE,FALSE,TRUE,warm,reduced,'pale pink',<3,'intermittent severe pain',hypomotile,moderate,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,clear,FALSE,died,yes
+?,young,FALSE,FALSE,FALSE,cold,absent,'pale cyanotic',>=3,'continuous severe pain',absent,severe,slight,?,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,?,yes
+?,adult,?,FALSE,FALSE,cool,?,'dark cyanotic',?,'intermittent severe pain',absent,moderate,none,none,FALSE,?,?,FALSE,FALSE,cloudy,FALSE,euthanized,yes
+?,adult,FALSE,FALSE,FALSE,cool,reduced,'pale cyanotic',>=3,?,absent,moderate,slight,?,?,absent,?,FALSE,FALSE,?,FALSE,lived,yes
+no,adult,TRUE,TRUE,?,cool,normal,'pale pink',<3,'intermittent mild pain',normal,moderate,slight,none,FALSE,absent,'distended large intestine',TRUE,TRUE,clear,TRUE,lived,yes
+?,adult,FALSE,FALSE,FALSE,cool,normal,'bright red',>=3,?,hypomotile,moderate,slight,<1l,FALSE,absent,'distended small intestine',FALSE,?,serosanguinous,FALSE,?,?
+yes,adult,FALSE,FALSE,FALSE,cold,normal,'pale cyanotic',>=3,'continuous severe pain',hypomotile,none,none,<1l,TRUE,absent,'distended small intestine',FALSE,TRUE,cloudy,?,died,?
+no,adult,FALSE,TRUE,FALSE,normal,normal,'normal pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,normal,'firm feces in large intestine',?,FALSE,cloudy,FALSE,lived,no
+no,adult,FALSE,TRUE,FALSE,warm,normal,'pale pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,normal,'firm feces in large intestine',TRUE,TRUE,cloudy,?,?,no
+no,adult,FALSE,?,TRUE,warm,normal,'pale pink',<3,?,hypomotile,slight,slight,none,FALSE,decreased,'distended large intestine',TRUE,FALSE,?,TRUE,lived,no
+yes,adult,FALSE,FALSE,FALSE,normal,normal,'pale pink',<3,depressed,hypermotile,none,none,?,FALSE,absent,'distended small intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+no,adult,TRUE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',?,none,none,none,FALSE,decreased,'firm feces in large intestine',TRUE,TRUE,cloudy,?,lived,no
+yes,adult,FALSE,FALSE,TRUE,cool,normal,'normal pink',<3,depressed,hypomotile,none,slight,?,FALSE,absent,'distended small intestine',FALSE,FALSE,cloudy,FALSE,lived,?
+?,adult,TRUE,TRUE,TRUE,normal,normal,'normal pink',<3,'intermittent mild pain',hypermotile,?,slight,none,FALSE,absent,'firm feces in large intestine',TRUE,FALSE,cloudy,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,cold,reduced,'bright red',>=3,depressed,absent,moderate,slight,<1l,FALSE,absent,'distended large intestine',FALSE,FALSE,?,FALSE,lived,no
+yes,adult,FALSE,FALSE,?,warm,reduced,'bright pink',<3,'continuous severe pain',hypomotile,?,none,>1l,FALSE,normal,'distended large intestine',TRUE,?,cloudy,TRUE,lived,yes
+no,adult,?,FALSE,FALSE,cool,normal,?,<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,?,cloudy,FALSE,died,no
+yes,adult,TRUE,FALSE,FALSE,?,reduced,'pale pink',?,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,FALSE,?,normal,?,<3,depressed,?,?,none,<1l,FALSE,absent,'distended small intestine',FALSE,FALSE,cloudy,FALSE,died,yes
+?,?,TRUE,TRUE,?,normal,?,'normal pink',<3,'alert no pain',hypermotile,none,slight,none,FALSE,normal,normal,FALSE,FALSE,cloudy,FALSE,lived,yes
+no,adult,TRUE,TRUE,FALSE,normal,normal,'normal pink',<3,'intermittent mild pain',hypomotile,slight,?,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,TRUE,lived,no
+no,?,?,TRUE,TRUE,normal,normal,'pale pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,normal,'distended large intestine',TRUE,FALSE,clear,TRUE,lived,no
+no,adult,TRUE,TRUE,FALSE,cool,reduced,'pale pink',<3,'intermittent mild pain',hypermotile,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,TRUE,lived,no
+no,?,FALSE,TRUE,TRUE,cool,?,'bright pink',>=3,depressed,absent,none,slight,none,FALSE,absent,'distended large intestine',FALSE,FALSE,cloudy,?,lived,no
+yes,adult,FALSE,TRUE,FALSE,normal,normal,'pale pink',<3,?,?,none,slight,none,FALSE,normal,'distended small intestine',TRUE,?,?,FALSE,?,yes
+yes,adult,TRUE,TRUE,FALSE,warm,normal,'bright pink',<3,depressed,hypomotile,moderate,slight,?,TRUE,absent,'distended large intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+no,adult,TRUE,FALSE,TRUE,cold,reduced,'dark cyanotic',>=3,depressed,absent,moderate,none,none,FALSE,absent,'distended large intestine',FALSE,TRUE,cloudy,?,euthanized,yes
+yes,adult,TRUE,FALSE,TRUE,warm,?,'pale cyanotic',<3,'intermittent mild pain',hypomotile,moderate,slight,>1l,TRUE,decreased,'distended small intestine',FALSE,FALSE,cloudy,FALSE,lived,yes
+no,adult,TRUE,?,FALSE,cool,normal,?,>=3,depressed,normal,none,?,none,FALSE,absent,'firm feces in large intestine',TRUE,FALSE,serosanguinous,FALSE,lived,no
+yes,adult,FALSE,FALSE,FALSE,?,?,'pale pink',<3,'intermittent severe pain',absent,moderate,slight,none,FALSE,decreased,?,TRUE,FALSE,?,TRUE,lived,yes
+?,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',>=3,?,hypermotile,none,slight,?,FALSE,absent,other,TRUE,TRUE,serosanguinous,?,lived,yes
+yes,adult,FALSE,TRUE,?,cool,normal,'normal pink',<3,'intermittent severe pain',hypomotile,none,slight,none,FALSE,decreased,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,?,FALSE,cool,normal,'pale cyanotic',<3,depressed,hypomotile,moderate,slight,?,FALSE,absent,'distended small intestine',FALSE,FALSE,serosanguinous,TRUE,?,?
+yes,young,FALSE,FALSE,?,cold,absent,'dark cyanotic',<3,'intermittent mild pain',hypomotile,moderate,slight,?,FALSE,normal,'distended large intestine',FALSE,TRUE,serosanguinous,FALSE,died,yes
+no,adult,TRUE,FALSE,TRUE,normal,normal,'pale pink',<3,?,?,slight,none,>1l,FALSE,decreased,'distended large intestine',TRUE,FALSE,cloudy,FALSE,euthanized,no
+yes,adult,FALSE,TRUE,FALSE,warm,normal,'pale pink',<3,depressed,hypomotile,none,slight,none,FALSE,absent,?,TRUE,FALSE,cloudy,TRUE,euthanized,yes
+yes,adult,FALSE,TRUE,TRUE,normal,normal,'normal pink',<3,'alert no pain',normal,?,none,?,FALSE,normal,'distended large intestine',FALSE,FALSE,?,?,lived,yes
+no,adult,FALSE,TRUE,FALSE,cool,normal,'normal pink',<3,'intermittent mild pain',hypomotile,none,slight,none,FALSE,absent,'distended large intestine',TRUE,FALSE,cloudy,FALSE,lived,yes
+no,adult,TRUE,TRUE,TRUE,cool,normal,'normal pink',<3,?,absent,moderate,slight,>1l,FALSE,absent,'distended large intestine',TRUE,TRUE,cloudy,FALSE,lived,yes
+yes,?,FALSE,FALSE,FALSE,cold,reduced,'normal pink',?,depressed,absent,none,slight,none,?,absent,'distended large intestine',FALSE,FALSE,serosanguinous,TRUE,lived,yes
+yes,adult,TRUE,TRUE,TRUE,cool,normal,'pale pink',<3,?,hypermotile,none,none,none,FALSE,absent,'distended large intestine',TRUE,?,cloudy,FALSE,euthanized,yes
+yes,?,FALSE,?,FALSE,normal,normal,'pale pink',<3,'intermittent mild pain',hypomotile,moderate,slight,<1l,TRUE,absent,?,FALSE,FALSE,cloudy,FALSE,lived,yes
+yes,adult,FALSE,FALSE,TRUE,normal,normal,'pale cyanotic',<3,'continuous severe pain',?,moderate,slight,<1l,FALSE,absent,'distended large intestine',FALSE,FALSE,clear,FALSE,lived,yes
+no,adult,FALSE,TRUE,FALSE,cool,normal,'normal pink',<3,'alert no pain',hypermotile,slight,slight,none,FALSE,decreased,other,TRUE,TRUE,cloudy,?,lived,no
+yes,young,FALSE,FALSE,FALSE,cold,absent,'dark cyanotic',<3,'intermittent mild pain',hypomotile,moderate,slight,none,FALSE,normal,'distended large intestine',?,TRUE,serosanguinous,FALSE,died,yes
+no,adult,FALSE,FALSE,FALSE,normal,normal,'pale pink',?,'intermittent severe pain',normal,slight,none,none,FALSE,absent,'distended large intestine',TRUE,TRUE,clear,FALSE,lived,yes
+no,?,TRUE,TRUE,FALSE,normal,normal,'normal pink',<3,'alert no pain',hypomotile,none,slight,none,FALSE,decreased,'firm feces in large intestine',TRUE,TRUE,cloudy,FALSE,?,no
+yes,?,TRUE,FALSE,TRUE,normal,normal,'bright pink',<3,?,hypermotile,?,none,?,FALSE,normal,'distended small intestine',FALSE,FALSE,serosanguinous,TRUE,euthanized,yes
+no,adult,TRUE,TRUE,TRUE,cool,normal,'pale pink',<3,'alert no pain',hypermotile,?,slight,?,FALSE,absent,normal,TRUE,TRUE,cloudy,FALSE,lived,no
+no,adult,TRUE,FALSE,FALSE,cool,normal,'normal pink',?,'intermittent mild pain',hypomotile,slight,none,<1l,TRUE,absent,'distended large intestine',FALSE,TRUE,cloudy,FALSE,died,yes

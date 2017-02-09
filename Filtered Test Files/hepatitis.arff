@@ -1,0 +1,180 @@
+@relation hepatitis-weka.filters.unsupervised.attribute.ReplaceWithMissingValue-Rfirst-last-S1-P0.1-unset-class-temporarily
+
+@attribute AGE {FALSE,TRUE}
+@attribute SEX {male,female}
+@attribute STEROID {no,yes}
+@attribute ANTIVIRALS {no,yes}
+@attribute FATIGUE {no,yes}
+@attribute MALAISE {no,yes}
+@attribute ANOREXIA {no,yes}
+@attribute LIVER_BIG {no,yes}
+@attribute LIVER_FIRM {no,yes}
+@attribute SPLEEN_PALPABLE {no,yes}
+@attribute SPIDERS {no,yes}
+@attribute ASCITES {no,yes}
+@attribute VARICES {no,yes}
+@attribute BILIRUBIN {FALSE,TRUE}
+@attribute ALK_PHOSPHATE {FALSE,TRUE}
+@attribute SGOT {FALSE,TRUE}
+@attribute ALBUMIN {FALSE,TRUE}
+@attribute PROTIME {FALSE,TRUE}
+@attribute HISTOLOGY {no,yes}
+@attribute Class {DIE,LIVE}
+
+@data
+
+TRUE,male,no,no,no,?,no,no,no,no,no,no,no,FALSE,FALSE,TRUE,FALSE,FALSE,no,LIVE
+FALSE,female,?,no,yes,no,no,no,no,no,no,no,?,TRUE,FALSE,TRUE,TRUE,FALSE,no,LIVE
+FALSE,female,yes,?,yes,no,no,yes,no,no,no,no,no,TRUE,FALSE,TRUE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,yes,no,no,no,yes,no,no,no,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,no,LIVE
+?,female,yes,no,no,no,no,yes,no,no,no,no,no,FALSE,?,FALSE,?,FALSE,?,?
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,TRUE,?,TRUE,FALSE,FALSE,?,LIVE
+FALSE,female,?,no,yes,no,yes,yes,no,yes,yes,no,no,?,FALSE,FALSE,FALSE,FALSE,no,DIE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,?,FALSE,FALSE,FALSE,FALSE,no,?
+FALSE,female,yes,no,yes,no,no,yes,yes,no,no,?,no,TRUE,FALSE,TRUE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,?,LIVE
+FALSE,female,no,yes,no,no,no,no,?,no,?,no,no,?,TRUE,TRUE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,yes,yes,?,no,yes,yes,no,yes,no,no,FALSE,TRUE,?,TRUE,TRUE,no,LIVE
+FALSE,female,yes,yes,yes,no,?,yes,yes,?,?,?,no,TRUE,TRUE,FALSE,TRUE,?,no,LIVE
+TRUE,female,yes,no,yes,no,no,?,yes,no,no,?,no,FALSE,TRUE,FALSE,FALSE,FALSE,no,LIVE
+FALSE,female,no,yes,?,no,no,yes,no,?,?,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,no,LIVE
+?,female,no,no,yes,yes,?,yes,no,no,no,yes,?,FALSE,TRUE,FALSE,TRUE,TRUE,no,LIVE
+FALSE,female,yes,no,yes,no,no,yes,no,no,no,no,no,FALSE,FALSE,TRUE,FALSE,?,no,?
+FALSE,female,?,no,yes,no,no,yes,yes,no,no,?,no,TRUE,TRUE,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,yes,LIVE
+TRUE,female,?,yes,no,no,no,no,yes,no,no,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,no,LIVE
+?,male,yes,yes,yes,no,?,yes,no,no,no,no,no,TRUE,?,TRUE,FALSE,FALSE,?,LIVE
+TRUE,female,yes,no,yes,yes,yes,?,yes,yes,yes,no,no,FALSE,FALSE,FALSE,FALSE,TRUE,no,LIVE
+TRUE,female,?,no,?,no,no,yes,no,no,no,no,no,FALSE,?,?,FALSE,FALSE,no,?
+FALSE,female,yes,?,no,no,no,yes,no,no,no,no,?,TRUE,TRUE,FALSE,FALSE,TRUE,no,LIVE
+?,male,no,yes,?,no,?,yes,no,no,no,no,no,TRUE,TRUE,TRUE,FALSE,?,no,LIVE
+?,female,no,no,yes,yes,no,yes,?,no,no,no,no,TRUE,FALSE,TRUE,TRUE,FALSE,no,LIVE
+FALSE,female,?,yes,yes,yes,yes,yes,yes,no,yes,no,no,TRUE,?,TRUE,TRUE,FALSE,no,LIVE
+FALSE,male,yes,no,yes,no,no,yes,yes,no,yes,no,no,FALSE,FALSE,TRUE,?,TRUE,no,LIVE
+FALSE,female,?,no,?,no,no,?,yes,no,no,?,no,FALSE,TRUE,TRUE,TRUE,FALSE,no,LIVE
+FALSE,?,no,yes,yes,yes,no,yes,no,no,no,no,no,FALSE,TRUE,FALSE,FALSE,TRUE,no,LIVE
+FALSE,female,?,yes,yes,?,no,yes,yes,no,no,no,no,FALSE,?,FALSE,TRUE,TRUE,no,DIE
+?,female,no,no,yes,yes,no,yes,no,no,no,?,no,FALSE,FALSE,FALSE,FALSE,FALSE,?,DIE
+FALSE,male,yes,yes,yes,yes,yes,yes,no,no,no,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,no,LIVE
+TRUE,male,no,?,no,no,no,yes,yes,no,no,no,no,TRUE,FALSE,TRUE,TRUE,?,?,LIVE
+TRUE,female,yes,no,yes,no,no,yes,no,no,no,no,no,TRUE,TRUE,FALSE,FALSE,?,no,LIVE
+TRUE,female,yes,no,yes,no,no,yes,no,no,?,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,?,DIE
+TRUE,female,yes,no,yes,?,yes,yes,?,?,no,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,no,?
+?,?,no,no,yes,yes,yes,?,yes,yes,yes,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,no,LIVE
+FALSE,female,no,no,no,no,no,yes,no,no,?,?,no,FALSE,FALSE,TRUE,FALSE,FALSE,?,LIVE
+?,female,yes,no,yes,yes,no,?,yes,yes,yes,yes,no,TRUE,FALSE,TRUE,TRUE,?,yes,LIVE
+FALSE,female,no,yes,no,no,no,yes,no,no,no,no,no,TRUE,TRUE,TRUE,FALSE,TRUE,no,LIVE
+TRUE,female,yes,no,?,?,no,yes,no,no,no,no,?,FALSE,TRUE,TRUE,FALSE,FALSE,?,LIVE
+TRUE,?,yes,no,no,no,no,yes,no,no,no,no,no,FALSE,TRUE,FALSE,FALSE,TRUE,no,?
+FALSE,female,no,no,yes,no,no,yes,no,no,no,no,no,TRUE,TRUE,?,FALSE,FALSE,?,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,no,yes,yes,no,?,no,no,no,no,no,TRUE,TRUE,FALSE,FALSE,FALSE,no,LIVE
+?,?,?,?,no,no,no,yes,yes,no,yes,no,no,TRUE,?,FALSE,TRUE,FALSE,no,LIVE
+?,male,?,no,yes,?,no,yes,yes,no,no,?,no,FALSE,FALSE,FALSE,TRUE,TRUE,no,LIVE
+TRUE,female,no,no,no,?,no,yes,no,yes,no,no,no,TRUE,?,TRUE,FALSE,FALSE,no,?
+TRUE,female,yes,yes,yes,yes,yes,?,no,no,yes,no,no,?,FALSE,FALSE,FALSE,FALSE,?,?
+FALSE,female,no,no,no,no,no,?,no,no,no,no,no,TRUE,FALSE,FALSE,FALSE,FALSE,no,LIVE
+FALSE,female,yes,no,no,no,no,?,no,no,no,no,no,FALSE,FALSE,TRUE,?,FALSE,no,LIVE
+FALSE,female,yes,no,no,no,no,yes,no,no,?,no,no,TRUE,FALSE,FALSE,FALSE,FALSE,no,LIVE
+FALSE,?,yes,yes,yes,no,no,yes,yes,yes,no,no,no,FALSE,FALSE,?,FALSE,?,no,LIVE
+TRUE,female,yes,no,yes,?,no,yes,no,no,no,no,no,TRUE,TRUE,FALSE,FALSE,FALSE,?,LIVE
+TRUE,female,no,no,yes,yes,yes,yes,no,no,no,no,no,TRUE,FALSE,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,no,no,yes,no,?,yes,?,no,no,?,no,FALSE,?,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,yes,no,no,no,yes,no,no,no,no,no,TRUE,TRUE,TRUE,TRUE,TRUE,no,LIVE
+FALSE,female,yes,yes,yes,yes,no,no,yes,no,no,no,no,FALSE,TRUE,TRUE,FALSE,FALSE,no,LIVE
+FALSE,male,no,no,yes,yes,no,yes,no,yes,no,no,no,FALSE,?,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,?,?,no,no,TRUE,TRUE,FALSE,FALSE,FALSE,no,?
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,TRUE,FALSE,?,FALSE,FALSE,no,LIVE
+TRUE,?,yes,no,yes,?,yes,yes,no,no,?,no,yes,FALSE,FALSE,TRUE,TRUE,TRUE,?,LIVE
+TRUE,female,no,no,no,no,no,no,yes,yes,no,?,no,TRUE,FALSE,TRUE,TRUE,TRUE,no,LIVE
+FALSE,female,yes,no,yes,yes,no,yes,no,no,?,?,no,TRUE,FALSE,?,TRUE,FALSE,no,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,?,FALSE,TRUE,FALSE,FALSE,no,LIVE
+FALSE,female,no,no,no,no,no,yes,no,no,no,no,no,?,TRUE,?,TRUE,FALSE,no,LIVE
+FALSE,female,yes,no,yes,yes,yes,yes,no,no,yes,yes,no,FALSE,FALSE,TRUE,?,FALSE,no,DIE
+FALSE,female,yes,no,yes,no,no,yes,no,no,no,no,no,FALSE,?,TRUE,FALSE,TRUE,no,LIVE
+FALSE,female,no,no,?,yes,no,yes,no,no,no,no,no,FALSE,TRUE,FALSE,TRUE,?,no,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,TRUE,TRUE,TRUE,?,FALSE,no,LIVE
+TRUE,female,no,no,yes,yes,no,no,yes,no,yes,no,no,FALSE,FALSE,FALSE,?,FALSE,no,DIE
+FALSE,female,yes,no,yes,yes,yes,yes,no,no,no,no,no,TRUE,TRUE,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,no,no,yes,?,yes,yes,yes,no,no,no,no,?,FALSE,TRUE,FALSE,TRUE,no,LIVE
+FALSE,female,yes,no,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,no,yes,yes,yes,no,yes,?,no,?,no,no,FALSE,TRUE,TRUE,FALSE,TRUE,?,LIVE
+FALSE,female,yes,no,yes,no,no,no,yes,yes,yes,no,?,FALSE,FALSE,FALSE,?,FALSE,no,DIE
+TRUE,male,no,yes,no,no,no,yes,yes,no,no,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,no,LIVE
+?,female,no,no,yes,no,no,no,yes,no,yes,no,no,FALSE,TRUE,TRUE,FALSE,TRUE,?,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,?,no,?,no,TRUE,FALSE,TRUE,?,FALSE,no,LIVE
+TRUE,female,yes,no,yes,yes,yes,yes,no,no,no,no,no,TRUE,FALSE,TRUE,?,FALSE,?,LIVE
+TRUE,female,yes,no,no,no,no,yes,no,no,no,no,no,TRUE,TRUE,FALSE,FALSE,FALSE,no,LIVE
+TRUE,female,no,no,no,no,no,yes,?,no,no,no,no,TRUE,FALSE,TRUE,FALSE,FALSE,no,LIVE
+FALSE,male,no,no,yes,yes,?,yes,no,no,no,no,?,FALSE,FALSE,FALSE,TRUE,FALSE,no,LIVE
+FALSE,?,yes,no,yes,yes,?,?,yes,?,yes,?,no,FALSE,FALSE,FALSE,TRUE,TRUE,no,LIVE
+?,?,no,no,?,yes,yes,yes,yes,no,no,no,no,FALSE,TRUE,FALSE,FALSE,?,no,?
+FALSE,female,no,no,yes,yes,no,yes,no,yes,no,?,yes,TRUE,?,TRUE,FALSE,TRUE,yes,DIE
+TRUE,female,yes,no,yes,yes,yes,yes,yes,no,yes,yes,yes,FALSE,FALSE,FALSE,TRUE,FALSE,yes,DIE
+TRUE,female,no,no,yes,yes,yes,yes,yes,no,yes,yes,yes,?,FALSE,?,TRUE,FALSE,yes,DIE
+?,female,no,no,yes,yes,?,no,yes,no,no,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,yes,LIVE
+?,male,no,no,yes,no,no,no,yes,yes,yes,no,no,TRUE,FALSE,FALSE,TRUE,TRUE,yes,?
+FALSE,female,no,no,yes,yes,yes,yes,no,yes,?,no,yes,FALSE,FALSE,TRUE,TRUE,FALSE,yes,DIE
+TRUE,female,yes,?,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,yes,LIVE
+FALSE,female,no,?,no,no,no,yes,?,no,no,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,yes,LIVE
+FALSE,female,no,no,yes,yes,no,yes,yes,yes,yes,no,no,FALSE,?,FALSE,TRUE,TRUE,yes,DIE
+FALSE,female,no,yes,yes,yes,yes,no,yes,no,no,no,no,TRUE,TRUE,FALSE,FALSE,FALSE,yes,LIVE
+TRUE,female,no,no,yes,yes,no,yes,yes,no,yes,no,no,?,FALSE,FALSE,TRUE,FALSE,yes,LIVE
+FALSE,female,no,no,yes,yes,no,no,yes,no,yes,no,no,FALSE,FALSE,FALSE,TRUE,?,yes,?
+FALSE,female,yes,no,no,?,no,yes,no,no,yes,no,?,?,TRUE,TRUE,FALSE,FALSE,yes,DIE
+FALSE,female,no,no,yes,no,no,no,yes,yes,yes,?,no,FALSE,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+FALSE,female,no,?,yes,yes,no,yes,yes,no,yes,yes,?,FALSE,FALSE,?,TRUE,TRUE,yes,DIE
+TRUE,?,yes,no,no,no,no,yes,no,no,?,no,?,TRUE,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+TRUE,female,?,no,yes,no,no,yes,yes,no,no,no,?,FALSE,FALSE,FALSE,?,FALSE,yes,LIVE
+FALSE,female,?,no,yes,?,yes,yes,?,yes,yes,?,yes,FALSE,FALSE,FALSE,?,?,yes,LIVE
+FALSE,female,yes,no,yes,yes,no,yes,yes,no,no,yes,?,?,FALSE,TRUE,TRUE,TRUE,yes,?
+?,female,yes,no,no,no,no,?,no,no,no,no,no,TRUE,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+TRUE,?,no,no,yes,?,no,yes,no,yes,yes,yes,no,FALSE,FALSE,FALSE,TRUE,FALSE,yes,DIE
+FALSE,female,no,no,?,yes,yes,yes,no,no,no,no,no,FALSE,?,?,FALSE,FALSE,yes,LIVE
+FALSE,female,?,yes,?,no,no,no,yes,no,no,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,yes,LIVE
+TRUE,female,no,no,yes,yes,no,yes,?,no,no,yes,no,TRUE,TRUE,FALSE,TRUE,TRUE,yes,DIE
+TRUE,female,yes,no,no,no,no,yes,yes,yes,no,no,no,TRUE,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+FALSE,female,no,yes,yes,yes,no,yes,no,?,yes,no,no,TRUE,TRUE,FALSE,TRUE,?,yes,DIE
+FALSE,female,no,no,yes,?,no,yes,?,no,no,no,no,FALSE,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+FALSE,female,no,no,yes,no,no,yes,yes,yes,no,no,no,?,TRUE,FALSE,TRUE,FALSE,no,LIVE
+TRUE,female,no,?,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,yes,?
+FALSE,male,yes,no,yes,no,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,yes,LIVE
+TRUE,female,no,?,yes,no,no,yes,no,no,?,no,no,?,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+FALSE,female,yes,no,no,?,no,yes,no,no,no,no,no,FALSE,FALSE,FALSE,?,FALSE,yes,LIVE
+FALSE,female,no,no,yes,yes,no,?,no,no,yes,no,no,?,FALSE,FALSE,FALSE,?,yes,DIE
+FALSE,female,yes,no,yes,no,no,no,yes,no,no,no,no,FALSE,FALSE,TRUE,TRUE,FALSE,yes,LIVE
+FALSE,female,no,no,yes,yes,yes,no,yes,no,yes,no,no,FALSE,FALSE,FALSE,FALSE,FALSE,yes,DIE
+TRUE,female,?,no,yes,yes,yes,yes,no,no,yes,yes,no,FALSE,FALSE,FALSE,?,TRUE,?,LIVE
+FALSE,female,yes,no,no,no,no,yes,?,yes,no,no,no,FALSE,FALSE,TRUE,FALSE,FALSE,?,LIVE
+TRUE,female,no,no,yes,no,no,?,no,no,yes,no,no,?,?,FALSE,FALSE,FALSE,?,LIVE
+FALSE,female,yes,?,no,?,no,yes,yes,yes,yes,no,no,FALSE,FALSE,FALSE,?,FALSE,yes,LIVE
+TRUE,male,yes,no,yes,yes,yes,no,yes,no,yes,no,no,TRUE,TRUE,TRUE,FALSE,FALSE,yes,LIVE
+TRUE,female,?,no,yes,yes,yes,yes,?,no,yes,yes,no,FALSE,FALSE,TRUE,?,FALSE,yes,LIVE
+FALSE,?,yes,no,yes,no,no,yes,yes,yes,no,yes,yes,FALSE,FALSE,?,TRUE,TRUE,yes,DIE
+FALSE,female,no,no,?,yes,no,yes,no,no,no,yes,no,FALSE,FALSE,FALSE,TRUE,?,yes,LIVE
+FALSE,female,?,no,yes,yes,no,yes,no,no,yes,?,no,FALSE,TRUE,TRUE,TRUE,TRUE,yes,DIE
+FALSE,female,yes,no,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,TRUE,FALSE,TRUE,yes,LIVE
+?,female,no,no,yes,yes,?,yes,no,yes,no,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,yes,DIE
+?,female,yes,no,yes,yes,yes,yes,yes,no,yes,no,no,FALSE,FALSE,FALSE,TRUE,FALSE,yes,LIVE
+FALSE,female,yes,?,yes,?,no,yes,?,no,no,no,no,?,FALSE,TRUE,TRUE,TRUE,yes,LIVE
+TRUE,?,no,no,no,no,no,yes,yes,no,no,no,no,TRUE,FALSE,TRUE,TRUE,FALSE,yes,DIE
+?,female,yes,?,yes,no,no,no,yes,yes,yes,yes,yes,FALSE,FALSE,FALSE,FALSE,TRUE,yes,LIVE
+FALSE,female,?,?,no,no,no,no,?,no,yes,no,no,TRUE,FALSE,?,FALSE,FALSE,yes,LIVE
+TRUE,female,yes,no,no,no,no,?,yes,no,yes,no,yes,FALSE,FALSE,FALSE,TRUE,TRUE,yes,LIVE
+FALSE,female,yes,no,yes,yes,no,yes,yes,no,yes,yes,yes,FALSE,FALSE,TRUE,?,TRUE,yes,DIE
+?,?,yes,yes,no,no,no,yes,no,no,no,no,no,FALSE,FALSE,TRUE,FALSE,FALSE,yes,LIVE
+TRUE,female,no,no,?,yes,yes,no,yes,no,yes,no,yes,FALSE,FALSE,FALSE,TRUE,FALSE,?,LIVE
+FALSE,female,no,no,yes,yes,no,yes,no,?,no,yes,no,FALSE,FALSE,TRUE,TRUE,TRUE,yes,?
+FALSE,female,yes,no,yes,no,no,yes,yes,yes,yes,no,yes,?,FALSE,?,TRUE,FALSE,yes,LIVE
+FALSE,female,?,no,yes,yes,no,yes,no,yes,yes,no,no,FALSE,FALSE,FALSE,TRUE,TRUE,yes,DIE
+FALSE,female,yes,no,?,yes,yes,yes,no,no,yes,?,?,FALSE,FALSE,FALSE,TRUE,FALSE,yes,DIE
+TRUE,female,no,no,yes,no,?,yes,no,no,no,no,?,FALSE,TRUE,FALSE,FALSE,TRUE,yes,LIVE
+FALSE,?,yes,no,yes,no,no,yes,yes,yes,yes,no,yes,FALSE,?,FALSE,TRUE,FALSE,?,DIE
+FALSE,?,no,?,yes,yes,yes,yes,no,no,no,no,no,FALSE,FALSE,?,TRUE,TRUE,yes,DIE
+TRUE,female,no,no,no,no,no,yes,?,?,no,no,no,TRUE,FALSE,FALSE,FALSE,FALSE,yes,LIVE
+TRUE,female,yes,no,no,no,?,yes,no,no,?,no,no,TRUE,FALSE,TRUE,FALSE,FALSE,?,LIVE
+FALSE,female,yes,no,yes,yes,yes,yes,no,no,yes,yes,yes,FALSE,FALSE,?,TRUE,TRUE,yes,?
+FALSE,?,yes,no,yes,no,no,yes,yes,no,?,no,no,TRUE,?,FALSE,FALSE,FALSE,yes,LIVE
+FALSE,female,no,no,yes,?,no,no,yes,no,yes,no,?,TRUE,TRUE,TRUE,FALSE,FALSE,yes,LIVE
+FALSE,male,no,no,yes,no,no,yes,no,yes,?,no,?,FALSE,TRUE,TRUE,FALSE,TRUE,yes,?
+FALSE,female,?,?,yes,no,no,yes,no,yes,yes,yes,?,FALSE,FALSE,TRUE,TRUE,TRUE,?,DIE

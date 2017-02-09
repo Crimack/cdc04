@@ -1,0 +1,104 @@
+@relation postoperative-patient-data-weka.filters.unsupervised.attribute.ReplaceWithMissingValue-Rfirst-last-S1-P0.1-unset-class-temporarily
+
+@attribute L-CORE {high,low,mid}
+@attribute L-SURF {high,low,mid}
+@attribute L-O2 {excellent,good}
+@attribute L-BP {high,low,mid}
+@attribute SURF-STBL {stable,unstable}
+@attribute CORE-STBL {mod-stable,stable,unstable}
+@attribute BP-STBL {mod-stable,stable,unstable}
+@attribute COMFORT {05,07,10,15}
+@attribute decision {A,I,S}
+
+@data
+
+mid,low,excellent,mid,stable,?,stable,15,A
+mid,high,excellent,high,stable,stable,stable,10,S
+high,low,excellent,high,?,stable,mod-stable,10,A
+mid,low,good,high,stable,?,mod-stable,15,A
+mid,mid,excellent,high,stable,stable,stable,?,A
+high,low,good,mid,stable,stable,unstable,15,S
+mid,low,excellent,high,stable,stable,mod-stable,05,S
+high,mid,excellent,mid,unstable,unstable,stable,10,S
+mid,high,good,mid,stable,stable,stable,10,?
+mid,low,excellent,mid,unstable,stable,mod-stable,10,S
+mid,mid,good,mid,?,stable,?,15,?
+?,low,good,high,stable,stable,mod-stable,10,A
+high,high,excellent,high,unstable,stable,?,15,A
+mid,?,good,mid,unstable,?,mod-stable,10,A
+mid,low,good,high,unstable,unstable,stable,?,S
+high,high,excellent,high,unstable,stable,unstable,10,A
+low,high,good,high,unstable,stable,mod-stable,15,A
+?,low,good,high,unstable,stable,?,10,A
+mid,high,good,mid,unstable,stable,unstable,15,A
+?,mid,good,mid,stable,stable,stable,10,A
+low,high,good,mid,unstable,stable,stable,15,A
+low,mid,excellent,high,unstable,stable,unstable,10,S
+?,mid,good,mid,unstable,stable,unstable,15,A
+mid,?,good,?,unstable,stable,?,10,A
+high,high,good,mid,stable,stable,mod-stable,10,A
+?,mid,good,mid,unstable,stable,stable,10,A
+high,?,good,low,stable,stable,mod-stable,10,A
+low,mid,excellent,?,stable,stable,?,?,?
+mid,mid,excellent,mid,stable,?,unstable,15,A
+mid,mid,good,mid,unstable,stable,?,10,S
+mid,?,good,high,unstable,stable,stable,10,A
+low,low,good,mid,unstable,?,unstable,10,A
+mid,?,?,high,unstable,stable,mod-stable,10,A
+mid,low,good,?,stable,stable,stable,10,A
+?,mid,excellent,high,stable,stable,?,10,A
+mid,mid,good,mid,stable,stable,stable,10,A
+low,mid,excellent,mid,stable,stable,stable,10,S
+low,low,good,mid,?,stable,?,10,S
+?,low,good,mid,stable,stable,stable,07,S
+?,mid,good,high,unstable,stable,mod-stable,10,A
+low,low,good,mid,unstable,stable,stable,10,A
+low,mid,good,mid,stable,stable,stable,15,S
+high,high,good,high,?,stable,stable,15,S
+mid,mid,good,mid,stable,stable,stable,10,S
+low,low,excellent,mid,?,stable,stable,10,A
+low,?,good,mid,unstable,stable,stable,10,S
+?,mid,good,high,?,stable,stable,10,I
+mid,mid,excellent,mid,?,stable,stable,10,A
+high,high,excellent,high,stable,stable,unstable,10,A
+mid,?,good,?,unstable,stable,stable,10,A
+mid,high,good,mid,?,?,mod-stable,10,A
+?,high,excellent,mid,?,stable,stable,10,A
+mid,low,excellent,high,?,stable,unstable,10,A
+mid,mid,good,?,unstable,stable,mod-stable,?,S
+?,high,excellent,mid,unstable,stable,mod-stable,10,A
+mid,mid,?,mid,unstable,?,stable,15,A
+high,mid,good,high,?,stable,unstable,15,A
+mid,low,good,high,unstable,stable,mod-stable,10,A
+?,low,good,high,stable,stable,stable,10,A
+mid,high,good,?,stable,stable,mod-stable,10,A
+mid,high,good,mid,unstable,stable,unstable,10,A
+mid,low,excellent,high,stable,stable,stable,?,A
+mid,mid,good,mid,?,stable,?,10,A
+?,low,excellent,mid,?,stable,unstable,10,S
+high,mid,excellent,mid,unstable,?,unstable,10,A
+mid,mid,good,high,stable,stable,stable,10,S
+mid,low,excellent,mid,unstable,stable,stable,10,?
+mid,mid,?,mid,unstable,stable,stable,10,A
+mid,mid,?,high,stable,stable,stable,10,?
+mid,mid,excellent,low,stable,stable,stable,10,A
+mid,?,excellent,mid,unstable,unstable,unstable,10,?
+low,low,excellent,mid,stable,stable,stable,10,A
+mid,mid,excellent,mid,stable,stable,mod-stable,10,S
+mid,mid,excellent,high,stable,stable,?,10,A
+mid,low,excellent,high,stable,stable,mod-stable,10,A
+low,mid,?,?,stable,stable,unstable,10,A
+mid,mid,excellent,mid,stable,stable,mod-stable,10,A
+mid,mid,excellent,mid,?,stable,unstable,10,A
+mid,mid,excellent,mid,unstable,unstable,stable,10,?
+mid,mid,good,high,stable,stable,stable,?,A
+mid,mid,excellent,mid,stable,?,stable,15,?
+?,mid,excellent,mid,stable,stable,stable,10,S
+mid,?,?,?,stable,stable,unstable,10,I
+?,mid,excellent,mid,unstable,stable,unstable,05,A
+mid,mid,excellent,mid,stable,stable,unstable,10,A
+mid,mid,excellent,mid,unstable,?,?,10,A
+mid,mid,excellent,mid,?,stable,?,15,S
+mid,mid,good,mid,?,stable,stable,15,A
+mid,mid,excellent,mid,unstable,?,stable,10,A
+mid,mid,good,mid,unstable,stable,stable,15,S

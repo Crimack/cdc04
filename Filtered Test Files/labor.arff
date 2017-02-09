@@ -1,0 +1,79 @@
+@relation labor-weka.filters.unsupervised.attribute.ReplaceWithMissingValue-Rfirst-last-S1-P0.1-unset-class-temporarily
+
+@attribute duration {FALSE,TRUE}
+@attribute wage-increase-first-year {FALSE,TRUE}
+@attribute wage-increase-second-year {FALSE,TRUE}
+@attribute wage-increase-third-year {FALSE,TRUE}
+@attribute cost-of-living-adjustment {none,tcf,tc}
+@attribute working-hours {FALSE,TRUE}
+@attribute pension {none,ret_allw,empl_contr}
+@attribute standby-pay {FALSE,TRUE}
+@attribute shift-differential {FALSE,TRUE}
+@attribute education-allowance {yes,no}
+@attribute statutory-holidays {FALSE,TRUE}
+@attribute vacation {below_average,average,generous}
+@attribute longterm-disability-assistance {yes,no}
+@attribute contribution-to-dental-plan {none,half,full}
+@attribute bereavement-assistance {yes,no}
+@attribute contribution-to-health-plan {none,half,full}
+@attribute class {bad,good}
+
+@data
+
+TRUE,FALSE,FALSE,FALSE,none,?,empl_contr,FALSE,TRUE,no,FALSE,average,yes,half,yes,full,good
+FALSE,FALSE,FALSE,FALSE,none,?,ret_allw,FALSE,FALSE,yes,FALSE,below_average,yes,full,yes,?,good
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,?,FALSE,generous,yes,half,yes,half,good
+FALSE,TRUE,FALSE,FALSE,tc,FALSE,empl_contr,FALSE,FALSE,yes,FALSE,below_average,yes,half,yes,full,good
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,no,FALSE,average,?,half,yes,half,good
+FALSE,TRUE,TRUE,FALSE,none,TRUE,empl_contr,FALSE,FALSE,?,FALSE,?,yes,?,?,full,good
+FALSE,FALSE,FALSE,FALSE,tc,FALSE,empl_contr,FALSE,FALSE,no,FALSE,generous,?,none,yes,half,?
+FALSE,FALSE,FALSE,?,none,FALSE,empl_contr,FALSE,TRUE,no,FALSE,below_average,yes,half,?,full,good
+FALSE,TRUE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,yes,FALSE,below_average,yes,half,yes,full,good
+?,FALSE,FALSE,FALSE,none,FALSE,?,FALSE,FALSE,no,FALSE,generous,yes,full,yes,full,good
+FALSE,?,FALSE,FALSE,none,TRUE,empl_contr,FALSE,TRUE,no,FALSE,generous,yes,half,yes,full,good
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,no,FALSE,?,yes,full,yes,full,good
+FALSE,TRUE,FALSE,FALSE,?,FALSE,?,FALSE,TRUE,?,TRUE,below_average,no,half,yes,half,bad
+FALSE,TRUE,FALSE,FALSE,?,TRUE,empl_contr,FALSE,FALSE,no,FALSE,generous,yes,full,?,full,good
+TRUE,TRUE,FALSE,FALSE,none,TRUE,empl_contr,FALSE,?,no,FALSE,?,?,?,yes,full,good
+FALSE,FALSE,?,FALSE,none,TRUE,empl_contr,FALSE,FALSE,no,FALSE,average,?,full,yes,full,?
+TRUE,TRUE,FALSE,FALSE,none,TRUE,empl_contr,FALSE,TRUE,no,FALSE,below_average,?,half,yes,full,good
+?,?,FALSE,FALSE,tc,FALSE,ret_allw,TRUE,TRUE,no,TRUE,?,yes,half,yes,none,bad
+?,TRUE,FALSE,FALSE,none,FALSE,?,FALSE,FALSE,yes,FALSE,average,no,none,no,none,bad
+FALSE,FALSE,FALSE,FALSE,tcf,TRUE,empl_contr,FALSE,FALSE,no,FALSE,generous,yes,half,?,full,?
+FALSE,FALSE,?,FALSE,none,FALSE,empl_contr,FALSE,FALSE,no,FALSE,?,yes,full,yes,full,good
+FALSE,TRUE,TRUE,FALSE,none,FALSE,none,FALSE,FALSE,no,FALSE,below_average,yes,half,yes,full,bad
+FALSE,TRUE,FALSE,FALSE,tcf,TRUE,empl_contr,FALSE,?,no,FALSE,below_average,yes,half,yes,full,good
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,?,TRUE,generous,yes,half,yes,?,good
+TRUE,FALSE,FALSE,FALSE,none,FALSE,?,FALSE,TRUE,no,?,generous,yes,half,yes,full,good
+FALSE,TRUE,?,TRUE,none,FALSE,none,FALSE,FALSE,no,TRUE,below_average,yes,half,yes,full,bad
+?,FALSE,?,FALSE,tcf,FALSE,empl_contr,FALSE,FALSE,yes,TRUE,below_average,?,?,yes,half,good
+?,TRUE,TRUE,FALSE,?,TRUE,empl_contr,FALSE,FALSE,yes,FALSE,generous,yes,?,yes,full,good
+FALSE,FALSE,FALSE,FALSE,?,TRUE,empl_contr,FALSE,?,no,?,below_average,yes,full,yes,full,good
+FALSE,TRUE,TRUE,FALSE,?,TRUE,none,?,FALSE,no,TRUE,average,yes,half,yes,?,bad
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,no,FALSE,average,?,half,yes,full,good
+FALSE,TRUE,TRUE,TRUE,tc,FALSE,none,?,FALSE,no,TRUE,below_average,yes,half,yes,full,bad
+FALSE,TRUE,TRUE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,no,TRUE,average,?,half,yes,full,bad
+FALSE,?,FALSE,?,none,FALSE,?,FALSE,TRUE,no,?,below_average,no,none,yes,none,bad
+FALSE,TRUE,TRUE,?,tc,FALSE,none,TRUE,TRUE,no,TRUE,below_average,no,half,yes,full,bad
+FALSE,TRUE,TRUE,FALSE,none,FALSE,none,?,FALSE,no,?,average,yes,none,yes,full,bad
+TRUE,TRUE,?,FALSE,tc,FALSE,ret_allw,TRUE,?,no,FALSE,generous,no,none,no,none,bad
+TRUE,TRUE,?,FALSE,none,FALSE,empl_contr,TRUE,TRUE,?,TRUE,below_average,yes,half,yes,none,bad
+FALSE,TRUE,TRUE,TRUE,none,TRUE,empl_contr,FALSE,FALSE,no,TRUE,average,yes,half,yes,none,bad
+?,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,no,FALSE,average,yes,full,?,?,good
+TRUE,FALSE,FALSE,FALSE,none,FALSE,none,FALSE,FALSE,yes,FALSE,average,no,none,no,none,bad
+?,TRUE,TRUE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,yes,FALSE,generous,yes,?,yes,full,bad
+FALSE,TRUE,TRUE,FALSE,?,FALSE,empl_contr,FALSE,FALSE,no,FALSE,?,yes,half,?,?,bad
+FALSE,TRUE,TRUE,FALSE,tcf,FALSE,none,FALSE,?,?,?,below_average,yes,half,yes,full,?
+FALSE,FALSE,FALSE,FALSE,none,FALSE,none,FALSE,TRUE,no,TRUE,below_average,no,none,yes,none,bad
+FALSE,FALSE,FALSE,FALSE,none,?,?,FALSE,TRUE,no,TRUE,below_average,no,?,yes,?,bad
+FALSE,FALSE,FALSE,FALSE,none,?,empl_contr,FALSE,FALSE,no,FALSE,average,yes,full,yes,?,good
+FALSE,FALSE,FALSE,FALSE,tcf,FALSE,empl_contr,FALSE,FALSE,no,FALSE,below_average,yes,half,yes,half,good
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,?,?,FALSE,below_average,yes,half,yes,full,?
+FALSE,FALSE,FALSE,FALSE,none,?,ret_allw,FALSE,?,no,FALSE,average,yes,full,yes,full,good
+FALSE,FALSE,FALSE,FALSE,none,FALSE,empl_contr,FALSE,FALSE,?,FALSE,below_average,yes,full,yes,full,good
+FALSE,TRUE,TRUE,FALSE,tcf,FALSE,empl_contr,FALSE,?,yes,FALSE,?,yes,half,yes,full,good
+FALSE,TRUE,FALSE,TRUE,tcf,TRUE,empl_contr,FALSE,FALSE,no,FALSE,generous,yes,half,yes,full,good
+FALSE,FALSE,TRUE,FALSE,none,FALSE,?,FALSE,FALSE,no,FALSE,average,yes,full,yes,full,good
+FALSE,FALSE,?,?,?,?,empl_contr,FALSE,FALSE,no,FALSE,generous,yes,half,yes,full,?
+FALSE,FALSE,FALSE,FALSE,none,?,empl_contr,?,FALSE,no,?,average,yes,half,yes,half,?
+FALSE,FALSE,FALSE,TRUE,none,TRUE,empl_contr,FALSE,FALSE,no,TRUE,generous,yes,?,yes,full,good
