@@ -27,11 +27,9 @@ import weka.core.Utils;
 public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
 	private static final long serialVersionUID = 3582366333379609425L;
-	private static final String DEFAULT_OUTPUT_DATA_PATH = "C:\\Users\\Chris\\Documents\\repos\\Project\\Test Results\\current.arff";
 
 	private String[] classifierOptions;
 	private boolean supervised = false;
-	private String outputDataPath = DEFAULT_OUTPUT_DATA_PATH;
 
 	// Classification variables
 	private Classifier[] classifiers;
@@ -92,11 +90,6 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				new Option("\tIf set, this causes the classifier should to run as  a supervised classifier.\n"
 						+ "\tIf not present, this will be supervised.", "S", 0, "-S"));
 
-		newVector.addElement(new Option(
-				"\tIf set, this will write the resulting dataset to the specified file path.\n"
-						+ "\tIf not present, this will be defaulted to " + DEFAULT_OUTPUT_DATA_PATH,
-				"-outputResultToFile", 1, "-outputResultToFile"));
-
 		newVector.addElement(
 				new Option("", "", 0, "\nOptions specific to classifier " + m_Classifier.getClass().getName() + ":"));
 		newVector.addAll(Collections.list(((OptionHandler) m_Classifier).listOptions()));
@@ -112,20 +105,12 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 		setSupervised(Utils.getFlag("S", options));
 
-		String chosenWritePath = Utils.getOption("outputResultToFile", options);
-		if (!chosenWritePath.isEmpty()) {
-			setOutputDataPath(chosenWritePath);
-		}
-
 	}
 
 	public String[] getOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 		String[] superOptions = super.getOptions();
-
-		options.add("-outputResultToFile");
-		options.add("" + outputDataPath);
 
 		if (supervised)
 			options.add("-S");
@@ -245,14 +230,10 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			for (int i : missing.get(originalClassAttributeIndex)) {
 				Instance toClassify = current.get(i);
 				toClassify.setValue(originalClassAttributeIndex, classifyInstance(toClassify));
+
 			}
 		}
 		System.out.println("Classifier completed");
-		FileWriter result = new FileWriter(outputDataPath, false);
-		PrintWriter print = new PrintWriter(result);
-		print.print(current.toString());
-		print.close();
-		result.close();
 	}
 
 	private void retrainClassifiers(Instances data) throws Exception {
@@ -302,18 +283,6 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 	public String supervisedTipText() {
 		return "Determines whether or not class attribute is used in training model.";
-	}
-
-	public String getOutputDataPath() {
-		return outputDataPath;
-	}
-
-	public void setOutputDataPath(String outputDataPath) {
-		this.outputDataPath = outputDataPath;
-	}
-
-	public String outputDataPathTipText() {
-		return "Determines the file location to write results to.";
 	}
 
 	public static void main(String[] args) {
