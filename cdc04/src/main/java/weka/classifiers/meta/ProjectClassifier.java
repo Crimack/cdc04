@@ -1,28 +1,15 @@
 package weka.classifiers.meta;
 
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Vector;
-
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.IterativeClassifier;
 import weka.classifiers.SingleClassifierEnhancer;
 import weka.classifiers.trees.J48;
-import weka.core.Capabilities;
+import weka.core.*;
 import weka.core.Capabilities.Capability;
-import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.Option;
-import weka.core.OptionHandler;
-import weka.core.Utils;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
@@ -30,6 +17,8 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 	private String[] classifierOptions;
 	private boolean supervised = false;
+	private boolean randomData = false;
+	private int maxIterations = Integer.MAX_VALUE;
 
 	// Classification variables
 	private Classifier[] classifiers;
@@ -90,6 +79,13 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				new Option("\tIf set, this causes the classifier should to run as  a supervised classifier.\n"
 						+ "\tIf not present, this will be supervised.", "S", 0, "-S"));
 
+		newVector.addElement(new Option(
+				"\tIf set, the classifiers will be trained with any missing arguments filled in by random data.", "R",
+				1, "-R"));
+
+		newVector.addElement(new Option("\tSets the maximum number of times that a particular classifier will iterate "
+				+ "before determining that it is trained.", "M", 1, "-M"));
+
 		newVector.addElement(
 				new Option("", "", 0, "\nOptions specific to classifier " + m_Classifier.getClass().getName() + ":"));
 		newVector.addAll(Collections.list(((OptionHandler) m_Classifier).listOptions()));
@@ -105,6 +101,12 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 		setSupervised(Utils.getFlag("S", options));
 
+		setRandomData(Utils.getFlag("R", options));
+
+		String maxIterString = Utils.getOption("M", options);
+		if (!maxIterString.isEmpty())
+			setMaxIterations(Integer.parseInt(maxIterString));
+
 	}
 
 	public String[] getOptions() {
@@ -114,6 +116,13 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 		if (supervised)
 			options.add("-S");
+
+		if (randomData)
+			options.add("-R");
+
+		if (maxIterations < Integer.MAX_VALUE && maxIterations > 0) {
+		options.add("-M");
+		options.add("" + maxIterations);}
 
 		options.addAll(Arrays.asList(superOptions));
 		String[] result = new String[options.size()];
@@ -132,7 +141,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	}
 
 	private ArrayList<LinkedList<Integer>> findMissingAttributes(Instances instances) {
-		missing = new ArrayList<LinkedList<Integer>>();
+		missing = new ArrayList<>();
 		// Initialise a list of instances with missing attributes for every
 		// column
 		for (int i = 0; i < instances.numAttributes(); i++) {
@@ -148,12 +157,10 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				}
 			}
 		}
-		System.out.println(missing);
 		return missing;
 	}
 
 	public void initializeClassifier(Instances instances) throws Exception {
-		System.out.println("Initialising...");
 		// Docs say data must not be changed, so we take copies that we're free
 		// to modify
 		classifiers = new Classifier[instances.numAttributes()];
@@ -168,40 +175,46 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	}
 
 	private void replaceMissingValues(Instances instances) {
-		System.out.println("Randomising missing values");
 		int attributesToReplace = instances.numAttributes();
 		// Trim off the last column if supervised
 		if (supervised)
 			attributesToReplace--;
 
 		for (int i = 0; i < attributesToReplace; i++) {
-			// Build a list of potential values to pick from
-			HashSet<Double> potentialValueSet = new HashSet<>();
-			for (int j = 0; j < instances.numInstances(); j++) {
-				Double a = instances.get(j).value(i);
-				if (!a.isNaN())
-					potentialValueSet.add(a);
-			}
-			Double[] potentialValues = potentialValueSet.toArray(new Double[potentialValueSet.size()]);
+			Attribute att = instances.attribute(i);
+			if (att.isNominal() || att.isRelationValued() || att.isString()) {
+				ArrayList<Object> a = Collections.list(att.enumerateValues());
+				Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+				while (instanceNumbers.hasNext()) {
+					int index = instanceNumbers.next();
+					Instance in = instances.get(index);
+					String value = (String) a.get(ThreadLocalRandom.current().nextInt(a.size()));
+					in.setValue(i, value);
 
-			// Replace the missing attribute with a random possible value
-			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
-			while (instanceNumbers.hasNext()) {
-				int index = instanceNumbers.next();
-				Instance a = instances.get(index);
-				Double value = potentialValues[(int) (Math.random() * potentialValues.length)];
-				a.setValue(i, value);
+				}
+			} else {
+				Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+				while (instanceNumbers.hasNext()) {
+					int index = instanceNumbers.next();
+					Instance a = instances.get(index);
+					double randomNum = ThreadLocalRandom.current().nextDouble(att.getLowerNumericBound(),
+							att.getUpperNumericBound() + 1);
+					a.setValue(i, randomNum);
 
+				}
 			}
 		}
 	}
 
 	public boolean next() throws Exception {
 		counter++;
+		System.out.println(counter);
 		last = new Instances(current);
 		current = new Instances(original);
-		System.out.println("Number of iterations: " + counter);
 		retrainClassifiers(last);
+		if (randomData)
+			return false;
+
 		for (int i = 0; i < current.numAttributes(); i++) {
 			if (i == originalClassAttributeIndex) {
 				// Don't guess at the values of the class attribute
@@ -216,11 +229,10 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 			}
 		}
-		if (current.toString().equals(last.toString()) || counter >= 25) {
+
+		if (current.toString().equals(last.toString()) || counter >= getMaxIterations()) {
 			return false;
 		}
-		System.out.println("Going again");
-		System.out.println();
 		return true;
 	}
 
@@ -233,16 +245,14 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 			}
 		}
-		System.out.println("Classifier completed");
+		System.out.println("Number of iterations: " + counter);
 	}
 
 	private void retrainClassifiers(Instances data) throws Exception {
-		System.out.println("Building new classifiers");
 		for (int j = 0; j < data.numAttributes(); j++) {
 			Classifier tester = classifiers[j];
 			data.setClassIndex(j);
 			tester.buildClassifier(data);
-			classifiers[j] = tester;
 		}
 	}
 
@@ -283,6 +293,34 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 	public String supervisedTipText() {
 		return "Determines whether or not class attribute is used in training model.";
+	}
+
+	public boolean getRandomData() {
+		return randomData;
+	}
+
+	public void setRandomData(boolean randomData) {
+		this.randomData = randomData;
+	}
+
+	public String randomDataTipText() {
+		return "Determines whether to build classifier in an iterative manner, or to just" + "use random data";
+	}
+
+	public int getMaxIterations() {
+		return maxIterations;
+	}
+
+	public void setMaxIterations(int maxIterations) {
+		if (maxIterations < 0)
+			this.maxIterations = Integer.MAX_VALUE;
+		else
+			this.maxIterations = maxIterations;
+	}
+
+	public String maxIterationsTipText() {
+		return "Sets the maximum number of times which the classifier should iterate "
+				+ "over the training data before determining that it is completed.";
 	}
 
 	public static void main(String[] args) {
