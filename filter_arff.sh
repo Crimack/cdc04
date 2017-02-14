@@ -2,7 +2,7 @@
 # Bash script to remove percentage of values from all test files
 # Works if run from top level of repo and weka.jar is built
 
-JAR_LOCATION="Code/McKee/dist/weka.jar"
+JAR_LOCATION="Code/Weka/dist/weka.jar"
 INPUT_FILES=`du Test\ Files/* | cut -f2`
 
 SAVEIFS=$IFS

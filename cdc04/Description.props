@@ -1,0 +1,39 @@
+# Description file for project Weka package
+# 
+
+# Package name (required)
+PackageName=projectClassifier
+
+# Version (required)
+Version=0.1.0
+
+#Date (year-month-day)
+Date=2017-02-14
+
+# Title (required)
+Title=Project Classifier
+
+# Category (recommended)
+Category=Classification, Imputation
+
+# Author (required)
+Author=Christopher McKee <cmckee41@qub.ac.uk>
+
+# Maintainer (required)
+Maintainer=Christopher McKee <cmckee41@qub.ac.uk>
+
+# License (required)
+License=GPL 2.0|Mozilla
+
+# Description (required)
+Description=Repeatedly trains target classifiers on the same training data set. Supports all classifiers but probabilistic classifiers are recommended for best results.
+
+# Package URL for obtaining the package archive (required)
+# Will put on public github if is useful
+PackageURL=http://www.cs.qub.ac.uk/~c.decampos/
+
+# URL for further information
+URL=http://www.cs.qub.ac.uk/~c.decampos/
+
+# Dependencies (format: packageName (equality/inequality version_number)
+Depends=weka (>=3.7.1)
