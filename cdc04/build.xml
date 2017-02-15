@@ -1,9 +1,9 @@
-<project name="weka-package" default="compile" basedir=".">
+<project name="cdc04" default="compile" basedir=".">
 	<!-- =========================================================================== 
 		Ant build file for weka a weka package. Type ant -projecthelp for targets 
 		and descriptions. $Revision: 7301 $ =========================================================================== -->
 	<!-- set global properties for this build -->
-	<property name="package" value="project" />
+	<property name="package" value="cdc04" />
 	<property name="src" value="src/main/java" />
 	<property name="src-test" value="src/test/java" />
 	<property name="lib" value="lib" />
@@ -19,10 +19,6 @@
 	<!-- general classpath definition, incl. CLASSPATH env. variable, // but 
 		jars in lib directory have precedence over the CLASSPATH variable -->
 	<path id="project.class.path">
-		<fileset dir="${lib}">
-			<include name="*.jar" />
-			<include name="*.zip" />
-		</fileset>
 		<pathelement location="${build}/classes" />
 		<pathelement location="${build}/testcases" />
 		<pathelement path="${java.class.path}" />
@@ -107,8 +103,8 @@
 	</target>
 	<!-- Put everything in ${build}/classes into the ${package}.jar file -->
 	<target name="exejar" depends="compile, docs, init_dist"
-		description="Create a binary jar file in ./dist">
-		<jar jarfile="${dist}/${package}.jar" basedir="${build}/classes"></jar>
+		description="Create a binary jar file in root dir">
+		<jar jarfile="./${package}.jar" basedir="${build}/classes"></jar>
 	</target>
 	<target name="make_package" depends="clean, exejar"
 		description="Make the package zip file. Run with -Dpackage=[package name]">

@@ -11,6 +11,8 @@ import weka.core.Capabilities.Capability;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import cdc04.StateAnalyser;
+
 public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
 	private static final long serialVersionUID = 3582366333379609425L;
@@ -30,6 +32,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	private Instances original;
 	private Instances last;
 	private Instances current;
+	private StateAnalyser tracker =  new StateAnalyser();
 
 	protected Classifier m_Classifier = new J48();
 
@@ -229,6 +232,9 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 			}
 		}
+		tracker.addInstances(current);
+		System.err.println(tracker.getNumberDifferences());
+		System.out.println();
 
 		if (current.toString().equals(last.toString()) || counter >= getMaxIterations()) {
 			return false;
