@@ -32,9 +32,15 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	private Instances original;
 	private Instances last;
 	private Instances current;
-	private StateAnalyser tracker =  new StateAnalyser();
+	private StateAnalyser tracker;
 
-	protected Classifier m_Classifier = new J48();
+	protected Classifier m_Classifier;
+	
+	public ProjectClassifier() {
+		super();
+		tracker =  new StateAnalyser();
+		m_Classifier = new J48();
+	}
 
 	/**
 	 * String describing default classifier.
