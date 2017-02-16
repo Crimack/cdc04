@@ -1,17 +1,28 @@
 package weka.classifiers.meta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
+
+import cdc04.StateAnalyser;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
 import weka.classifiers.IterativeClassifier;
 import weka.classifiers.SingleClassifierEnhancer;
-import weka.classifiers.trees.J48;
-import weka.core.*;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.core.Attribute;
+import weka.core.Capabilities;
 import weka.core.Capabilities.Capability;
-
-import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-
-import cdc04.StateAnalyser;
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.Option;
+import weka.core.OptionHandler;
+import weka.core.Utils;
 
 public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
@@ -33,13 +44,11 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	private Instances last;
 	private Instances current;
 	private StateAnalyser tracker;
-
-	protected Classifier m_Classifier;
 	
 	public ProjectClassifier() {
 		super();
 		tracker =  new StateAnalyser();
-		m_Classifier = new J48();
+		m_Classifier = new NaiveBayes();
 	}
 
 	/**
@@ -48,7 +57,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	@Override
 	protected String defaultClassifierString() {
 
-		return "weka.classifiers.trees.J48";
+		return "weka.classifiers.bayes.NaiveBayes";
 	}
 
 	public String globalInfo() {
