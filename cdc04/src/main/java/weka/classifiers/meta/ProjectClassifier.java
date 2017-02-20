@@ -24,30 +24,125 @@ import weka.core.Option;
 import weka.core.OptionHandler;
 import weka.core.Utils;
 
+/**
+ * A classifier which is iteratively trained, imputing missing values into
+ * copies of the training data until no further change is observed. Builds one
+ * learner per attribute, and therefore can take quite a while to run.
+ * 
+ * <!-- options-start --> Valid options are:
+ * 
+ * <pre>
+ * -W classifier
+ * Full path to the target classifier to use, e.g. weka.classifiers.trees.J48
+ * </pre>
+ * 
+ * <pre>
+ * -S
+ * Defines whether or not the classifier will impute a value for the class
+ * attribute as it trains.
+ * </pre>
+ * 
+ * <pre>
+ * -R
+ * If set, the classifiers will be trained with any missing arguments filled in
+ * by random data. The classifier will then only iterate once.
+ * </pre>
+ * 
+ * <pre>
+ * -M integer
+ * Sets the maximum number of times that a particular classifier will iterate
+ * before determining that it is trained.
+ * </pre>
+ * 
+ * Options after -- are passed to the currently selected classifier.
+ *
+ * <!-- options-end -->
+ * 
+ * @author Christopher McKee (cmckee41@qub.ac.uk)
+ *
+ */
 public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
+	/** For serialization */
 	private static final long serialVersionUID = 3582366333379609425L;
 
-	private String[] classifierOptions;
-	private boolean supervised = false;
-	private boolean randomData = false;
-	private int maxIterations = Integer.MAX_VALUE;
+	/**
+	 * An array of String objects containing arguments to be passed to the
+	 * classifier being used
+	 */
+	private String[] m_ClassifierOptions;
+
+	/**
+	 * Boolean which determines how the iterative training is performed. If
+	 * false, then the class attribute is treated as though it is any other, and
+	 * is iteratively imputed. If true, then the class attribute is only imputed
+	 * once every other attribute has converged.
+	 */
+	private boolean m_Supervised = false;
+
+	/**
+	 * Boolean which simply fills missing data with random values. Useful in
+	 * experiments as a control.
+	 */
+	private boolean m_RandomData = false;
+
+	/**
+	 * The maximum number of times which the classifier iterates over the
+	 * training set. Should be set to a value lower than 50 for
+	 * non-probabilistic classifiers.
+	 */
+	private int m_MaxIterations = Integer.MAX_VALUE;
 
 	// Classification variables
-	private Classifier[] classifiers;
-	private ArrayList<LinkedList<Integer>> missing;
+	/** The current set of trained classifiers being iteratively trained */
+	private Classifier[] m_Classifiers;
+	/**
+	 * A record of all of values which were originally missing from the training
+	 * set. The index in the ArrayList corresponds with the attribute number,
+	 * while integers within the LinkedList correspond with the instance number.
+	 */
+	private ArrayList<LinkedList<Integer>> m_Missing;
 
 	// Instances used to track progress
-	private int counter = 0;
-	private int originalClassAttributeIndex = Integer.MIN_VALUE;
-	private Instances original;
-	private Instances last;
-	private Instances current;
-	private StateAnalyser tracker;
-	
+	/**
+	 * Counts the number of times the classifier has currently iterated
+	 */
+	private int m_Counter = 0;
+	/**
+	 * The attribute number which was originally set as the class attribute.
+	 * This is recorded since the class attribute must be repeatedly changed
+	 * during imputation.
+	 */
+	private int m_OriginalClassAttributeIndex = Integer.MIN_VALUE;
+
+	/**
+	 * A copy of the original training data
+	 */
+	private Instances m_Original;
+
+	/**
+	 * A copy of the training data, which classifiers are retrained against
+	 */
+	private Instances m_Last;
+
+	/**
+	 * Another copy of the training data, which is actively having missing
+	 * values filled in
+	 */
+	private Instances m_Current;
+
+	/**
+	 * Object used to track the number of rows which have changed between
+	 * iterations of training
+	 */
+	private StateAnalyser m_Tracker;
+
+	/**
+	 * Constructor
+	 */
 	public ProjectClassifier() {
 		super();
-		tracker =  new StateAnalyser();
+		m_Tracker = new StateAnalyser();
 		m_Classifier = new NaiveBayes();
 	}
 
@@ -60,11 +155,22 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		return "weka.classifiers.bayes.NaiveBayes";
 	}
 
+	/**
+	 * Global information about the class
+	 * 
+	 * @return information about the classifier which is displayed in the
+	 *         CLI/GUI
+	 */
 	public String globalInfo() {
 		return "Repeatedly applies, then rebuilds models until the output data set no longer changes.";
 
 	}
 
+	/**
+	 * Returns default capabilities of the classifier.
+	 * 
+	 * @return the capabilities of this classifier
+	 */
 	@Override
 	public Capabilities getCapabilities() {
 		Capabilities result = super.getCapabilities();
@@ -83,15 +189,15 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 	/**
 	 * Returns an enumeration describing the available options.
-	 *
+	 * 
 	 * @return an enumeration of all the available options.
 	 */
 	public Enumeration<Option> listOptions() {
 		Vector<Option> newVector = Option.listOptionsForClassHierarchy(this.getClass(), AbstractClassifier.class);
 
-		newVector.addElement(
-				new Option("\tSets the classifier to be used, and any options to be passed to it. Defaults to J48.",
-						"W", 1, "-W"));
+		newVector.addElement(new Option(
+				"\tSets the classifier to be used, and any options to be passed to it. Defaults to Naive Bayes.", "W",
+				1, "-W"));
 
 		newVector.addElement(
 				new Option("\tIf set, this causes the classifier should to run as  a supervised classifier.\n"
@@ -99,7 +205,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 		newVector.addElement(new Option(
 				"\tIf set, the classifiers will be trained with any missing arguments filled in by random data.", "R",
-				1, "-R"));
+				0, "-R"));
 
 		newVector.addElement(new Option("\tSets the maximum number of times that a particular classifier will iterate "
 				+ "before determining that it is trained.", "M", 1, "-M"));
@@ -111,6 +217,37 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		return newVector.elements();
 	}
 
+	/**
+	 * Parses a given list of options. Valid options are:
+	 * <p>
+	 * 
+	 * -W classifier<br>
+	 * Full path to the target classifier to use, e.g.
+	 * weka.classifiers.trees.J48
+	 * <p>
+	 * 
+	 * -S <br>
+	 * Defines whether or not the classifier will impute a value for the class
+	 * attribute as it trains.
+	 * <p>
+	 * 
+	 * -R <br>
+	 * If set, the classifiers will be trained with any missing arguments filled
+	 * in by random data. The classifier will then only iterate once.
+	 * <p>
+	 * 
+	 * -M integer <br>
+	 * Sets the maximum number of times that a particular classifier will
+	 * iterate before determining that it is trained.
+	 * <p>
+	 * 
+	 * Options after -- are passed to the currently selected classifier.
+	 * 
+	 * @param options
+	 *            The list of options as an array of Strings
+	 * @exception Exception
+	 *                if an option is not supported
+	 */
 	public void setOptions(String[] options) throws Exception {
 
 		super.setOptions(options);
@@ -127,20 +264,26 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 	}
 
+	/**
+	 * Gets the current settings of the Classifier.
+	 *
+	 * @return an array of strings suitable for passing to setOptions
+	 */
 	public String[] getOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 		String[] superOptions = super.getOptions();
 
-		if (supervised)
+		if (m_Supervised)
 			options.add("-S");
 
-		if (randomData)
+		if (m_RandomData)
 			options.add("-R");
 
-		if (maxIterations < Integer.MAX_VALUE && maxIterations > 0) {
-		options.add("-M");
-		options.add("" + maxIterations);}
+		if (m_MaxIterations < Integer.MAX_VALUE && m_MaxIterations > 0) {
+			options.add("-M");
+			options.add("" + m_MaxIterations);
+		}
 
 		options.addAll(Arrays.asList(superOptions));
 		String[] result = new String[options.size()];
@@ -148,9 +291,18 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		return options.toArray(result);
 	}
 
+	/**
+	 * Builds a set of classifiers based on the training data. These are
+	 * iteratively trained on copies of the data.
+	 * 
+	 * @param data
+	 *            the Instances object which comprises the training data
+	 * @exception Exception
+	 *                exception thrown is raised to a Weka error handler
+	 */
 	@Override
 	public void buildClassifier(Instances data) throws Exception {
-		originalClassAttributeIndex = data.classIndex();
+		m_OriginalClassAttributeIndex = data.classIndex();
 		findMissingAttributes(data);
 		initializeClassifier(data);
 		while (next()) {
@@ -158,12 +310,23 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		done();
 	}
 
+	/**
+	 * Parses a given set of Instances, usually the training data, and returns
+	 * an ArrayList of LinkedLists which contains informtation about which
+	 * values are missing. The ArrayList index indicates the attribute index,
+	 * while the integers contained in the LinkedList objects are instance
+	 * numbers.
+	 * 
+	 * @param instances
+	 *            an Instances object, usually the training data.
+	 * @return list of lists containing information about missing values
+	 */
 	private ArrayList<LinkedList<Integer>> findMissingAttributes(Instances instances) {
-		missing = new ArrayList<>();
+		m_Missing = new ArrayList<>();
 		// Initialise a list of instances with missing attributes for every
 		// column
 		for (int i = 0; i < instances.numAttributes(); i++) {
-			missing.add(i, new LinkedList<Integer>());
+			m_Missing.add(i, new LinkedList<Integer>());
 		}
 		for (int i = 0; i < instances.numInstances(); i++) {
 			Instance test = instances.get(i);
@@ -171,38 +334,52 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				// Add the index of the instance which contains the attribute to
 				// that particular attribute's list
 				if (test.isMissing(j)) {
-					missing.get(j).add(i);
+					m_Missing.get(j).add(i);
 				}
 			}
 		}
-		return missing;
+		return m_Missing;
 	}
 
+	/**
+	 * Makes copies of the training data which can be mutated, and initialise
+	 * the array of Classifier objects
+	 * 
+	 * @param instances
+	 *            the training data
+	 */
 	public void initializeClassifier(Instances instances) throws Exception {
 		// Docs say data must not be changed, so we take copies that we're free
 		// to modify
-		classifiers = new Classifier[instances.numAttributes()];
-		for (int i = 0; i < classifiers.length; i++) {
-			classifiers[i] = forName(getClassifier().getClass().getName(), getClassifierOptions());
+		m_Classifiers = new Classifier[instances.numAttributes()];
+		for (int i = 0; i < m_Classifiers.length; i++) {
+			m_Classifiers[i] = forName(getClassifier().getClass().getName(), getClassifierOptions());
 		}
-		original = new Instances(instances);
-		current = new Instances(instances);
-		last = new Instances(original);
-		replaceMissingValues(last);
-		current.remove(0); // Force first loop to pass
+		m_Original = new Instances(instances);
+		m_Current = new Instances(instances);
+		m_Last = new Instances(m_Original);
+		replaceMissingValues(m_Last);
+		m_Current.remove(0); // Force first loop to pass
 	}
 
+	/**
+	 * Initially replaces missing data with random, potentially valid data by
+	 * traversing m_Missing
+	 * 
+	 * @param instances
+	 *            a dataset
+	 */
 	private void replaceMissingValues(Instances instances) {
 		int attributesToReplace = instances.numAttributes();
 		// Trim off the last column if supervised
-		if (supervised)
+		if (m_Supervised)
 			attributesToReplace--;
 
 		for (int i = 0; i < attributesToReplace; i++) {
 			Attribute att = instances.attribute(i);
 			if (att.isNominal() || att.isRelationValued() || att.isString()) {
 				ArrayList<Object> a = Collections.list(att.enumerateValues());
-				Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+				Iterator<Integer> instanceNumbers = m_Missing.get(i).iterator();
 				while (instanceNumbers.hasNext()) {
 					int index = instanceNumbers.next();
 					Instance in = instances.get(index);
@@ -211,7 +388,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 				}
 			} else {
-				Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+				Iterator<Integer> instanceNumbers = m_Missing.get(i).iterator();
 				while (instanceNumbers.hasNext()) {
 					int index = instanceNumbers.next();
 					Instance a = instances.get(index);
@@ -224,126 +401,232 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		}
 	}
 
+	/**
+	 * Retrains each of the classifiers, then attempts to impute missing data in
+	 * a copy of the training data. Does not iterate again if the results of
+	 * current iteration match the results of the previous iteration, or the max
+	 * number of iterations has been reached.
+	 * 
+	 * @return true if another iteration should be performed, otherwise false.
+	 */
 	public boolean next() throws Exception {
-		counter++;
-		System.out.println(counter);
-		last = new Instances(current);
-		current = new Instances(original);
-		retrainClassifiers(last);
-		if (randomData)
+		m_Counter++;
+		System.out.println(m_Counter);
+		m_Last = new Instances(m_Current);
+		m_Current = new Instances(m_Original);
+		retrainClassifiers(m_Last);
+		if (m_RandomData)
 			return false;
 
-		for (int i = 0; i < current.numAttributes(); i++) {
-			if (i == originalClassAttributeIndex) {
+		for (int i = 0; i < m_Current.numAttributes(); i++) {
+			if (i == m_OriginalClassAttributeIndex) {
 				// Don't guess at the values of the class attribute
 				continue;
 			}
-			current.setClassIndex(i);
-			Iterator<Integer> instanceNumbers = missing.get(i).iterator();
+			m_Current.setClassIndex(i);
+			Iterator<Integer> instanceNumbers = m_Missing.get(i).iterator();
 			while (instanceNumbers.hasNext()) {
 				int index = instanceNumbers.next();
-				Instance a = current.get(index);
+				Instance a = m_Current.get(index);
 				a.setValue(i, classifyInstance(a));
 
 			}
 		}
-		tracker.addInstances(current);
-		System.err.println(tracker.getNumberDifferences());
+		m_Tracker.addInstances(m_Current);
+		System.err.println(m_Tracker.getNumberDifferences());
 		System.out.println();
 
-		if (current.toString().equals(last.toString()) || counter >= getMaxIterations()) {
+		if (m_Current.toString().equals(m_Last.toString()) || m_Counter >= getMaxIterations()) {
 			return false;
 		}
 		return true;
 	}
 
+	/**
+	 * Method called when iteration has terminated. Imputes class values if
+	 * m_Supervised is set.
+	 */
 	public void done() throws Exception {
-		if (supervised) {
-			current.setClassIndex(originalClassAttributeIndex);
-			for (int i : missing.get(originalClassAttributeIndex)) {
-				Instance toClassify = current.get(i);
-				toClassify.setValue(originalClassAttributeIndex, classifyInstance(toClassify));
+		if (m_Supervised) {
+			m_Current.setClassIndex(m_OriginalClassAttributeIndex);
+			for (int i : m_Missing.get(m_OriginalClassAttributeIndex)) {
+				Instance toClassify = m_Current.get(i);
+				toClassify.setValue(m_OriginalClassAttributeIndex, classifyInstance(toClassify));
 
 			}
 		}
-		System.out.println("Number of iterations: " + counter);
+		System.out.println("Number of iterations: " + m_Counter);
 	}
 
+	/**
+	 * Retrains each classifier against a particular dataset.
+	 * 
+	 * @param data
+	 *            training data to use
+	 * @throws Exception
+	 *             any exception thrown
+	 */
 	private void retrainClassifiers(Instances data) throws Exception {
 		for (int j = 0; j < data.numAttributes(); j++) {
-			Classifier tester = classifiers[j];
+			Classifier tester = m_Classifiers[j];
 			data.setClassIndex(j);
 			tester.buildClassifier(data);
 		}
 	}
 
+	/**
+	 * Classifies an instance.
+	 * 
+	 * @param instance
+	 *            the instance to classify
+	 * @return the classification for the instance
+	 * @throws Exception
+	 *             if instance can't be classified successfully
+	 */
+
 	@Override
 	public double classifyInstance(Instance instance) throws Exception {
-		Classifier active = classifiers[instance.classIndex()];
+		Classifier active = m_Classifiers[instance.classIndex()];
 		return active.classifyInstance(instance);
 	}
 
+	/**
+	 * Returns class probabilities for an instance.
+	 * 
+	 * @param instance
+	 *            the instance to calculate the class probabilities for
+	 * @return the class probabilities
+	 * @throws Exception
+	 *             if distribution can't be computed successfully
+	 */
 	public double[] distributionForInstance(Instance instance) throws Exception {
-		Classifier active = classifiers[instance.classIndex()];
+		Classifier active = m_Classifiers[instance.classIndex()];
 		return active.distributionForInstance(instance);
 	}
 
-	public Instances classifyDataset() throws Exception {
-		return current;
-	}
-
+	/**
+	 * Gets classifier options
+	 * 
+	 * @return array of String objects to be passed to each classifier
+	 */
 	public String[] getClassifierOptions() {
-		return classifierOptions;
+		return m_ClassifierOptions;
 	}
 
+	/**
+	 * Sets classifier options
+	 * 
+	 * @param classifierOptions
+	 *            array of String objects to be passed to each classifier
+	 */
 	public void setClassifierOptions(String[] classifierOptions) {
-		this.classifierOptions = classifierOptions;
+		this.m_ClassifierOptions = classifierOptions;
 	}
 
+	/**
+	 * Tip text to be displayed in the GUI for this property
+	 * 
+	 * @return tip text to be displayed in the GUI
+	 */
 	public String classifierOptionsTipText() {
 		return "Options to pass to the chosen classifier";
 	}
 
+	/**
+	 * Get the value of m_Supervised
+	 * 
+	 * @return value of m_Supervised
+	 */
 	public boolean getSupervised() {
-		return supervised;
+		return m_Supervised;
 	}
 
+	/**
+	 * Set the value of m_Supervised
+	 * 
+	 * @param supervised
+	 *            the new value of m_Supervised
+	 */
 	public void setSupervised(boolean supervised) {
-		this.supervised = supervised;
+		this.m_Supervised = supervised;
 	}
 
+	/**
+	 * Tip text to be displayed in the GUI for this property
+	 * 
+	 * @return tip text to be displayed in the GUI
+	 */
 	public String supervisedTipText() {
 		return "Determines whether or not class attribute is used in training model.";
 	}
 
+	/**
+	 * Get the value of m_RandomData
+	 * 
+	 * @return value of m_RandomData
+	 */
 	public boolean getRandomData() {
-		return randomData;
+		return m_RandomData;
 	}
 
+	/**
+	 * Set the value of m_RandomData
+	 * 
+	 * @param randomData
+	 *            new value of m_RandomData
+	 */
 	public void setRandomData(boolean randomData) {
-		this.randomData = randomData;
+		this.m_RandomData = randomData;
 	}
 
+	/**
+	 * Tip text to be displayed in the GUI for this property
+	 * 
+	 * @return tip text to be displayed in the GUI
+	 */
 	public String randomDataTipText() {
 		return "Determines whether to build classifier in an iterative manner, or to just" + "use random data";
 	}
 
+	/**
+	 * Get the value of m_MaxIterations
+	 * 
+	 * @return value of m_MaxIterations
+	 */
 	public int getMaxIterations() {
-		return maxIterations;
+		return m_MaxIterations;
 	}
 
+	/**
+	 * Set the value of m_MaxIterations. Defaults to Integer.MAX_VALUE if value
+	 * less than 0 is supplied.
+	 * 
+	 * @param maxIterations
+	 *            new value of m_MaxIterations
+	 */
 	public void setMaxIterations(int maxIterations) {
 		if (maxIterations < 0)
-			this.maxIterations = Integer.MAX_VALUE;
+			this.m_MaxIterations = Integer.MAX_VALUE;
 		else
-			this.maxIterations = maxIterations;
+			this.m_MaxIterations = maxIterations;
 	}
 
+	/**
+	 * Tip text to be displayed in the GUI for this property
+	 * 
+	 * @return tip text to be displayed in the GUI
+	 */
 	public String maxIterationsTipText() {
 		return "Sets the maximum number of times which the classifier should iterate "
 				+ "over the training data before determining that it is completed.";
 	}
 
+	/**
+	 * Main method for testing this class.
+	 * 
+	 * @param args
+	 *            the options
+	 */
 	public static void main(String[] args) {
 		runClassifier(new ProjectClassifier(), args);
 	}
