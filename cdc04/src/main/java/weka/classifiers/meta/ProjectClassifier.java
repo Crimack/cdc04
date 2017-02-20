@@ -17,7 +17,6 @@ import weka.classifiers.SingleClassifierEnhancer;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.core.Attribute;
 import weka.core.Capabilities;
-import weka.core.Capabilities.Capability;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
@@ -92,7 +91,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 * non-probabilistic classifiers.
 	 */
 	private int m_MaxIterations = Integer.MAX_VALUE;
-	private int m_NumHiddenVariables;
+	private int m_NumHiddenVariables = 0;
 
 	// Classification variables
 	/** The current set of trained classifiers being iteratively trained */
@@ -171,15 +170,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	public Capabilities getCapabilities() {
 		Capabilities result = super.getCapabilities();
 
-		// class
-		result.disableAll();
-		result.disableAllClassDependencies();
-		result.enable(Capability.NOMINAL_CLASS);
-		result.enable(Capability.NUMERIC_CLASS);
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NOMINAL_ATTRIBUTES);
-		result.enable(Capability.NUMERIC_ATTRIBUTES);
-		result.enable(Capability.MISSING_VALUES);
+		result.setMinimumNumberInstances(0);
 		return result;
 	}
 
@@ -253,15 +244,17 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 		setClassifierOptions(Utils.partitionOptions(options));
 
-		setSupervised(Utils.getFlag("S", options));
+		setSupervised(Utils.getFlag('S', options));
 
-		setRandomData(Utils.getFlag("R", options));
+		setRandomData(Utils.getFlag('R', options));
 
-		String maxIterString = Utils.getOption("M", options);
+		String maxIterString = Utils.getOption('M', options);
 		if (!maxIterString.isEmpty())
 			setMaxIterations(Integer.parseInt(maxIterString));
 
-		setNumHiddenVariables(Integer.parseInt(Utils.getOption('N', options)));
+		String numHiddenVariables = Utils.getOption('N', options);
+		if (!numHiddenVariables.isEmpty())
+			setNumHiddenVariables(Integer.parseInt(numHiddenVariables));
 
 	}
 
@@ -285,9 +278,10 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			options.add("-M");
 			options.add("" + m_MaxIterations);
 		}
-		if (m_NumHiddenVariables > 0)
+		if (m_NumHiddenVariables > 0) {
 			options.add("-N");
 			options.add("" + m_NumHiddenVariables);
+		}
 
 		options.addAll(Arrays.asList(superOptions));
 		String[] result = new String[options.size()];
@@ -393,7 +387,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				continue;
 
 			Attribute att = instances.attribute(i);
-			if (att.isNominal() || att.isRelationValued() || att.isString()) {
+			if (att.isNominal() || att.isString()) {
 				ArrayList<Object> a = Collections.list(att.enumerateValues());
 				Iterator<Integer> instanceNumbers = m_Missing.get(i).iterator();
 				while (instanceNumbers.hasNext()) {
