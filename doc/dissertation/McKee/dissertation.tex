@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper]{report}
 
 \usepackage{graphicx}
+\usepackage{pdfpages}
 
 \begin{document}
 \title{Extending Classifiers for Incomplete Data\\
@@ -15,7 +16,9 @@ Christopher McKee\\
 INCLUDE DATE PLS}
 \maketitle
 \newpage
-Placeholder for declaration, once there's a useful version on QOL
+\includepdf{declaration.pdf}
+\input{abstract.tex}
+\tableofcontents
 \input{intro.tex}
 \input{requirements.tex}
 \input{design_implementation.tex}
