@@ -11,7 +11,49 @@ Since the project relies upon the idea that predictions for missing training dat
 \section{Implementation}
 As an existing piece of software is being extended, much of the work to implement the various classifiers to be tested is already done. The main aim of this work is to integrate successfully into Weka as a plugin, and to interface with it as necessary.
 \subsection{Weka Architecture}
-Stuff about how weka is laid out
+Weka is a Java package, with a source code layout which looks somewhat like this if unused packages are omitted: \\
+\dirtree{%
+.1 weka. 
+.2 associations. 
+.2 attributeSelection. 
+.2 classifiers. 
+.3 AbstractClassifier. 
+.3 IterativeClassifier. 
+.3 SingleClassifierEnhancer. 
+.2 clusterers. 
+.2 core. 
+.3 Attribute. 
+.3 Capabilities. 
+.3 Instance. 
+.3 Instances. 
+.3 Option. 
+.3 Utils. 
+.2 datagenerators.
+.2 estimators.
+.2 experiment.
+.2 filters.
+.2 gui.
+.2 knowledgeflow. }
+\hfill \break
+Each of these subpackages is reasonably self explanatory. This project is mostly concerned with classifications, and thus code implemented for it lives in the \textit{weka.classifiers} package, although there are some dependcies on \textit{weka.core} since it contains much of the shared code for Weka. Provided that the rest of the project works as intended and the documentation is followed, there is no need to modify or discuss the other packages.
+
+\subsection{weka.core}
+From \textit{weka.core}, the following classes are used:
+
+\begin{itemize}
+\item \textbf{Instances} - An Instances object in Weka is used to represent a complete data set. It is roughly equivalent to the object representation of an ARFF file. It is comprised of a list of Instance objects,  a list of Attribute objects and some other metadata such as the class attribute for the data set and its name.
+\item \textbf{Attribute} - An Attribute in Weka refers to a single column in a data set. This object is mostly responsible for tracking the column's data type (e.g. nominal, numeric, etc), and other related information common to the entire column.
+\item \textbf{Instance} - An Instance is the representation of a single row of data, roughly analogous to a row in a CSV file. Belongs to a particular Instances object. Each attribute value is stored as a Java double, which is then used in connection with an Attribute object to determine the actual value of an attribute.
+\item \textbf{Option} - An Option object represents a particular command line parameter, and the way in which it should be handled. This also contains a description to be printed in the help dialog if incorrect parameters are passed to the CLI.
+\end{itemize}
+
+\subsection{AbstractClassifier}
+Stuff about deriving from same base classifier
+\subsection{IterativeClassifier}
+Stuff about next() and done()
+\subsection{SingleClassifierEnhancer}
+Stuff about mClassifier and stuff
+
 \subsection{Weka Command Line Interface}
 Stuff about passing options to classifiers
 \subsection{Weka Graphical User Interface}
