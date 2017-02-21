@@ -49,6 +49,10 @@ public class StateAnalyser implements Serializable {
 		else
 			return -1;
 	}
+	
+	public int getNumberIterations() {
+		return tracker.size();
+	}
 
 	public void addInstances(Instances toAdd) {
 		tracker.add(toAdd);

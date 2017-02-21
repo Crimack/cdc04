@@ -105,10 +105,6 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 	// Instances used to track progress
 	/**
-	 * Counts the number of times the classifier has currently iterated
-	 */
-	private int m_Counter = 0;
-	/**
 	 * The attribute number which was originally set as the class attribute.
 	 * This is recorded since the class attribute must be repeatedly changed
 	 * during imputation.
@@ -410,8 +406,6 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 * @return true if another iteration should be performed, otherwise false.
 	 */
 	public boolean next() throws Exception {
-		m_Counter++;
-		System.out.println(m_Counter);
 		m_Last = new Instances(m_Current);
 		m_Current = new Instances(m_Original);
 		retrainClassifiers(m_Last);
@@ -433,10 +427,11 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			}
 		}
 		m_Tracker.addInstances(m_Current);
+		System.err.println(m_Tracker.getNumberIterations());
 		System.err.println(m_Tracker.getNumberDifferences());
-		System.out.println();
+		System.err.println();
 
-		if (m_Current.toString().equals(m_Last.toString()) || m_Counter >= getMaxIterations()) {
+		if (m_Tracker.getNumberDifferences() == 0 || m_Tracker.getNumberIterations() >= getMaxIterations()) {
 			return false;
 		}
 		return true;
@@ -455,7 +450,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 
 			}
 		}
-		System.out.println("Number of iterations: " + m_Counter);
+		System.err.println("Number of iterations taken: " + m_Tracker.getNumberIterations());
 	}
 
 	/**
