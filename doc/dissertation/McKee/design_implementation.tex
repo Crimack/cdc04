@@ -6,4 +6,17 @@ This body of work is mainly interested in common classifiers, and in trying to u
 
 It also follows that any files which are used for testing should be in either .csv, or .arff format. The former is commonly used in data processing while the latter is a proprietary Weka format which is very similar, but differs in that it contains additional data at the top of the file pertaining to the dataset. Both are supported by Weka, and therefore either is usable.
 
+Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values, whilst numeric values are not guaranteed to every settle on a particular value at all. It is more likely that numeric predicitions would just change less and less between iterations, until the changes were miniscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
+
 \section{Implementation}
+As an existing piece of software is being extended, much of the work to implement the various classifiers to be tested is already done. The main aim of this work is to integrate successfully into Weka as a plugin, and to interface with it as necessary.
+\subsection{Weka Architecture}
+Stuff about how weka is laid out
+\subsection{Weka Command Line Interface}
+Stuff about passing options to classifiers
+\subsection{Weka Graphical User Interface}
+Stuff about setter methods etc
+\subsection{StateAnalyser}
+Stuff about how we're measuring sameness
+\subsection{ProjectClassifier}
+Stuff about implementation, mostly pseudocode

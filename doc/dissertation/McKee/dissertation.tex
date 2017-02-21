@@ -1,7 +1,20 @@
 \documentclass[12pt,a4paper]{report}
 
+% Imports
 \usepackage{graphicx}
 \usepackage{pdfpages}
+\usepackage{geometry}
+\usepackage{standalone}
+
+
+%Spacing
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+\setlength{\parskip}{1em}
 
 \begin{document}
 \title{Extending Classifiers for Incomplete Data\\
@@ -12,8 +25,8 @@ BACHELOR OF ENGINEERING in Computer Science\\
 in\\
 The Queen's University of Belfast\\
 by\\
-Christopher McKee\\
-INCLUDE DATE PLS}
+}
+\author{Christopher McKee}
 \maketitle
 \newpage
 \includepdf{declaration.pdf}
@@ -24,5 +37,9 @@ INCLUDE DATE PLS}
 \input{design_implementation.tex}
 \input{experiments.tex}
 \input{conclusion.tex}
+\appendix
+\chapter{JavaDoc}
+\label{JavaDoc}
+\includepdf[pages=-]{javadoc.pdf}
 \end{document}
 \end
