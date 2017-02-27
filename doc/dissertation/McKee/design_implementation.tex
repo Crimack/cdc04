@@ -8,6 +8,16 @@ It also follows that any files which are used for testing should be in either .c
 
 Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values, whilst numeric values are not guaranteed to every settle on a particular value at all. It is more likely that numeric predicitions would just change less and less between iterations, until the changes were miniscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
 
+It is intended that the implemented algorithm will work as follows:
+\begin{enumerate}
+\item Take a given training set, and make a copy of it
+\item Fill the copy set with random, viable values
+\item Use the produced data set to train a new model
+\item Use the newly trained model to impute values into a new copy of the training set
+\item Repeat 3 and 4 until identical data sets are produced by two consecutive iterations
+\item Use the model built by the final iteration for classification of a test set
+\end{enumerate}
+
 \section{Implementation}
 As an existing piece of software is being extended, much of the work to implement the various classifiers to be tested is already done. The main aim of this work is to integrate successfully into Weka as a plugin, and to interface with it as necessary.
 \subsection{Weka Architecture}
@@ -136,10 +146,11 @@ public buildClassifier(instances) {
 \end{footnotesize}
 This means that building the classifier continues until it no longer makes sense to keep doing so, or no gain is achieved. This suits the project's use case, and therefore the interface makes sense to use.
 
-\subsection{Weka Command Line Interface}
-Stuff about passing options to classifiers
-\subsection{Weka Graphical User Interface}
-Stuff about setter methods etc
+\subsection{Weka Interfaces}
+Calling a Weka classifier from the command line (assuming that the Weka jar file is already on the classpath) is reasonably straightforward. The target classifier is firstly called by its full path e.g.  \textit{java weka.classifiers.trees.J48}. Anything which comes after this point is passed to the classifier as an Option object. These are used as parameters to configure the behaviour of a particular classifier, and each class which extends from \textit{AbstractClassifier} generally implements its own specific set of Options through a combination of private variables and specifically named methods. The GUI appears works in much the same way, except that it provides windows with dropdown menus and text fields to allow classifiers and their Options to be configured.  
+
+For example, imagine a given classifier had a private variable named \textit{m\_Example}. In order to expose this to the GUI and CLI it would require getter and setter methods, as well as an \textit{exampleTipText()} method to display help text. Code specifying how to handle this Option would also need to be added to the \textit{getOptions()}, \textit{setOptions()} and \textit{listOptions()} methods. (paragraph too vague / not enough detail)
+
 \subsection{StateAnalyser}
 The \textit{StateAnalyser} class has been designed to track the progress of the \textit{ProjectClassifier} as it is being trained. It contains a list of the training sets which have been produced by the \textit{next()} method, and records the number of differences between them. All of the methods described below are just utility methods for working with or comparing the training sets which have been produced.
 
@@ -175,14 +186,74 @@ public getNumberIterations() {
 \end{verbatim}
 \end{footnotesize}
 \subsection{ProjectClassifier}
-Stuff about :
-- array of classifiers
-- missing value array
-- variables used for tracking 
-- find missing attributes
-- initializeClassifier
-- replaceMissingValues
-- next
-- done 
-- retrainClassifiers
-- classify / distributionForInstance
+The \textit{ProjetClassifier} class is the implementation of the algorithm described in section 2.1. This is extends from \textit{SingleClassifierEnhancer} and implements the \textit{IterativeClassifier} interface. It maintains an internal array of classifiers for every attribute in a data set, and uses these to impute values into the training set as well as to classify test data. It also maintains three copies of training set while building:
+
+\begin{itemize}
+\item \textit{original} - a copy of the training set
+\item \textit{last} - the last data set produced by imputing missing values, which can be used for retraining during the next iteration
+\item \textit{current} - the data set which is currently having its missing values filled in
+\end{itemize}
+
+\begin{footnotesize}
+\begin{verbatim}
+public buildClassifier(instances) {
+    record the index of the original class attribute
+    take a reference copy of the training set (original)
+    find the location of missing data in the training set
+    set up the classifier for the first run
+    repeat until no change is observed between current and last
+    perform any cleanup needed
+}
+
+public findMissingAttributes(instances) {
+    for each instance in a training set {
+        record any values which are missing for later use
+    }
+}
+
+public initializeClassifier(instances) {
+    create new tracker object
+    create one classifier object per attribute in the data set
+    take two modifiable copies of the training data set (last/current)
+    replace any missing data in last using random values
+}
+
+public replaceMissingValues(instances) {
+    for any each piece of missing data {
+        input a random possible value
+    }
+}
+
+public next() {
+    replace last with current
+    replace current with a new copy of the training data
+    retrain classifiers against last
+    for each recorded missing value {
+        use trained classifiers to impute missing values in current
+    }
+    add current to the tracker object
+    if (current == last)
+        stop iterating
+    else   
+        iterate again
+}
+
+public done() {
+    do option specific cleanup
+}
+
+public retrainClassifiers(instances) {
+    for each attribute in the training set {
+        retrain a classifier against that attribute
+    }
+}
+\end{verbatim}
+\end{footnotesize}
+
+\textit{ProjetClassifier} also accepts some options, which can be used to configure how it runs:
+\begin{itemize}
+\item \textbf{maxIterations} (-M number) - Some classifiers may not converge in the way in which we expect, or they make take a very long time to reach this point. This flag allows for a maximum number of training iterations to be set in order to ensure experiments finish in a timely fashion.
+\item \textbf{supervised} (-S) - It may be interesting to observe the difference between classifiers which are trained against a training set where the class attribute is trained iteratively along with the rest of the data set against a training set where missing class attribute values are not imputed until the classifier rest of the classifier has converged. This flag allows for the latter case to be tested.
+\item \textbf{randomData} (-R) - As a control set during experiments, it make sense to fill a training set with random data and determine whether or not the implemented algorithm outperforms classifiers which are trained against this. This allows this experiment to be performed.
+\item \textbf{hiddenVariables} (-N) - See appendix B (or something, update later)
+\end{itemize}

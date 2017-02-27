@@ -207,7 +207,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				+ "before determining that it is trained.", "M", 1, "-M"));
 
 		newVector.addElement(new Option(
-				"\tSets the number of 'hidden variables' to be inferred by the chosen classifier.", "h", 1, "-h"));
+				"\tSets the number of 'hidden variables' to be inferred by the chosen classifier.", "N", 1, "-N"));
 
 		newVector.addElement(
 				new Option("", "", 0, "\nOptions specific to classifier " + m_Classifier.getClass().getName() + ":"));
@@ -261,7 +261,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		if (!maxIterString.isEmpty())
 			setMaxIterations(Integer.parseInt(maxIterString));
 
-		setNumHiddenVariables(Integer.parseInt(Utils.getOption('h', options)));
+		setNumHiddenVariables(Integer.parseInt(Utils.getOption('N', options)));
 
 	}
 
@@ -286,7 +286,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			options.add("" + m_MaxIterations);
 		}
 		if (m_NumHiddenVariables > 0)
-			options.add("-h");
+			options.add("-N");
 			options.add("" + m_NumHiddenVariables);
 
 		options.addAll(Arrays.asList(superOptions));
@@ -376,8 +376,6 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		m_Current = new Instances(m_Original);
 		m_Last = new Instances(m_Original);
 		replaceMissingValues(m_Last);
-		System.out.println(m_Last);
-		m_Current.remove(0); // Force first loop to pass
 	}
 
 	/**
@@ -435,7 +433,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			return false;
 
 		for (int i = 0; i < m_Current.numAttributes(); i++) {
-			if (i == m_OriginalClassAttributeIndex) {
+			if (m_Supervised && i == m_OriginalClassAttributeIndex) {
 				// Don't guess at the values of the class attribute
 				continue;
 			}
@@ -657,7 +655,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	}
 
 	public String numHiddenVariablesTipText() {
-		return "Determines the number of 'hidden variables which should be inferred";
+		return "Determines the number of 'hidden variables' which should be inferred";
 	}
 
 	/**
