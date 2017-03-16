@@ -1,11 +1,10 @@
 package cdc04;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import weka.core.Instance;
 import weka.core.Instances;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Class written to record a series of Weka instances, and to determine
@@ -17,16 +16,16 @@ public class StateAnalyser implements Serializable {
 	 * For serialization
 	 */
 	private static final long serialVersionUID = -3287661327385866977L;
-	/**
-	 * ArrayList of Instances being tracked
-	 */
-	private ArrayList<Instances> tracker;
+	private Instances last;
 
+	private Instances current;
+
+	private int numIterations;
 	/**
 	 * Constructs a new instance with an empty ArrayList of items
 	 */
 	public StateAnalyser() {
-		tracker = new ArrayList<>();
+		numIterations = 0;
 	}
 
 	/**
@@ -56,10 +55,10 @@ public class StateAnalyser implements Serializable {
 	 * be calculated, since there are not at least two iterations present.
 	 */
 	public int getNumberDifferences() {
-		if (tracker.size() >= 2) {
+		if (last != null && current != null) {
 			int differences = 0;
-			double[][] a = convertToMatrix(tracker.get(tracker.size() - 1));
-			double[][] b = convertToMatrix(tracker.get(tracker.size() - 2));
+			double[][] a = convertToMatrix(last);
+			double[][] b = convertToMatrix(current);
 			for (int i = 0; i < a.length; i++) {
 				if (!Arrays.equals(a[i], b[i]))
 					differences++;
@@ -80,7 +79,7 @@ public class StateAnalyser implements Serializable {
 	 * @return the current number of recorded instances
 	 */
 	public int getNumberIterations() {
-		return tracker.size();
+		return numIterations;
 	}
 
 	/**
@@ -90,7 +89,9 @@ public class StateAnalyser implements Serializable {
 	 *            Instances object to be added
 	 */
 	public void addInstances(Instances toAdd) {
-		tracker.add(toAdd);
+		last = current;
+		current = toAdd;
+		numIterations++;
 	}
 
 }

@@ -293,7 +293,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 * Builds a set of classifiers based on the training data. These are
 	 * iteratively trained on copies of the data.
 	 * 
-	 * @param data
+	 * @param instances
 	 *            the Instances object which comprises the training data
 	 * @exception Exception
 	 *                exception thrown is raised to a Weka error handler
@@ -369,7 +369,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 		}
 		m_Current = new Instances(m_Original);
 		m_Last = new Instances(m_Original);
-		replaceMissingValues(m_Last);
+		replaceMissingValues(m_Current);
 	}
 
 	/**
@@ -395,6 +395,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 					Instance in = instances.get(index);
 					String value = (String) a.get(ThreadLocalRandom.current().nextInt(a.size()));
 					in.setValue(i, value);
+					instances.set(index, in);
 
 				}
 			} else {
@@ -405,6 +406,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 					double randomNum = ThreadLocalRandom.current().nextDouble(att.getLowerNumericBound(),
 							att.getUpperNumericBound() + 1);
 					a.setValue(i, randomNum);
+					instances.set(index, a);
 
 				}
 			}
@@ -441,10 +443,13 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			}
 		}
 		m_Tracker.addInstances(m_Current);
-		System.err.println(m_Tracker.getNumberIterations());
-		System.err.println(m_Tracker.getNumberDifferences());
-		System.err.println();
-
+		
+		if (getDebug()) {
+			System.out.println("Training iteration: " + m_Tracker.getNumberIterations());
+			System.out.println("Number differences: " + m_Tracker.getNumberDifferences());
+			System.out.println();
+		}
+				
 		if (m_Tracker.getNumberDifferences() == 0 || m_Tracker.getNumberIterations() >= getMaxIterations()) {
 			return false;
 		}
@@ -473,14 +478,12 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 				m_Current.deleteAttributeAt(i);
 			}
 		}
-		System.err.println(m_Current);
-		System.err.println("Number of iterations taken: " + m_Tracker.getNumberIterations());
 	}
 
 	/**
 	 * Retrains each classifier against a particular dataset.
 	 * 
-	 * @param data
+	 * @param instances
 	 *            training data to use
 	 * @throws Exception
 	 *             any exception thrown
