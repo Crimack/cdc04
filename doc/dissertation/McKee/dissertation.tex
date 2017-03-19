@@ -1,0 +1,47 @@
+\documentclass[12pt,a4paper]{report}
+
+% Imports
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{geometry}
+\usepackage{standalone}
+\usepackage{dirtree}
+\usepackage{float}
+
+% Spacing
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+\setlength{\parskip}{1em}
+
+\begin{document}
+\title{Extending Classifiers for Incomplete Data\\
+\large
+A dissertation submitted in partial fulfillment of\\
+the requirements for the degree of\\
+BACHELOR OF ENGINEERING in Computer Science\\
+in\\
+The Queen's University of Belfast\\
+by
+}
+\author{Christopher McKee}
+\maketitle
+\newpage
+\includepdf{declaration.pdf}
+\input{abstract.tex}
+\tableofcontents
+\listoftables
+\input{intro.tex}
+\input{requirements.tex}
+\input{design_implementation.tex}
+\input{experiments.tex}
+\input{conclusion.tex}
+\appendix
+\chapter{JavaDoc}
+\label{JavaDoc}
+\includepdf[pages=-]{javadoc.pdf}
+\end{document}
+\end

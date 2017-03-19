@@ -1,0 +1,38 @@
+% experiments.tex
+\newpage
+\chapter{Experiments}
+The classifier described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the algorithm described earlier in the paper will provide any benefits. Each case will be tested against 51 different sets of nominal data, each of which has had approximate 10% of its values removed in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times.
+
+For each classifier which we are testing we will use the following test cases, where TestClassifier represents the current classifier under test:
+
+\begin{enumerate}
+\item \textit{ProjectClassifier -S with TestClassifier} - Iteratively trains the target classifier by imputing missing values, retraining against the newly completed data set and then imputing again until convergence or max iterations reached. The class attribute is not guessed.
+\item \textit{ProjectClassifier with TestClassifier} - Same as previous case, except that the initial class attribute is also iteratively imputed.
+\item \textit{TestClassifier} - 'Vanilla' classifier, run without attempting to remove missing values before classification.
+\item \textit{TestClassifier (missing data filled in with mode)} - Same as previous case, except every missing value will be replaced using the mode before it is run.
+\item \textit{ProjectClassifier -R with TestClassifier} - Similar to previous case, except missing values will be replaced using random possible values before classification. Only one iteration will be performed.
+\end{enumerate}
+
+Some adaptations may need to be made for certain classifiers, but this is the general structure of each experiment. For each of these classifiers the percentage of incorrect classifications, mean absolute error (MAE), root mean squared error (RMSE), and mean entropy gain (MEG) will be compared for statistical significance. It is generally expected that case 1, the iteratively trained classifier, will perform better than all other cases with the possible exception of case 3. For each of the tables discussed below, the index of each column refers to the number of each case in the list above.
+
+\section{Results}
+\subsection{Naive Bayes}
+No adaptations needed to be made for the Naive Bayes classification method since it converged to a stable model as expected, and did so within a reasonable period of time.
+
+Naive Bayes Percent Incorrect results are shown in Table 3.1. As expected, case 1 generally performed better than cases 2, 4 and 5. It generally performed worse than case 3, producing statistically even results in 30 cases and statistically worse results in 19 cases.
+\input{naive_bayes_percent_incorrect.tex}
+Naive Bayes RMSE results are shown in Table 3.2.
+\input{naive_bayes_root_mean_squared_error.tex}
+Naive Bayes MAE results are shown in Table 3.3.
+\input{naive_bayes_mean_absolute_error.tex}
+Naive Bayes MEG results are shown in Table 3.4.
+\input{naive_bayes_mean_entropy_gain.tex}
+
+
+
+
+
+\subsection{Bayesian Network}
+a
+\subsection{J48 Decision Tree}
+b
