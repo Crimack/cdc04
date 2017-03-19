@@ -16,13 +16,25 @@ public class StateAnalyser implements Serializable {
 	 * For serialization
 	 */
 	private static final long serialVersionUID = -3287661327385866977L;
-	private Instances last;
 
+
+	/**
+	 * Most recent iteration
+	 */
 	private Instances current;
 
-	private int numIterations;
 	/**
-	 * Constructs a new instance with an empty ArrayList of items
+	 * Next most recent iteration
+	 */
+	private Instances last;
+
+	/**
+	 * Current total number of iterations
+	 */
+	private int numIterations;
+
+	/**
+	 * Constructs a new instance with no recorded instances
 	 */
 	public StateAnalyser() {
 		numIterations = 0;
