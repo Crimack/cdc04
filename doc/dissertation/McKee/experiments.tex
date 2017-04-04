@@ -1,7 +1,7 @@
 % experiments.tex
 \newpage
 \chapter{Experiments}
-The classifier described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the algorithm described earlier in the paper will provide any benefits. Each case will be tested against 51 different sets of nominal data, each of which has had approximate 10% of its values removed in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times.
+The algorithm described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the implemented algorithm described has proven beneficial. Each case will be tested against 51 different sets of nominal data, each of which has had approximately 10\% of its values removed at random in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times. Additional information about the data sets can be found in appendix \ref{datasets}.
 
 For each classifier which we are testing we will use the following test cases, where TestClassifier represents the current classifier under test:
 
@@ -13,61 +13,72 @@ For each classifier which we are testing we will use the following test cases, w
 \item \textit{ProjectClassifier -R with TestClassifier} - Similar to previous case, except missing values will be replaced using random possible values before classification. Only one iteration will be performed.
 \end{enumerate}
 
-Some adaptations may need to be made for certain classifiers, but this is the general structure of each experiment. For each of these classifiers the percentage of incorrect classifications, mean absolute error (MAE), root mean squared error (RMSE), and mean entropy gain (MEG) will be compared for statistical significance using a paired T test with a statistical significance threshold of 0.05. It is generally expected that case 1, the iteratively trained classifier, will perform better than all other cases with the possible exception of case 3. For each of the tables discussed below, the index of each column refers to the number of each case in the list above.
+Each of these tests will henceforth be referred to as Case 1, 2, 3, 4 and 5 respectively. For each of the tables discussed below, the index of each column refers to the number of each case. 
 
-<< Should each of the tests (MAE, RMSE etc) be explained?? Or are we assuming this is being read by statisticians / ML people >>
+Some adaptations may need to be made for certain classifiers, but this is the general structure of each experiment. For each of these classifiers the percentage of incorrect classifications, mean absolute error (MAE), root mean squared error (RMSE), and mean entropy gain (MEG) will be compared using a paired T test with a statistical significance threshold of 0.05. It is generally expected that Case 1, the iteratively trained classifier, will perform better than all other cases with the possible exception of Case 3.
+
+[[ Should each of the tests (MAE, RMSE etc) be explained?? Or are we assuming this is being read by statisticians / ML people ]]
 
 \section{Results}
 
-Tables referenced below can be found at the end of the chapter, since they are too large to be included beside where they are discussed.
+[[ This whole subsection feels weak. I'm basically stating what can be seen in the tables. Any suggestions? ]]
+
+Tables referenced below can be found at the end of each subsection, since they are too large to be included in-line.
 
 \subsection{Naive Bayes}
 No adaptations needed to be made for the Naive Bayes classification method since it converged to a stable model as expected, and did so within a reasonable period of time.
 
-Naive Bayes Percent Incorrect results are shown in Table \ref{nbpi}. As expected, case 1 generally performed better than cases 2, 4 and 5. It seems logical that cases 4 and 5 would perform the worst, since these methods generally just involved filling in missing data with the most common and random data respectively. Case 1 generally performed worse than case 3, producing statistically even results in 30 cases and statistically worse results in 19 cases.
+Naive Bayes Percent Incorrect results are shown in Table \ref{nbpi}. As expected, Case 1 generally performed better than Cases 2, 4 and 5. It seems logical that Cases 4 and 5 would perform the worst, since these methods generally just involved filling in missing data with the most common and random data respectively. Case 1 generally performed worse than Case 3, producing statistically even results in 30 tests and statistically worse results in 19 tests.
 
-Naive Bayes MAE results are shown in Table \ref{nbmae}. Cases 1, 2 and 3 proved approximately equal according to this test, with no real significant difference between results. Case 1 performed much better than cases 4 or 5, showing better results in 37 and 45 cases respectively. This is an expected result, since cases 4 and 5 are effectively control cases.
+Naive Bayes MAE results are shown in Table \ref{nbmae}. Cases 1, 2 and 3 proved approximately equal according to this test, with no real significant difference between results. Case 1 performed much better than Cases 4 or 5, showing better results in 37 and 45 tests respectively. This is an expected result, since Cases 4 and 5 are effectively control cases.
 
-Naive Bayes RMSE results are shown in Table \ref{nbrmse}. Using this metric for measurement, case 1 performed significantly better than both cases 2 and 4, with better results shown in 41 and 28 data sets respectively. Interestingly, it performed about as well as case 5, performing significantly better in 17 cases, approximately about as well in 16 cases, and significantly worse in 18 cases. This could be due to the fact that using random data is unlikely to lead to strong predictions being made, while iteratively imputing missing values will tend to result in either increasingly bad or increasingly good predicitons being made. Again, case 3 performed significantly better than case 1.
+Naive Bayes RMSE results are shown in Table \ref{nbrmse}. Using this metric for measurement, Case 1 performed significantly better than both Cases 2 and 4, with better results shown in 41 and 28 data sets respectively. Interestingly, it performed about as well as Case 5, performing significantly better in 17 tests, approximately about as well in 16 tests, and significantly worse in 18 tests. This could be due to the fact that using random data is unlikely to lead to strong predictions being made, while iteratively imputing missing values will tend to result in either increasingly bad or increasingly good predicitons being made. Again, Case 3 performed significantly better than Case 1.
 
-Naive Bayes MEG results are shown in Table \ref{nbmeg}. Case 1 performed significanty worse than case 2 according to this metric, performing worse in 42/51 data sets. It is assumed that this is due to the iterative imputation of the class attribute in case 2, which probably leads to lower entropy gains since it will produce a smaller range of values. For a very similar reason, case 1 performs significantly better than case 3. Since it's iteratively imputing all but one attribute in the training set, a smaller range of values are probably produced during classification. Cases 1, 4 and 5 perform about as well as each other, since cases 4 and 5 are essentially just making random guesses.
+Naive Bayes MEG results are shown in Table \ref{nbmeg}. Case 1 performed significanty worse than Case 2 according to this metric, performing worse in 42/51 data sets. It is assumed that this is due to the iterative imputation of the class attribute in Case 2, which probably leads to lower entropy gains since it will produce a smaller range of values. For a very similar reason, Case 1 performs significantly better than Case 3. Since it's iteratively imputing all but one attribute in the training set, a smaller range of values are probably produced during classification. Cases 1, 4 and 5 perform about as well as each other, since Cases 4 and 5 are essentially just making random guesses.
 
-It would seem that the implemented algorithm does not provide any significant gains when using the Naive Bayes classifier according to the measurements used.
+It would seem that the implemented algorithm does not provide any significant gains when using the Naive Bayes classifier according to the measurements used. While signifcant decreases in entropy gain were observed, it was both less accurate as a classifier and more strongly wrong.
 
 \input{naive_bayes_percent_incorrect.tex}
 \input{naive_bayes_mean_absolute_error.tex}
 \input{naive_bayes_root_mean_squared_error.tex}
 \input{naive_bayes_mean_entropy_gain.tex}
+\FloatBarrier
 
 \subsection{Bayesian Network}
-For testing, a Tree Augmented Naive Bayes (TAN) Bayesian Network using MDL for scoring was used as the internal classifier for the ProjectClassifier, although some small adaptations to the experiment were needed for testing performance. In some cases, most frequently with small data sets, an iteratively trained Bayesian Network did not converge as expected. This led to it running for longer than it would be practical to test for, with no guarantee that it would ever finished iterating. In order to produce results, training was limited to 5000 iterations.
+For testing, a Tree Augmented Naive Bayes (TAN) Bayesian Network using MDL for scoring was used as the internal classifier for the ProjectClassifier, although some small adaptations to the experiment were needed for testing performance. In some cases, most frequently with small data sets, an iteratively trained Bayesian Network did not converge as expected. This led to it running for longer than it would be practical to test for, with no guarantee that it would ever finish iterating. In order to produce results, training was limited to 5000 iterations.
 
-Table \ref{bnpi}
+Bayesian Network Percent Incorrect results are shown in Table \ref{bnpi}. Case 1 did not perform particularly well according to this metric, with results than were approximately equivalent to the results from Case 5, and were slightly worse than the results seen in Case 4. Since Case 1 significantly outperformed Case 2 (with more accurate or similarly accurate results shown in 49/51 tests) and Case 3 performed as well or better than Case 1 in 38/51 tests, this may show that the more a Bayesian Network is trained iteratively the less accurate it becomes. 
 
-Table \ref{bnmae}
+Bayesian Network Mean Absolute Error results are shown in Table \ref{bnmae}. Case 1 produced much better results than either control case, doing as well or better than Case 4 in 45/51 tests, and as well or better than Case 5 in 50/51 tests. Case 2 provided very similar results to Case 1, with neither method proving significantly better or worse according to this metric. Case 1 performed better than Case 3 in 27/51 tests, as well as Case 3 in 5/51 tests, and worse than Case 3 in 19/51 tests. This does not allow any clear conclusion to be drawn, since while Case 1 did perform better in more cases, it was not enough to be significant.
 
-Table \ref{bnrmse}
+Bayesian Network Root Mean Squared Error results are displayed in Table \ref{bnrmse}. Using this measure, it was determined that Cases 4 and 5 both outperformed Case 1. Case 4 produced better results in 32/51 tests, while Case 5 produced better results in 27/51 tests and similar results in 14/51 tests. Case 3 produced a similar result, with better results in 31/51 test cases. The only case which Case 1 performed better than was Case 2, which it did in 37/51 tests. This would appear to indicate that further training using this classifier leads to stronger predictions which are less accurate.
 
-Table \ref{bnmeg}
+Bayesian Network Mean Entropy Gain results are shown in Table \ref{bnmeg}. Case 1 again showed smaller entropy gains than Cases 3, 4 and 5 in at least 60\% of cases. Case 2 again showed even smaller entropy gains, probably due to the increased iteration removing variation.
+
+It would seem that again, the implemented algorithm does not provide any significant gains when using a TAN Bayesian Network. Again, entropy gain significantly decreased due to the repeated training and imputation cycles, but the classifications became more inaccurate, and judging by the RMSE results they were more likely to be very inaccurate.
 
 
 \input{bayes_net_percent_incorrect.tex}
 \input{bayes_net_mean_absolute_error.tex}
 \input{bayes_net_root_mean_squared_error.tex}
 \input{bayes_net_mean_entropy_gain.tex}
+\FloatBarrier
 
 \subsection{J48 Decision Tree}
-When testing the J48 decision tree, adaptations were needed. The J48 failed to converge as expected in most cases, although this was most common and also most time consuming with very large data sets. Through experimentation it was determined that iteratively training the J48 classifier caused it to reach a certain state of stability around which it would fluctuate by changing a handful of rows between iterations, and this was usually at around 15-20 iterations. It therefore made sense to limit training to 30 iterations to allow experiments to be run in a reasonably period of time.
+When testing the J48 decision tree, adaptations were needed. The J48 failed to converge as expected in most cases, although this was most common and also most time consuming with very large data sets. Through experimentation it was determined that iteratively training the J48 classifier caused it to reach a certain state of stability around which it would fluctuate by changing a handful of rows between iterations, usually after around 15-20 rounds of training and reimputing. It therefore made sense to limit training to 30 iterations to allow experiments to be run in a reasonable period of time while also providing some 10-15 extra iterations to allow for even more volatile datasets to reach relative stability.
 
-Table \ref{j48pi}
+J48 Percent Incorrect results are shown in Table \ref{j48pi}. Case 1 performed as well as or better than Cases 2, 4 and 5 in almost all tests, which was the expected result for the control cases. Case 1 was again outperformed by Case 3, performing worse in 16/51 tests and even in 26/51. 
 
-Table \ref{j48mae}
+J48 Mean Absolute Error results can be found in Table \ref{j48mae}. Interestingly, using this metric Case 1 performed much better than Cases 3, 4 or 5, with better results in 38/51, 37/51 and 47/51 data sets respectively. This result was not seen while using Naive Bayes or Bayesian Networks as the classifier. This could be due to the fact that J48 was capped at 30 iterations to reduce experiment time and this may suggest that there is an optimal number of iterations for this method. Case 2 also was significantly more accurate than Case 1 in 21/51 tests, and approximately the same in 26/51.  
 
-Table \ref{j48rmse}
+J48 Root Mean Squared Error resuls are shown in Table \ref{j48rmse}. Case 1 again performed much better than either Case 4 or 5, which was expected since these were the control cases. It also performed as well as or better than Case 2 in all 51 data sets. Case 1 was heavily outperformed by Case 3 using RMSE as the metric for comparison, since the results for Case 3 were as good or better in 44/51 data sets.
 
-Table \ref{j48meg}
+J48 Mean Entropy Gain results are shown in Table \ref{j48meg}. Case 1 signifcantly outperformed Case 3 using this measure, as it rewards a reduction in entropy. Since the iterative training will naturally lead to decreased variety in the results shown, this result is expected. Case 1 generally produced a smaller reduction in entropy than Case 2, since it was not also iteratively training the class attribute. Cases 4 and 5 can effectively be disregarded here, since they're just imputing pseudo-random data, and this will naturally lead to a lot of variance between results.
+
+From the above results, there does not appear to be much benefit to using the implemented algorithm with the J48 classifier. The classifier became less accurate when trained iteratively, and also appeared to make larger errors according to the RMSE test. The MAE result is an interesting case though, and could prove interesting if further explored. [[ Explain why MAE did so well here maybe? ]]
 
 \input{j48_percent_incorrect.tex}
 \input{j48_mean_absolute_error.tex}
 \input{j48_root_mean_squared_error.tex}
 \input{j48_mean_entropy_gain.tex}
+\FloatBarrier
