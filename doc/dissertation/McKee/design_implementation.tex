@@ -2,11 +2,12 @@
 \newpage
 \chapter{Design and Implementation} 
 \section{Design}
-This body of work is mainly interested in common classifiers, and in trying to use them in a slightly unusual way. It therefore makes sense to extend a package in which these are already implemented, and in which they are easily accessible. The Weka project suits this purpose since it has well maintained, efficient implementations of most machine learning algorithms, handles file I/O, and has both command line and graphical user interfaces. Since Weka is written in Java, it follows that the plugin should also be written in Java.
+\label{design}
+This body of work is mainly interested in popular classification algorithms, and in trying to use them in a slightly unusual way. It therefore makes sense to extend a package in which these are already implemented, and in which they are easily accessible. The Weka project suits this purpose since it has well maintained, efficient implementations of most machine learning algorithms, handles file I/O, and has both command line and graphical user interfaces. Since Weka is written in Java, it follows that the plugin should also be written in Java.
 
 It also follows that any files which are used for testing should be in either .csv, or .arff format. The former is commonly used in data processing while the latter is a proprietary Weka format which is very similar, but differs in that it contains additional data at the top of the file pertaining to the dataset. Both are supported by Weka, and therefore either is usable.
 
-Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values, whilst numeric values are not guaranteed to every settle on a particular value at all. It is more likely that numeric predicitions would just change less and less between iterations, until the changes were miniscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
+Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values (at least when imputed using probabilistic techniques), whilst numeric values are not guaranteed to every settle on a particular value at all. It is more likely that numeric predicitions would just change less and less between iterations, until the changes were miniscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
 
 It is intended that the implemented algorithm will work as follows:
 \begin{enumerate}
@@ -19,7 +20,7 @@ It is intended that the implemented algorithm will work as follows:
 \end{enumerate}
 
 \section{Implementation}
-As an existing piece of software is being extended, much of the work to implement the various classifiers to be tested is already done. The main aim of this work is to integrate successfully into Weka as a plugin, and to interface with it as necessary. This plugin will be provided as a zip file containing the implemented algorithm which can be loaded by Weka using its package manager, 
+As an existing piece of software is being extended, much of the work to implement the various classifiers to be tested is already done. The main aim of this work is to integrate successfully into Weka as a plugin, and to interface with it as necessary. This plugin will be provided as a zip file containing the implemented algorithm which can be loaded by Weka using its package manager.
 \subsection{Weka Architecture}
 Weka is a Java package, with a source code layout which looks somewhat like this if unused packages are omitted: \\
 \dirtree{%
@@ -52,7 +53,7 @@ From \textit{weka.core}, the following classes are used:
 
 \begin{itemize}
 \item \textbf{Attribute} - An Attribute in Weka refers to a single column in a data set. This object is mostly responsible for tracking the column's data type (e.g. nominal, numeric, etc), and other related information common to the entire column.
-\item \textbf{Instance} - An Instance is the representation of a single row of data, roughly analogous to a row in a CSV file. Belongs to a particular Instances object. Each attribute value is stored as a Java double, which is then used in connection with an Attribute object to determine the actual value of an attribute.
+\item \textbf{Instance} - An Instance is the representation of a single row of data, roughly analogous to a row in a CSV file. Each Instance belongs to a particular Instances object. Each attribute value is stored as a Java double, which is then used in connection with an Attribute object to determine the actual value of an attribute.
 \item \textbf{Instances} - An Instances object in Weka is used to represent a complete data set. It is roughly equivalent to the object representation of an ARFF file. It is comprised of a list of Instance objects,  a list of Attribute objects and some other metadata such as the class attribute for the data set and its name.
 \item \textbf{Option} - An Option object represents a particular command line parameter, and the way in which it should be handled. This also contains a description to be printed in the help dialog if incorrect parameters are passed to the CLI.
 \end{itemize}
@@ -111,7 +112,7 @@ There are a number of other utility and stub methods within this abstract class 
 \begin{itemize}
 \item \textit{SingleClassifierEnhancer} is designed for 'meta' classifiers, or those which wrap another classifier. It already contains an internal classifier and handles passing options to it. This can easily be extended to copy this classifier multiple times with the same options.
 \item The internal classifier is already displayed nicely in the Weka GUI. This allows it to be configured via a drop down menu, as shown in figure [[put screenshot here?]].
-\item It already handles some edge cases, such as calling the \textit{preExecution()} and \textit{postExecution()} methods of the internal classifier, which handles any specific setup and cleanup needed. These are small edge cases that would be easy to forget about, so extending in this way improves reliability by removing some of the implementation overhead.
+\item It already handles some edge cases, such as calling the \textit{preExecution()} and \textit{postExecution()} methods of the internal classifier, which handles any specific setup and cleanup needed. These are small edge cases that would be easy to forget about, so extending in this way improves reliability by removing some of the mental overhead of the implementation.
 \end{itemize}
 
 \subsection{IterativeClassifier}
@@ -136,11 +137,11 @@ These methods generally come together in the following pattern in a classifier w
 \begin{footnotesize}
 \begin{verbatim}
 public buildClassifier(instances) {
-    // code
+    // some code here 
     initializeClassifier(instances)
     while(next()) {}
     done()
-    // code
+    // some other code here
 }
 \end{verbatim}
 \end{footnotesize}
@@ -149,7 +150,9 @@ This means that building the classifier continues until it no longer makes sense
 \subsection{Weka Interfaces}
 Calling a Weka classifier from the command line (assuming that the Weka jar file is already on the classpath) is reasonably straightforward. The target classifier is firstly called by its full path e.g.  \textit{java weka.classifiers.trees.J48}. Anything which comes after this point is passed to the classifier as an Option object. These are used as parameters to configure the behaviour of a particular classifier, and each class which extends from \textit{AbstractClassifier} generally implements its own specific set of Options through a combination of private variables and specifically named methods. The GUI appears works in much the same way, except that it provides windows with dropdown menus and text fields to allow classifiers and their Options to be configured.  
 
-For example, imagine a given classifier had a private variable named \textit{m\_Example}. In order to expose this to the GUI and CLI it would require getter and setter methods, as well as an \textit{exampleTipText()} method to display help text. Code specifying how to handle this Option would also need to be added to the \textit{getOptions()}, \textit{setOptions()} and \textit{listOptions()} methods. [[paragraph too vague / not enough detail?]]
+For example, imagine a given classifier had a private variable named \textit{m\_Example}. In order to expose this to the GUI and CLI it would require getter and setter methods, as well as an \textit{exampleTipText()} method to display help text. Code specifying how to handle this Option would also need to be added to the \textit{getOptions()}, \textit{setOptions()} and \textit{listOptions()} methods. 
+
+[[section too vague / not enough detail?]]
 
 \subsection{StateAnalyser}
 The \textit{StateAnalyser} class has been designed to track the progress of the \textit{ProjectClassifier} as it is being trained. It contains a list of the training sets which have been produced by the \textit{next()} method, and records the number of differences between them. All of the methods described below are just utility methods for working with or comparing the training sets which have been produced.
@@ -186,7 +189,7 @@ public getNumberIterations() {
 \end{verbatim}
 \end{footnotesize}
 \subsection{ProjectClassifier}
-The \textit{ProjetClassifier} class is the implementation of the algorithm described in section 2.1. This is extends from \textit{SingleClassifierEnhancer} and implements the \textit{IterativeClassifier} interface. It maintains an internal array of classifiers for every attribute in a data set, and uses these to impute values into the training set as well as to classify test data. It also maintains three copies of training set while building:
+The \textit{ProjetClassifier} class is the implementation of the algorithm described in section \ref{design}. This extends from \textit{SingleClassifierEnhancer} and implements the \textit{IterativeClassifier} interface. It maintains an internal array of classifiers, one for each of the attributes in a data set, and uses these to impute values into the training set as well as to classify test data. It also maintains three copies of training set while building:
 
 \begin{itemize}
 \item \textit{original} - a copy of the training set
