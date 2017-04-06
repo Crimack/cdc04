@@ -461,8 +461,8 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 * m_Supervised is set.
 	 */
 	public void done() throws Exception {
+		m_Current.setClassIndex(m_OriginalClassAttributeIndex);
 		if (m_Supervised) {
-			m_Current.setClassIndex(m_OriginalClassAttributeIndex);
 			for (int i : m_Missing.get(m_OriginalClassAttributeIndex)) {
 				Instance toClassify = m_Current.get(i);
 				toClassify.setValue(m_OriginalClassAttributeIndex, classifyInstance(toClassify));

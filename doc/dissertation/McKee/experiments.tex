@@ -1,7 +1,7 @@
 % experiments.tex
 \newpage
 \chapter{Experiments}
-The algorithm described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the implemented algorithm described has proven beneficial. Each case will be tested against 51 different sets of nominal data, each of which has had approximately 10\% of its values removed at random in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times. Additional information about the data sets can be found in appendix \ref{datasets}.
+The algorithm described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the implemented algorithm described has proven beneficial. Each case will be tested against 51 different sets of nominal data taken from the UCI Machine Learning Repository \cite{asuncion+newman:2007}, each of which has had approximately 10\% of its values removed at random in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times. Additional information about the data sets can be found in appendix \ref{datasets}.
 
 For each classifier which we are testing we will use the following test cases, where \textit{TestClassifier} represents the current classifier under test:
 
