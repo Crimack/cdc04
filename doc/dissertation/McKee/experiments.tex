@@ -1,7 +1,7 @@
 % experiments.tex
 \newpage
 \chapter{Experiments}
-The algorithm described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the implemented algorithm described has proven beneficial. Each case will be tested against 51 different sets of nominal data taken from the UCI Machine Learning Repository \cite{asuncion+newman:2007}, each of which has had approximately 10\% of its values removed at random in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times. Additional information about the data sets can be found in appendix \ref{datasets}.
+The algorithm described in the previous section will be used in experiments with a number of internal classifiers in order to assess their performance when trained iteratively. These results will be compared with the results of using the internal classifier in a number of control cases, to determine if the implemented algorithm described has proven beneficial. Each case will be tested against 51 different sets of nominal data taken from the UCI Machine Learning Repository \cite{Lichman:2013}, each of which has had approximately 10\% of its values removed at random in order to simulate the effects of having missing data. For each data set, 5 folds will be used for cross validation and this will be repeated 10 times. Additional information about the data sets can be found in appendix \ref{datasets}.
 
 For each classifier which we are testing we will use the following test cases, where \textit{TestClassifier} represents the current classifier under test:
 
@@ -17,11 +17,7 @@ Each of these tests will henceforth be referred to as Case 1, 2, 3, 4 and 5 resp
 
 Some adaptations may need to be made for certain classifiers, but this is the general structure of each experiment. For each of these classifiers the percentage of incorrect classifications, mean absolute error (MAE), root mean squared error (RMSE), and mean entropy gain (MEG) will be compared using a paired T test with a statistical significance threshold of 0.05. It is generally expected that Case 1, the iteratively trained classifier, will perform better than all other cases with the possible exception of Case 3.
 
-[[ Should each of the tests (MAE, RMSE etc) be explained?? Or are we assuming this is being read by statisticians / ML people ]]
-
 \section{Results}
-
-[[ This whole subsection feels weak. I'm basically stating what can be seen in the tables. Any suggestions? ]]
 
 Tables referenced below can be found at the end of each subsection, since they are too large to be included in-line.
 
@@ -75,7 +71,7 @@ J48 Root Mean Squared Error resuls are shown in Table \ref{j48rmse}. Case 1 agai
 
 J48 Mean Entropy Gain results are shown in Table \ref{j48meg}. Case 1 signifcantly outperformed Case 3 using this measure, as it rewards a reduction in entropy. Since the iterative training will naturally lead to decreased variety in the results shown, this result is expected. Case 1 generally produced a smaller reduction in entropy than Case 2, since it was not also iteratively training the class attribute. Cases 4 and 5 can effectively be disregarded here, since they're just imputing pseudo-random data, and this will naturally lead to a lot of variance between results.
 
-From the above results, there does not appear to be much benefit to using the implemented algorithm with the J48 classifier. The classifier became less accurate when trained iteratively, and also appeared to make larger errors according to the RMSE test. The MAE result is an interesting case though, and could prove interesting if further explored. [[ Explain why MAE did so well here maybe? ]]
+From the above results, there does not appear to be much benefit to using the implemented algorithm with the J48 classifier. The classifier became less accurate when trained iteratively, and also appeared to make larger errors according to the RMSE test. The MAE result is an interesting case though, and could prove interesting if further explored.
 
 \input{j48_percent_incorrect.tex}
 \input{j48_mean_absolute_error.tex}
