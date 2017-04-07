@@ -470,13 +470,14 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 			}
 		}
 
-		// Talk to Cassio about this. Should we remove and force a retrain or
-		// just use the non-hidden classifiers
 		if (getNumHiddenVariables() > 0) {
 			for (int i = m_OriginalClassAttributeIndex
 					+ getNumHiddenVariables(); i > m_OriginalClassAttributeIndex; i--) {
 				m_Current.deleteAttributeAt(i);
 			}
+			// Have to force a retrain. Certain classifiers expect the same number of attributes
+			// in input and output
+			retrainClassifiers(m_Current);
 		}
 	}
 

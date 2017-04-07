@@ -65,6 +65,8 @@ public class StateAnalyser implements Serializable {
 	 *
 	 * A negative return values shows that the number of differences could not
 	 * be calculated, since there are not at least two iterations present.
+	 * 
+	 * @return int representing number of differences between previous two iterations
 	 */
 	public int getNumberDifferences() {
 		if (last != null && current != null) {
