@@ -2,6 +2,8 @@
 
 % Imports
 \usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{geometry}
@@ -12,12 +14,7 @@
 \usepackage[nottoc,numbib]{tocbibind}
 
 % Spacing
-\geometry{
-    a4paper,
-    total={170mm,257mm},
-    left=20mm,
-    top=20mm,
-}
+\onehalfspacing
 \setlength{\parskip}{1em}
 
 \begin{document}
@@ -47,7 +44,7 @@ Christopher McKee\\
 \input{experiments.tex}
 \input{conclusion.tex}
 \bibliography{dissertation}
-\bibliographystyle{ieeetr}
+\bibliographystyle{IEEEtran}
 \appendix
 \chapter{Experimental Data Sets}
 \label{datasets}

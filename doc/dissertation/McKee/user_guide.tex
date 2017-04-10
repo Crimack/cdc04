@@ -14,7 +14,8 @@ java weka.classifiers.bayes.NaiveBayes -t training.arff
 would have to become
 \begin{footnotesize}
 \begin{verbatim}
-java -cp /home/path/to/jar/weka.jar weka.classifiers.bayes.NaiveBayes -t training.arff
+java -cp /home/path/to/jar/weka.jar weka.classifiers.bayes.NaiveBayes
+        -t training.arff
 \end{verbatim}
 \end{footnotesize}
 
@@ -30,8 +31,8 @@ An example of using the classifier from the command line would be:
 
 \begin{footnotesize}
 \begin{verbatim}
-java weka.Run ProjectClassifier -t audiology.arff -W weka.classifiers.bayes.NaiveBayes
-    -S -M 30 -- -O
+java weka.Run ProjectClassifier -t audiology.arff
+        -W weka.classifiers.bayes.NaiveBayes -S -M 30 -- -O
 \end{verbatim}
 \end{footnotesize}
 

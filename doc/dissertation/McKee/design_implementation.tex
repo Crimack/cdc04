@@ -3,11 +3,11 @@
 \chapter{Design and Implementation}\label{design_impl}
 \section{Design}
 \label{design}
-This body of work is mainly interested in popular classification algorithms, and in trying to use them in a slightly unusual way. It therefore makes sense to extend a package in which these are already implemented, and in which they are easily accessible. The Weka project \cite{weka} suits this purpose since it has well maintained, efficient implementations of most machine learning algorithms, handles file I/O, and has both command line and graphical user interfaces. Since Weka is written in Java, it follows that the plugin should also be written in Java.
+This body of work is mainly interested in popular classification algorithms, and in trying to use them in a slightly unusual way. It therefore makes sense to extend a package in which these are already implemented, and in which they are easily accessible. The Weka project~\cite{weka} suits this purpose since it has well maintained, efficient implementations of most machine learning algorithms, handles file I/O, and has both command line and graphical user interfaces. Since Weka is written in Java, it follows that the plugin should also be written in Java.
 
-It also follows that any files which are used for testing should be in either .csv, or .arff format. The former is commonly used in data processing while the latter is a proprietary Weka format which is very similar, but differs in that it contains additional data at the top of the file pertaining to the dataset. Both are supported by Weka, and therefore either is usable.
+It also follows that any files which are used for testing should be in either .csv, or .arff format. The former is commonly used in data processing while the latter is a proprietary Weka format which is very similar, but differs in that it contains additional data at the top of the file pertaining to the data set. Both are supported by Weka, and therefore either is usable.
 
-Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values (at least when imputed using probabilistic techniques), whilst numeric values are not guaranteed to every settle on a particular value at all. It is more likely that numeric predicitions would just change less and less between iterations, until the changes were miniscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
+Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values (at least when imputed using probabilistic techniques), whilst numeric values are not guaranteed to every settle on a particular value at all. It is more likely that numeric predictions would just change less and less between iterations, until the changes were minuscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
 
 It is intended that the implemented algorithm will work as follows:
 \begin{enumerate}
@@ -46,7 +46,7 @@ Weka is a Java package, with a source code layout which looks somewhat like this
 .2 gui.
 .2 knowledgeflow. }
 \hfill \break
-Each of these subpackages is reasonably self explanatory. This project is mostly concerned with classifications, and thus code implemented for it lives in the \textit{weka.classifiers} package, although there are some dependcies on \textit{weka.core} since it contains much of the shared code for Weka. Provided that the rest of the project works as intended and the documentation is followed, there is no need to modify or discuss the other packages.
+Each of these sub-packages is reasonably self explanatory. This project is mostly concerned with classifications, and thus code implemented for it lives in the \textit{weka.classifiers} package, although there are some dependencies on \textit{weka.core} since it contains much of the shared code for Weka. Provided that the rest of the project works as intended and the documentation is followed, there is no need to modify or discuss the other packages.
 
 \subsection{weka.core}
 From \textit{weka.core}, the following classes are used:
@@ -65,7 +65,8 @@ From \textit{weka.core}, the following classes are used:
 \begin{verbatim}
 abstract class AbstractClassifier {
     forName(classifierName, options) {
-        return an instance of classifier <classifierName> with options <option>
+        return an instance of classifier <classifierName>
+            with options <option>
     }
 
     runClassifier(classifier, options) {
@@ -74,12 +75,13 @@ abstract class AbstractClassifier {
 
     classifyInstance(instance) {
         returns the class which the instance is most 
-            likely to belong to as a double in Weka's internal representation
+            likely to belong to as a double in Weka's
+            internal representation
     }
 
     distributionForInstance(instance) {
         return a list of probabilities for each 
-            possibile class value for a given instance
+            possible class value for a given instance
     }
 
     listOptions() {
@@ -111,7 +113,7 @@ There are a number of other utility and stub methods within this abstract class 
 \textit{SingleClassifierEnhancer} is a concrete class which extends from \textit{AbstractClassifier}, and from which the implemented ProjectClassifier extends. Extending from this class gives us a couple of benefits:
 \begin{itemize}
 \item \textit{SingleClassifierEnhancer} is designed for 'meta' classifiers, or those which wrap another classifier. It already contains an internal classifier and handles passing options to it. This can easily be extended to copy this classifier multiple times with the same options.
-\item The internal classifier is already displayed nicely in the Weka GUI. This allows it to be configured via a drop down menu, as shown in figure [[put screenshot here?]].
+\item The internal classifier is already displayed nicely in the Weka GUI. This allows it to be configured via a menu, as shown in figure \ref{project_classifier_gui}.
 \item It already handles some edge cases, such as calling the \textit{preExecution()} and \textit{postExecution()} methods of the internal classifier, which handles any specific setup and cleanup needed. These are small edge cases that would be easy to forget about, so extending in this way improves reliability by removing some of the mental overhead of the implementation.
 \end{itemize}
 
@@ -168,7 +170,7 @@ private convertToMatrix(instances) {
 
 public getNumberDifferences() {
     if at least two training sets recorded {
-        convert the two most recent training sets to matrixes
+        convert the two most recent training sets to matrices
         for each row in both matrices {
             if the two rows differ, increment the difference counter
         }
