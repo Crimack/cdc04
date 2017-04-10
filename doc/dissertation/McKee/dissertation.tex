@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper]{report}
 
 % Imports
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{pdfpages}
 \usepackage{geometry}
@@ -8,6 +9,7 @@
 \usepackage{dirtree}
 \usepackage[section]{placeins}
 \usepackage{url}
+\usepackage[nottoc,numbib]{tocbibind}
 
 % Spacing
 \geometry{
@@ -35,6 +37,7 @@ by
 \input{abstract.tex}
 \tableofcontents
 \listoftables
+\listoffigures
 \input{intro.tex}
 \input{requirements.tex}
 \input{design_implementation.tex}
