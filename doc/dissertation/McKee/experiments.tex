@@ -34,10 +34,10 @@ Naive Bayes MEG results are shown in Table \ref{nbmeg}. Case 1 performed signifi
 
 It would seem that the implemented algorithm does not provide any significant gains when using the Naive Bayes classifier according to the measurements used. While significant decreases in entropy gain were observed, it was both less accurate as a classifier and more strongly wrong.
 
-\input{naive_bayes_percent_incorrect.tex}
-\input{naive_bayes_mean_absolute_error.tex}
-\input{naive_bayes_root_mean_squared_error.tex}
-\input{naive_bayes_mean_entropy_gain.tex}
+\input{tables/naive_bayes_percent_incorrect.tex}
+\input{tables/naive_bayes_mean_absolute_error.tex}
+\input{tables/naive_bayes_root_mean_squared_error.tex}
+\input{tables/naive_bayes_mean_entropy_gain.tex}
 \FloatBarrier
 
 \subsection{Bayesian Network}
@@ -54,10 +54,10 @@ Bayesian Network Mean Entropy Gain results are shown in Table \ref{bnmeg}. Case 
 It would seem that again, the implemented algorithm does not provide any significant gains when using a TAN Bayesian Network. Again, entropy gain significantly decreased due to the repeated training and imputation cycles, but the classifications became more inaccurate, and judging by the RMSE results they were more likely to be very inaccurate.
 
 
-\input{bayes_net_percent_incorrect.tex}
-\input{bayes_net_mean_absolute_error.tex}
-\input{bayes_net_root_mean_squared_error.tex}
-\input{bayes_net_mean_entropy_gain.tex}
+\input{tables/bayes_net_percent_incorrect.tex}
+\input{tables/bayes_net_mean_absolute_error.tex}
+\input{tables/bayes_net_root_mean_squared_error.tex}
+\input{tables/bayes_net_mean_entropy_gain.tex}
 \FloatBarrier
 
 \subsection{J48 Decision Tree}
@@ -73,8 +73,8 @@ J48 Mean Entropy Gain results are shown in Table \ref{j48meg}. Case 1 significan
 
 From the above results, there does not appear to be much benefit to using the implemented algorithm with the J48 classifier. The classifier became less accurate when trained iteratively, and also appeared to make larger errors according to the RMSE test. The MAE result is an interesting case though, and could prove interesting if further explored.
 
-\input{j48_percent_incorrect.tex}
-\input{j48_mean_absolute_error.tex}
-\input{j48_root_mean_squared_error.tex}
-\input{j48_mean_entropy_gain.tex}
+\input{tables/j48_percent_incorrect.tex}
+\input{tables/j48_mean_absolute_error.tex}
+\input{tables/j48_root_mean_squared_error.tex}
+\input{tables/j48_mean_entropy_gain.tex}
 \FloatBarrier

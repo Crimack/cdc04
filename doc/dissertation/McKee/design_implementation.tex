@@ -118,7 +118,7 @@ There are a number of other utility and stub methods within this abstract class 
 \end{itemize}
 
 \subsection{IterativeClassifier}
-\textit{IterativeClassifier} is an Interface which is provided by Weka for 'classifiers which build models of increasing complexity' [[Javadoc citation?]]. It provides three method signatures: 
+\textit{IterativeClassifier} is an Interface which is provided by Weka for 'classifiers which build models of increasing complexity'. It provides three method signatures: 
 \begin{footnotesize}
 \begin{verbatim}
 public initializeClassifier() {
@@ -189,6 +189,7 @@ public getNumberIterations() {
 \end{verbatim}
 \end{footnotesize}
 \subsection{ProjectClassifier}
+\label{project_class}
 The \textit{ProjetClassifier} class is the implementation of the algorithm described in section \ref{design}. This extends from \textit{SingleClassifierEnhancer} and implements the \textit{IterativeClassifier} interface. It maintains an internal array of classifiers, one for each of the attributes in a data set, and uses these to impute values into the training set as well as to classify test data. It also maintains three copies of training set while building:
 
 \begin{itemize}
