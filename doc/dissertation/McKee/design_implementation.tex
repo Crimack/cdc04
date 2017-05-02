@@ -190,7 +190,7 @@ public getNumberIterations() {
 \end{footnotesize}
 \subsection{ProjectClassifier}
 \label{project_class}
-The \textit{ProjetClassifier} class is the implementation of the algorithm described in section \ref{design}. This extends from \textit{SingleClassifierEnhancer} and implements the \textit{IterativeClassifier} interface. It maintains an internal array of classifiers, one for each of the attributes in a data set, and uses these to impute values into the training set as well as to classify test data. It also maintains three copies of training set while building:
+The \textit{ProjectClassifier} class is the implementation of the algorithm described in section \ref{design}. This extends from \textit{SingleClassifierEnhancer} and implements the \textit{IterativeClassifier} interface. It maintains an internal array of classifiers, one for each of the attributes in a data set, and uses these to impute values into the training set as well as to classify test data. It also maintains three copies of training set while building:
 
 \begin{itemize}
 \item \textit{original} - a copy of the training set
@@ -254,10 +254,16 @@ public retrainClassifiers(instances) {
 \end{verbatim}
 \end{footnotesize}
 
-\textit{ProjetClassifier} also accepts some options, which can be used to configure how it runs:
+\textit{ProjectClassifier} also accepts some options, which can be used to configure how it runs:
 \begin{itemize}
 \item \textbf{maxIterations} (-M number) - Some classifiers may not converge in the way in which we expect, or they make take a very long time to reach this point. This flag allows for a maximum number of training iterations to be set in order to ensure experiments finish in a timely fashion.
 \item \textbf{supervised} (-S) - It may be interesting to observe the difference between classifiers which are trained against a training set where the class attribute is trained iteratively along with the rest of the data set against a training set where missing class attribute values are not imputed until the classifier rest of the classifier has converged. This flag allows for the latter case to be tested.
 \item \textbf{randomData} (-R) - As a control set during experiments, it make sense to fill a training set with random data and determine whether or not the implemented algorithm outperforms classifiers which are trained against this. This allows this experiment to be performed.
 \item \textbf{hiddenVariables} (-N) - See appendix \ref{hidden}.
 \end{itemize}
+
+\subsection{Testing}
+
+Unit tests were written for both the \textit{StateAnalyser} and \textit{ProjectClassifier} classes using JUnit 3 since Weka's unit tests are written using this version. While JUnit 4 and 5 are both available, it seems sensible to use the same version for both as there are large changes in how tests are defined and written between versions. These tests allowed for reasonably quick iteration, and in the case of the \textit{ProjectClassifier} class provided useful debugging information.
+
+Unfortunately more rigorous testing could not be performed due to the nature of this work. Since this is an experimental implementation, the expected results are unknown and are therefore only testable through experimentation as described in section \ref{experiments}.

@@ -1,20 +1,29 @@
 % Hidden Variables appendix
 
-In neural networks, many hidden layers generally exist between the input and output layer and each is trained to determine particular characteristics of an input, either from the actual input or from a preceeding layer \cite{stackexchange_nn}. This appendix attempts to apply a similar concept to the iterative training method described in Section \ref{design} by adding additional attributes to the training set before the algorithm begins, and investigating the effect of these on classification accuracy.
+In neural networks, many hidden layers generally exist between the input and output layer and each is trained to determine particular characteristics of an input, either from the actual input or from a preceding layer \cite{stackexchange_nn}. This appendix attempts to apply a similar concept to the iterative training method described in Section \ref{design} by adding additional attributes to the training set before the algorithm begins, and investigating the effect of these on classification accuracy.
 
-\subsection{Implementation}
+\section{Implementation}
 
 The implemented \textit{ProjectClassifier} class from Section \ref{project_class} accepts an optional parameter (-N followed by a number), which represents the number of 'hidden variables' which will be added to the test data set during training. It is hoped that each of these hidden variables will correspond to some trend within the training data. In order to simplify the scope of the experiments, the added attributes will each be binary attributes where a 1 represents the presence of the unknown trend, while a 0 will represent its absence. 
 
 The training algorithm then becomes the following:
 
 \begin{enumerate}
-\item Add \texit{x} additional attributes to the training set, where \textit{x} is the specified number of hidden variables
+\item Add \textit{x} additional attributes to the training set, where \textit{x} is the specified number of hidden variables
 \item Fill each of these added columns with random data by adding either a 1 or a 0
 \item Train the model normally
 \item Once the data set has converged, remove the added columns
+\end{enumerate}
 
-This should cause the model to behave slightly differently during classification than if it had been trained without the hidden attrbutes.
+This should cause the model to behave slightly differently during classification than if it had been trained without the hidden attributes.
 
-\subsection{Experiments}
+\section{Experiments}
 
+\subsubsection{Bayesian Network}
+
+
+\input{tables/bayes_net_percent_incorrect_hidden_three.tex}
+\input{tables/bayes_net_mean_absolute_error_hidden_three.tex}
+\input{tables/bayes_net_root_mean_squared_error_hidden_three.tex}
+\input{tables/bayes_net_mean_entropy_gain_hidden_three.tex}
+\FloatBarrier
