@@ -1,0 +1,61 @@
+\newpage
+{\centering \footnotesize \begin{longtable}{lrr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}cr@{\hspace{0.1cm}}c}
+\caption{\label{nbpi3}Naive Bayes Percent Incorrect - Three Hidden Variables}
+\\
+\hline
+Dataset & (1)& (2) & & (3) & & (4) & & (5) & \\
+\hline
+audiology & 37.44 & 38.34 &   $\circ$ & 37.28 &           & 50.09 &    $\circ$ & 37.28 &          \\
+autos &  9.89 &  9.94 &           & 10.22 &           &  9.62 &            & 10.22 &          \\
+balance-scale & 25.78 & 26.03 &           & 26.26 &           & 28.49 &    $\circ$ & 26.26 &          \\
+breast-cancer & 27.33 & 27.52 &           & 27.14 &           & 27.41 &            & 27.14 &          \\
+bridges-version1 & 34.68 & 34.57 &           & 35.45 &           & 36.00 &            & 35.45 &          \\
+car & 19.51 & 19.75 &           & 19.46 &           & 23.23 &    $\circ$ & 19.46 &          \\
+cmc & 51.92 & 52.39 &   $\circ$ & 50.69 & $\bullet$ & 50.24 &  $\bullet$ & 50.69 & $\bullet$\\
+colic & 22.65 & 22.22 &           & 20.92 & $\bullet$ & 19.94 &  $\bullet$ & 20.92 & $\bullet$\\
+cylinder-bands & 32.93 & 32.73 &           & 31.79 & $\bullet$ & 32.69 &            & 31.79 & $\bullet$\\
+dermatology &  3.10 &  3.16 &           &  2.95 &           &  3.58 &            &  2.95 &          \\
+diabetes & 29.18 & 28.88 &           & 27.79 & $\bullet$ & 27.52 &  $\bullet$ & 27.79 & $\bullet$\\
+ecoli & 33.39 & 32.96 &           & 32.67 & $\bullet$ & 34.53 &    $\circ$ & 32.67 & $\bullet$\\
+flags & 36.86 & 37.05 &           & 38.46 &   $\circ$ & 40.51 &    $\circ$ & 38.46 &   $\circ$\\
+glass & 47.78 & 45.17 & $\bullet$ & 46.42 &           & 46.58 &            & 46.42 &          \\
+haberman & 28.34 & 27.93 &           & 27.71 &           & 27.27 &  $\bullet$ & 27.71 &          \\
+hayes-roth-train & 53.76 & 55.09 &           & 47.16 & $\bullet$ & 49.23 &  $\bullet$ & 47.16 & $\bullet$\\
+heart-h & 17.75 & 18.13 &   $\circ$ & 18.39 &   $\circ$ & 19.23 &    $\circ$ & 18.39 &   $\circ$\\
+heart-statlog & 26.74 & 27.03 &           & 27.10 &           & 27.51 &            & 27.10 &          \\
+hepatitis & 18.84 & 18.99 &           & 19.06 &           & 19.20 &            & 19.06 &          \\
+hypothyroid & 11.07 & 12.42 &   $\circ$ &  8.74 & $\bullet$ &  8.38 &  $\bullet$ &  8.74 & $\bullet$\\
+ionosphere & 31.46 & 30.99 & $\bullet$ & 24.93 & $\bullet$ & 23.94 &  $\bullet$ & 24.93 & $\bullet$\\
+iris & 21.89 & 21.43 & $\bullet$ & 21.51 &           & 23.54 &    $\circ$ & 21.51 &          \\
+kr-vs-kp & 16.53 & 16.50 &           & 14.01 & $\bullet$ & 16.69 &            & 14.01 & $\bullet$\\
+labor &  5.40 &  5.00 &           &  4.80 &           &  5.20 &            &  4.80 &          \\
+letter & 62.20 & 62.01 & $\bullet$ & 59.84 & $\bullet$ & 62.59 &    $\circ$ & 59.84 & $\bullet$\\
+liver-disorders & 39.38 & 40.30 &           & 37.31 & $\bullet$ & 39.17 &            & 37.31 & $\bullet$\\
+lung-cancer & 47.87 & 51.21 &           & 53.02 &   $\circ$ & 45.55 &            & 53.02 &   $\circ$\\
+lymph & 16.23 & 16.23 &           & 15.65 &           & 16.49 &            & 15.65 &          \\
+molecular-biology-promoters &  9.95 &  9.53 &           &  8.56 &           & 14.00 &    $\circ$ &  8.56 &          \\
+mushroom &  6.89 &  6.86 &           &  5.06 & $\bullet$ &  7.89 &    $\circ$ &  5.06 & $\bullet$\\
+nursery & 16.11 & 16.06 &           & 15.87 & $\bullet$ & 16.51 &    $\circ$ & 15.87 & $\bullet$\\
+optdigits & 14.03 & 14.05 &           & 13.10 & $\bullet$ & 16.32 &    $\circ$ & 13.10 & $\bullet$\\
+page-blocks & 27.29 & 19.30 & $\bullet$ & 16.82 & $\bullet$ & 14.00 &  $\bullet$ & 16.82 & $\bullet$\\
+pendigits & 23.03 & 22.49 & $\bullet$ & 21.21 & $\bullet$ & 26.14 &    $\circ$ & 21.21 & $\bullet$\\
+postoperative-patient-data & 31.16 & 32.42 &           & 29.98 &           & 30.36 &            & 29.98 &          \\
+primary-tumor & 55.55 & 55.16 &           & 54.13 & $\bullet$ & 54.94 &            & 54.13 & $\bullet$\\
+segment & 30.06 & 30.79 &   $\circ$ & 28.12 & $\bullet$ & 33.04 &    $\circ$ & 28.12 & $\bullet$\\
+shuttle-landing-control & 41.33 & 44.67 &           & 46.67 &   $\circ$ & 36.67 &            & 46.67 &   $\circ$\\
+sick & 10.73 & 10.23 & $\bullet$ &  9.81 & $\bullet$ &  8.84 &  $\bullet$ &  9.81 & $\bullet$\\
+solar-flare-2 & 28.29 & 28.33 &           & 28.16 &           & 28.39 &            & 28.16 &          \\
+sonar & 26.16 & 25.85 &           & 24.14 & $\bullet$ & 25.33 &            & 24.14 & $\bullet$\\
+soybean & 10.44 & 10.34 &           &  9.77 & $\bullet$ & 11.28 &    $\circ$ &  9.77 & $\bullet$\\
+spambase & 25.42 & 24.84 & $\bullet$ & 24.51 & $\bullet$ & 24.14 &  $\bullet$ & 24.51 & $\bullet$\\
+tae & 51.29 & 49.86 &           & 48.92 & $\bullet$ & 51.64 &            & 48.92 & $\bullet$\\
+tic-tac-toe & 29.98 & 30.07 &           & 29.49 & $\bullet$ & 29.23 &  $\bullet$ & 29.49 & $\bullet$\\
+trains & 36.00 & 33.00 &           & 31.00 &           & 39.00 &            & 31.00 &          \\
+vehicle & 56.72 & 56.82 &           & 53.71 & $\bullet$ & 55.79 &  $\bullet$ & 53.71 & $\bullet$\\
+vote &  9.57 &  9.57 &           &  9.47 & $\bullet$ &  9.34 &            &  9.47 & $\bullet$\\
+vowel & 71.54 & 71.71 &           & 69.27 & $\bullet$ & 72.30 &            & 69.27 & $\bullet$\\
+waveform-5000 & 22.62 & 22.65 &           & 22.44 & $\bullet$ & 23.63 &    $\circ$ & 22.44 & $\bullet$\\
+zoo &  9.11 &  9.12 &           &  8.78 &           & 11.33 &    $\circ$ &  8.78 &          \\
+\hline
+\multicolumn{10}{c}{$\circ$, $\bullet$ statistically significant improvement or degradation}\\
+\end{longtable} \footnotesize \par}

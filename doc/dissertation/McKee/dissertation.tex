@@ -6,19 +6,17 @@
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{pdfpages}
-\usepackage{geometry}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{standalone}
 \usepackage{dirtree}
 \usepackage[section]{placeins}
 \usepackage{url}
 \usepackage[nottoc,numbib]{tocbibind}
-\usepackage{floatpag}
 \usepackage{longtable}
 
 % Spacing
-\onehalfspacing
+\linespread{1.3}
 \setlength{\parskip}{1em}
-\floatpagestyle{empty}
 
 \begin{document}
 \title{Extending Classifiers for Incomplete Data\\
@@ -53,6 +51,9 @@ Christopher McKee\\
 \chapter{Experimental Data Sets}
 \label{datasets}
 \input{datasets.tex}
+\chapter{Experimental Results}
+\label{results}
+\input{results.tex}
 \chapter{Hidden Variables}
 \label{hidden}
 \input{hidden_variables.tex}

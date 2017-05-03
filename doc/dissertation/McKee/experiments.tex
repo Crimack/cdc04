@@ -19,7 +19,7 @@ Some adaptations may need to be made for certain classifiers, but this is the ge
 
 \section{Results}
 
-Tables referenced below can be found at the end of each subsection, since they are too large to be included in-line.
+Tables referenced below can be found in appendix \ref{results}, since they are too large to be included in-line.
 
 \subsection{Naive Bayes}
 No adaptations needed to be made for the Naive Bayes classification method since it converged to a stable model as expected, and did so within a reasonable period of time.
@@ -34,12 +34,6 @@ Naive Bayes MEG results are shown in Table \ref{nbmeg}. Case 1 performed signifi
 
 It would seem that the implemented algorithm does not provide any significant gains when using the Naive Bayes classifier according to the measurements used. While significant decreases in entropy gain were observed, it was both less accurate as a classifier and more strongly wrong.
 
-\input{tables/naive_bayes_percent_incorrect.tex}
-\input{tables/naive_bayes_mean_absolute_error.tex}
-\input{tables/naive_bayes_root_mean_squared_error.tex}
-\input{tables/naive_bayes_mean_entropy_gain.tex}
-\FloatBarrier
-
 \subsection{Bayesian Network}
 For testing, a Tree Augmented Naive Bayes (TAN) Bayesian Network using MDL for scoring was used as the internal classifier for the ProjectClassifier, although some small adaptations to the experiment were needed for testing performance. In some cases, most frequently with small data sets, an iteratively trained Bayesian Network did not converge as expected. This led to it running for longer than it would be practical to test for, with no guarantee that it would ever finish iterating. In order to produce results, training was limited to 5000 iterations.
 
@@ -53,14 +47,7 @@ Bayesian Network Mean Entropy Gain results are shown in Table \ref{bnmeg}. Case 
 
 It would seem that again, the implemented algorithm does not provide any significant gains when using a TAN Bayesian Network. Again, entropy gain significantly decreased due to the repeated training and imputation cycles, but the classifications became more inaccurate, and judging by the RMSE results they were more likely to be very inaccurate.
 
-
-\input{tables/bayes_net_percent_incorrect.tex}
-\input{tables/bayes_net_mean_absolute_error.tex}
-\input{tables/bayes_net_root_mean_squared_error.tex}
-\input{tables/bayes_net_mean_entropy_gain.tex}
-\FloatBarrier
-
-\subsection{J48 Decision Tree}
+\subsection{J48 Decision Tree}\label{j48experiments}
 When testing the J48 decision tree, adaptations were needed. The J48 failed to converge as expected in most cases, although this was most common and also most time consuming with very large data sets. Through experimentation it was determined that iteratively training the J48 classifier caused it to reach a certain state of stability around which it would fluctuate by changing a handful of rows between iterations, usually after around 15-20 rounds of training and re-imputing. It therefore made sense to limit training to 30 iterations to allow experiments to be run in a reasonable period of time while also providing some 10-15 extra iterations to allow for even more volatile data sets to reach relative stability.
 
 J48 Percent Incorrect results are shown in Table \ref{j48pi}. Case 1 performed as well as or better than Cases 2, 4 and 5 in almost all tests, which was the expected result for the control cases. Case 1 was again outperformed by Case 3, performing worse in 16/51 tests and even in 26/51. 
@@ -72,9 +59,3 @@ J48 Root Mean Squared Error results are shown in Table \ref{j48rmse}. Case 1 aga
 J48 Mean Entropy Gain results are shown in Table \ref{j48meg}. Case 1 significantly outperformed Case 3 using this measure, as it rewards a reduction in entropy. Since the iterative training will naturally lead to decreased variety in the results shown, this result is expected. Case 1 generally produced a smaller reduction in entropy than Case 2, since it was not also iteratively training the class attribute. Cases 4 and 5 can effectively be disregarded here, since they're just imputing pseudo-random data, and this will naturally lead to a lot of variance between results.
 
 From the above results, there does not appear to be much benefit to using the implemented algorithm with the J48 classifier. The classifier became less accurate when trained iteratively, and also appeared to make larger errors according to the RMSE test. The MAE result is an interesting case though, and could prove interesting if further explored.
-
-\input{tables/j48_percent_incorrect.tex}
-\input{tables/j48_mean_absolute_error.tex}
-\input{tables/j48_root_mean_squared_error.tex}
-\input{tables/j48_mean_entropy_gain.tex}
-\FloatBarrier
