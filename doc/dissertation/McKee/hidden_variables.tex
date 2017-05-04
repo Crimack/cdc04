@@ -19,11 +19,19 @@ This should cause the model to behave slightly differently during classification
 
 \section{Experiments}
 
-The experiments described here follow much the same format as those described in section \ref{experiments}, with only slight alterations. Exactly the same test cases and data sets are used as those described there, except hidden variables are added to Cases 1 and 2. Experiments will be carried out with 3 and 5 added hidden variables, and these will then be compared with relevant results found with 0 hidden variables earlier in the work.
+The experiments described here follow much the same format as those described in section \ref{experiments}, with only slight alterations. Exactly the same test cases and data sets are used as those described there, except hidden variables are added to Cases 1 and 2. Experiments will be carried out with three and five added hidden variables, and these will then be compared with relevant results found with 0 hidden variables earlier in the work.
 
 \subsection{Naive Bayes}
 
 The results for the Naive Bayes classifier with various numbers of hidden variables can be seen in figures \ref{nbpi3} - \ref{nbmeg5}.
+
+From the percent incorrect results (figures \ref{nbpi}, \ref{nbpi3} and \ref{nbpi5}), it can be seen that increasing the number of hidden variables decreased the accuracy of the classifier quite significantly. With no hidden variables, Case 1 was roughly as accurate as Case 3 in 30 tests, and less accurate in 19. With three hidden variables it was as accurate in 19 tests and less accurate in 28 cases, and with 5 hidden variables it was even in 17 tests and performed significantly worse in 32 cases. At five hidden variables Case 1 was roughly as accurate as Case 4, and actually less accurate than Case 5.
+
+The Naive Bayes MAE results (figures \ref{nbmae}, \ref{nbmae3} and \ref{nbmae5}) show a similar trend. While Case 1 outperformed Cases 3 and 5 with 0 hidden variables, increasing the number of hidden variables caused Case 1 to perform less well relative to these classifiers. Case 1 still performed better than Case 4 in all three experiments.
+
+The Naive Bayes RMSE results (figures \ref{nbrmse}, \ref{nbrmse3} and \ref{nbrmse5}) show that adding hidden variables during training appears to significantly lower RMSE. Case 1 was outperformed by the other cases in all three experiments, and the number of tests in which they were outperformed increased from 36 to 41 when three hidden variables were added. This is probably because the iterative training method will generally lead to very strong predictions one way or the other, and adding additional random data to this is likely to cause more extreme predictions.
+
+From the Naive Bayes MEG results in figures \ref{nbmeg}, \ref{nbmeg3} and \ref{nbmeg5}, it can be seen that adding additional hidden variables caused large reductions in entropy. With three added hidden variables Case 1 showed larger entropy reductions than Cases 4 and 5, with large increases in the number of tests in which this was observed. A similar trend was observed when five hidden variables were added. This is probably due to so the amount of additional data being added to the system (${X~hidden~variables}\times{Y~rows~of~data}$). It is assumed that this causes the iterative training to find and favour certain trends, and therefore reduce the entropy of the whole data set.
 
 \linespread{1.0}
 \input{tables/naive_bayes_percent_incorrect_hidden_three.tex}
@@ -41,6 +49,14 @@ The results for the Naive Bayes classifier with various numbers of hidden variab
 
 The results for a TAN Bayesian Network with various numbers of hidden variables can be seen in figures \ref{bnpi3} - \ref{bnmeg5}.
 
+The Bayesian Network Percent Incorrect results can be seen in figures \ref{bnpi}, \ref{bnpi3} and \ref{bnpi5}. With zero hidden variables, Case 1 performed slightly worse than Case 4, and roughly as well as Case 5. Once the number of hidden variables was increased to three, Case 1 started to perform much worse than both Cases 4 and 5. This trend continued when five hidden variables were added. Interestingly the performance of Case 1 relative to Case 3 was reasonably stable throughout. The number of tests in which they performed better or worse than each other was approximately the same in all three experiments, with Case 3 performing better in roughly twice as many tests.
+
+The Bayesian Network MAE results (figures \ref{bnmae}, \ref{bnmae3} and \ref{bnmae5}) again show Case 1 and Case 3 performing roughly as well as each other with all numbers of hidden variables. Case 1 does perform slightly better than Case 3, but not significantly so. The most interesting part of these results is the comparison between Case 1 and Case 5. With zero hidden variables Case 1 performs better in 44/51 tests, but with three and five hidden variables this drops to 22/51 tests.
+
+The Bayesian Network RMSE results can be seen in figures \ref{bnrmse}, \ref{bnrmse3} and \ref{bnrmse5}. These figures show Case 1 performing significantly worse as hidden variables are added, especially relative to the control cases. Case 1 again performs approximately the same relative to Case 3 at any number of hidden variables, with Case 3 seeming to be roughly 2.5 times better.
+
+The Bayesian Network MEG results are shown in figures \ref{bnmeg}, \ref{bnmeg3} and \ref{bnmeg5}. Adding hidden variables again caused large entropy reductions, and adding more hidden variables led to larger reductions.
+
 \linespread{1.0}
 \input{tables/bayes_net_percent_incorrect_hidden_three.tex}
 \input{tables/bayes_net_percent_incorrect_hidden_five.tex}
@@ -54,6 +70,16 @@ The results for a TAN Bayesian Network with various numbers of hidden variables 
 
 \subsection{J48 Decision Tree}
 
+J48 Decision Tree results for various numbers of hidden variables can be seen in figures \ref{j48pi3} - \ref{j48meg5}. As in section \ref{j48experiments}, the maximum number of iterations was set to 30 in order to obtain results in a reasonable time.
+
+The J48 Percent Incorrect results can be seen in figures \ref{j48pi}, \ref{j48pi3} and \ref{j48pi5}. As more hidden variables were added, Case 1 became less accurate relative to Case 3. At zero hidden variables it was more accurate in 9/51 cases, while with 5 hidden variables this had decreased to to 47/51. It also remained better than Case 4 in all three experiments, although became worse relative to Case 5 as more hidden variables were added.
+
+The J48 MAE results are shown in \ref{j48mae}, \ref{j48mae3} and \ref{j48mae5}. Adding hidden variables seemed to have a much smaller effect on this metric when using J48 rather than the other classifiers. Only small changes were observed, probably due to the much lower cap on the max iterations. Case 1 began to perform slightly better than Case 3 as hidden variables were added, while it also began to perform slightly worse relative to Cases 4 and 5.
+
+The J48 RMSE results (figures \ref{j48rmse}, \ref{j48rmse3} and \ref{j48rmse5}) show that adding more hidden variables with this classifier caused the RMSE to increase on average. Case 1 initially performed better than Case 5 in 21/51 cases, while with five hidden variables added in only performed better in 4/51. The decrease in relative performance was lessed pronounced between Case 3 and Case 4, although decreases were still observed in both cases.
+
+The J48 MEG results can be seen in \ref{j48meg}, \ref{j48meg3} and \ref{j48meg5}. Case 1 saw large entropy reductions relative to Cases 3 and 5 as more hidden variables were added. Case 1 also saw large entropy \textit{gains} relative to Case 4. This is probably due to how J48 decision trees are built; imputing the most common value for missing values will heavily influence how the tree splits, and therefore decrease the entropy of the system.
+
 \linespread{1.0}
 \input{tables/j48_percent_incorrect_hidden_three.tex}
 \input{tables/j48_percent_incorrect_hidden_five.tex}
@@ -64,3 +90,7 @@ The results for a TAN Bayesian Network with various numbers of hidden variables 
 \input{tables/j48_mean_entropy_gain_hidden_three.tex}
 \input{tables/j48_mean_entropy_gain_hidden_five.tex}
 \linespread{1.3}
+
+\section{Conclusions}
+
+Adding hidden variables did not appear to be particularly helpful for the iterative training method which was implemented in this work. While adding more hidden variables did further reduce the entropy gains of the classifier, it also decreased classifier accuracy in every test case, and also generally increased root mean squared error. While this method may prove useful for other classifiers that were not tested in this body of work, it does not appear useful for those that were tested.
