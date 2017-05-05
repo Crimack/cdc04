@@ -35,7 +35,7 @@
 \expandafter\ifx\csname r@#1\endcsname\relax
 \relax\else
 {$($in \ref{#1}, page \pageref{#1}$)$}\fi}
-\date{\today}
+\date{10 May 2017}
 \title{CDC04 TeXDoclet}
 \author{Christopher McKee}
 \chardef\textbackslash=`\\
@@ -137,6 +137,9 @@ public int getNumberDifferences()\end{lstlisting} %end signature
 
 Returns an integer representation of the number of rows which have changed between the previous two iterations of the classifier A negative return values shows that the number of differences could not be calculated, since there are not at least two iterations present.
 }
+\item{{\bf  Returns} -- 
+int representing number of differences between previous two iterations 
+}%end item
 \end{itemize}
 }%end item
 \item{ 
