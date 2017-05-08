@@ -7,8 +7,6 @@ This body of work is mainly interested in popular classification algorithms, and
 
 It also follows that any files which are used for testing should be in either .csv, or .arff format. The former is commonly used in data processing while the latter is a proprietary Weka format which is very similar, but differs in that it contains additional data at the top of the file pertaining to the data set. Both are supported by Weka, and therefore either is usable.
 
-Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values (at least when imputed using probabilistic techniques), whilst numeric values are not guaranteed to ever settle on a particular value at all. It is more likely that numeric predictions would just change less and less between iterations, until the changes were minuscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
-
 It is intended that the implemented algorithm will work as follows:
 \begin{enumerate}
 \item Take a given training set, and make a copy of it
@@ -18,6 +16,9 @@ It is intended that the implemented algorithm will work as follows:
 \item Repeat 3 and 4 until identical data sets are produced by two consecutive iterations
 \item Use the model built by the final iteration for classification of a test set
 \end{enumerate}
+
+Since the project relies upon the idea that predictions for missing training data values should converge, it is assumed that the developed classifier will initially only work on nominal data sets. This is because nominal data sets should eventually settle on concrete values (at least when imputed using probabilistic techniques), whilst numeric values are not guaranteed to ever settle on a particular value at all. It is more likely that numeric predictions would just change less and less between iterations, until the changes were minuscule. While it would be possible to implement a solution which stops iterating once a numeric data set only changes to a certain degree, as a proof of concept it is sensible to stick to nominal data.
+
 
 \section{Implementation}
 As an existing piece of software is being extended, much of the work to implement the various classifiers to be tested is already done. The main aim of this work is to integrate successfully into Weka as a plugin, and to interface with it as necessary. This plugin will be provided as a zip file containing the implemented algorithm which can be loaded by Weka using its package manager.
@@ -256,10 +257,10 @@ public retrainClassifiers(instances) {
 
 \textit{ProjectClassifier} also accepts some options, which can be used to configure how it runs:
 \begin{itemize}
-\item \textbf{maxIterations} (-M number) - Some classifiers may not converge in the way in which we expect, or they make take a very long time to reach this point. This flag allows for a maximum number of training iterations to be set in order to ensure experiments finish in a timely fashion.
+\item \textbf{maxIterations} (-M \textit{numIterations}) - Some classifiers may not converge in the way in which we expect, or they make take a very long time to reach this point. This flag allows for a maximum number of training iterations to be set in order to ensure experiments finish in a timely fashion.
 \item \textbf{supervised} (-S) - It may be interesting to observe the difference between classifiers which are trained against a training set where the class attribute is trained iteratively along with the rest of the data set against a training set where missing class attribute values are not imputed until the classifier rest of the classifier has converged. This flag allows for the latter case to be tested.
 \item \textbf{randomData} (-R) - As a control set during experiments, it make sense to fill a training set with random data and determine whether or not the implemented algorithm outperforms classifiers which are trained against this. This allows this experiment to be performed.
-\item \textbf{hiddenVariables} (-N) - See appendix \ref{hidden}.
+\item \textbf{hiddenVariables} (-N \textit{numHiddenVariables}) - See appendix \ref{hidden}.
 \end{itemize}
 
 \subsection{Testing}
