@@ -60,7 +60,7 @@ import weka.core.Utils;
  * @author Christopher McKee (cmckee41@qub.ac.uk)
  *
  */
-public class ProjectClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
+public class IterativeImputationClassifier extends SingleClassifierEnhancer implements IterativeClassifier {
 
 	/** For serialization */
 	private static final long serialVersionUID = 3582366333379609425L;
@@ -136,7 +136,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	/**
 	 * Constructor
 	 */
-	public ProjectClassifier() {
+	public IterativeImputationClassifier() {
 		super();
 		m_Classifier = new NaiveBayes();
 	}
@@ -663,7 +663,7 @@ public class ProjectClassifier extends SingleClassifierEnhancer implements Itera
 	 *            the options
 	 */
 	public static void main(String[] args) {
-		runClassifier(new ProjectClassifier(), args);
+		runClassifier(new IterativeImputationClassifier(), args);
 	}
 
 }

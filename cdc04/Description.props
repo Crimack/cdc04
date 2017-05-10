@@ -1,11 +1,10 @@
 # Description file for project Weka package
-# 
 
 # Package name (required)
 PackageName=cdc04
 
 # Version (required)
-Version=0.1.0
+Version=1.0.0
 
 #Date (year-month-day)
 Date=2017-02-14
@@ -26,14 +25,13 @@ Maintainer=Christopher McKee <cmckee41@qub.ac.uk>
 License=GPL 2.0|Mozilla
 
 # Description (required)
-Description=Repeatedly trains target classifiers on the same training data set. Supports all classifiers but probabilistic classifiers are recommended for best results.
+Description=Iteratively trains a model by imputing missing training data, and continuing to iterate until two consecutive results are the same or the maximum iteration limit is reached. Supports all classifiers but probabilistic classifiers are recommended for best results. Also allows classifiers which do not support missing data to be used by randomly imputing missing values.
 
 # Package URL for obtaining the package archive (required)
-# Will put on public github if is useful
-PackageURL=http://www.cs.qub.ac.uk/~c.decampos/
+PackageURL=https://github.com/Crimack/cdc04/blob/master/cdc04/dist/cdc04.zip
 
 # URL for further information
-URL=http://www.cs.qub.ac.uk/~c.decampos/
+URL=https://github.com/Crimack/cdc04/
 
 # Dependencies (format: packageName (equality/inequality version_number)
-Depends=weka (>=3.7.1)
+Depends=weka (>3.7.1)
